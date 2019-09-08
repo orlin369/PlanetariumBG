@@ -22,34 +22,25 @@
     SOFTWARE.
 */
 
-using System;
-
-namespace SpaceObjects.SolarSystem
+namespace SpaceObjects.Data
 {
-	/// <summary>
-	/// 
-	/// </summary>
-	interface ISolarSystemObject
-	{
-		void OrbitalElements();
+    /// <summary>
+    /// Summary description for Constellation.
+    /// </summary>
+    public class ConstellationLine
+    {
+        public SkyPosition sp1, sp2;
 
-		double N  {get; set;}
-		double i  {get; set;}
-		double w  {get; set;}
-		double a  {get; set;}
-		double ec {get; set;}
-		double M  {get; set;}
+        public ConstellationLine(double RA1, double decl1, double RA2, double decl2)
+        {
+            sp1 = new SkyPosition();
+            sp2 = new SkyPosition();
 
-		double d	 {get; set;}
-		double T	 {get; set;}
-		double d0	 {get; set;}
-		string name  {get; set;}
+            sp1.RA = RA1;
+            sp1.Decl = decl1;
 
-		double dist  {get; set;}
-		double diam  {get; set;}
-		double elong {get; set;}
-		double FV {get; set;}
-		double phase {get; set;}
-		double magnitude {get; set;}
-	}
+            sp2.RA = RA2;
+            sp2.Decl = decl2;
+        }
+    }
 }

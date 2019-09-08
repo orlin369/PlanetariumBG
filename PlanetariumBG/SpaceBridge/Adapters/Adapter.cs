@@ -22,9 +22,8 @@
     SOFTWARE.
 */
 
-using System;
-
 using SpaceBridge.Events;
+using System;
 
 namespace SpaceBridge.Adapters
 {

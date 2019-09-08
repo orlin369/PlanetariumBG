@@ -22,11 +22,10 @@
     SOFTWARE.
 */
 
+using SpaceBridge.Events;
 using System;
 using System.IO.Ports;
 using System.Threading;
-
-using SpaceBridge.Events;
 
 namespace SpaceBridge.Adapters
 {
@@ -168,7 +167,7 @@ namespace SpaceBridge.Adapters
                 try
                 {
                     byte[] inData = new byte[50];
-                    
+
                     serialPort.Read(inData, 0, 50);
 
                     this.OnMessage?.Invoke(this, new EventArgsByte(inData));

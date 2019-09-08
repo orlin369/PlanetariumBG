@@ -22,78 +22,96 @@
     SOFTWARE.
 */
 
-using System;
-
 namespace SpaceObjects.Perturbations
 {
-	/// <summary>
-	/// 
-	/// </summary>
-	public class PertElements
-	{
-		public static PertElements GetInstance()
-		{
-			if( instance == null )
-				instance = new PertElements();
-			return instance;
-		}
+    /// <summary>
+    /// 
+    /// </summary>
+    public class PertElements
+    {
 
-		public double Mj {
-			get {return v_Mj;}
-			set {v_Mj = value;}
-		}
+        #region Variables
 
-		public double Msat {
-			get {return v_Msat;}
-			set {v_Msat = value;}
-		}
+        private static PertElements instance;
 
-		public double Mu {
-			get {return v_Mu;}
-			set {v_Mu = value;}
-		}
+        #endregion
 
-		public double Ls {
-			get {return v_Ls;}
-			set {v_Ls = value;}
-		}
+        #region Properties
 
-		public double Lm {
-			get {return v_Lm;}
-			set {v_Lm = value;}
-		}
+        public double Mj
+        {
+            get;
+            set;
+        }
 
-		public double Msun {
-			get {return v_Msun;}
-			set {v_Msun = value;}
-		}
+        public double Msat
+        {
+            get;
+            set;
+        }
 
-		public double Mm {
-			get {return v_Mm;}
-			set {v_Mm = value;}
-		}
+        public double Mu
+        {
+            get;
+            set;
+        }
 
-		public double D {
-			get {return v_D;}
-			set {v_D = value;}
-		}
+        public double Ls
+        {
+            get;
+            set;
+        }
 
-		public double F {
-			get {return v_F;}
-			set {v_F = value;}
-		}
+        public double Lm
+        {
+            get;
+            set;
+        }
 
-		private double v_Mj;
-		private double v_Msat;
-		private double v_Mu;
-		private double v_Ls;
-		private double v_Lm;
-		private double v_Msun;
-		private double v_Mm;
-		private double v_D;
-		private double v_F;
+        public double Msun
+        {
+            get;
+            set;
+        }
 
-		private PertElements(){}
-		private static PertElements instance;
-	}
+        public double Mm
+        {
+            get;
+            set;
+        }
+
+        public double D
+        {
+            get;
+            set;
+        }
+
+        public double F
+        {
+            get;
+            set;
+        }
+
+        #endregion
+
+        #region Constructor
+
+        private PertElements()
+        {
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public static PertElements GetInstance()
+        {
+            if (instance == null)
+                instance = new PertElements();
+            return instance;
+        }
+
+        #endregion
+
+    }
 }

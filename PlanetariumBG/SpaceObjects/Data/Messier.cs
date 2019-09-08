@@ -22,24 +22,47 @@
     SOFTWARE.
 */
 
-using SpaceObjects.Position;
-using System;
-
-namespace SpaceObjects
+namespace SpaceObjects.Data
 {
-	/// <summary>
-	/// Summary description for Constellation.
-	/// </summary>
-	public class ConstellationLine
-	{
-		public SkyPos sp1, sp2;
+    /// <summary>
+    /// Summary description for Messier.
+    /// </summary>
+    public class Messier : BaseSpaceObject
+    {
+        public string Type { get; set; }
 
-		public ConstellationLine(double RA1, double decl1, double RA2, double decl2)
-		{
-			sp1.RA = RA1;
-			sp1.Decl = decl1;
-			sp2.RA = RA2;
-			sp2.Decl = decl2;
-		}
-	}
+        public Messier()
+        { }
+
+        public Messier(string designation, double RA, double Decl, string type, string name)
+        {
+            if (designation != "")
+            {
+                this.Designation = "M" + designation;
+            }
+            else
+            {
+                this.Designation = name;
+            }
+            this.Name = name;
+            this.SkyPosition.RA = RA;
+            this.SkyPosition.Decl = Decl;
+            this.Type = type;
+        }
+
+        public override void Ephemerides()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void OrbitalElements()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Perturbations()
+        {
+            throw new System.NotImplementedException();
+        }
+    }
 }

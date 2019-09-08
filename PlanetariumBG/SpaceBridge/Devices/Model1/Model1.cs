@@ -22,12 +22,12 @@
     SOFTWARE.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using SpaceBridge.Adapters;
 using SpaceBridge.Data;
 using SpaceBridge.Events;
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace SpaceBridge.Devices.Model1
 {
@@ -137,7 +137,7 @@ namespace SpaceBridge.Devices.Model1
             this.adapter.OnConnect += Adapter_OnConnect;
             this.adapter.OnMessage += Adapter_OnMessage;
             this.adapter.OnDisconnect += Adapter_OnDisconnect;
-            this.adapter.Connect();            
+            this.adapter.Connect();
         }
 
 
@@ -235,27 +235,27 @@ namespace SpaceBridge.Devices.Model1
                 if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.Ping)
                 {
 
-                   // SendRawResponse(OpCodes.Ping, StatusCodes.Ok, PayloadRequest_g, frame[FrameIndexes.Length] - 1);
+                    // SendRawResponse(OpCodes.Ping, StatusCodes.Ok, PayloadRequest_g, frame[FrameIndexes.Length] - 1);
                 }
                 else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.Stop)
                 {
 
-                   // SendRawResponse(OpCodes.Stop, StatusCodes.Ok, NULL, 0);
+                    // SendRawResponse(OpCodes.Stop, StatusCodes.Ok, NULL, 0);
                 }
                 else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.Disable)
                 {
 
-                   // SendRawResponse(OpCodes.Disable, StatusCodes.Ok, NULL, 0);
+                    // SendRawResponse(OpCodes.Disable, StatusCodes.Ok, NULL, 0);
                 }
                 else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.Enable)
                 {
 
-                   // SendRawResponse(OpCodes.Enable, StatusCodes.Ok, NULL, 0);
+                    // SendRawResponse(OpCodes.Enable, StatusCodes.Ok, NULL, 0);
                 }
                 else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.Clear)
                 {
 
-                   // SendRawResponse(OpCodes.Clear, StatusCodes.Ok, NULL, 0);
+                    // SendRawResponse(OpCodes.Clear, StatusCodes.Ok, NULL, 0);
                 }
                 else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.MoveRelative)
                 {
@@ -267,13 +267,13 @@ namespace SpaceBridge.Devices.Model1
                 {
 
                     // Respond with success.
-                   // SendRawResponse(OpCodes.MoveAblolute, StatusCodes.Ok, NULL, 0);
+                    // SendRawResponse(OpCodes.MoveAblolute, StatusCodes.Ok, NULL, 0);
                 }
                 else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.DO)
                 {
 
                     // Respond with success.
-                   // SendRawResponse(OpCodes.DO, StatusCodes.Ok, NULL, 0);
+                    // SendRawResponse(OpCodes.DO, StatusCodes.Ok, NULL, 0);
                 }
                 else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.DI)
                 {
@@ -307,11 +307,11 @@ namespace SpaceBridge.Devices.Model1
 
                     SendRawResponse(OpCodes.GetDeviceID, StatusCodes.Ok, PayloadRequest_g);
                 }
-                else if(frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.Compas)
+                else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.Compas)
                 {
                     byte[] buff = GetPayload(frame);
 
-                    if(buff == null)
+                    if (buff == null)
                     {
                         SendRawResponse(OpCodes.Compas, StatusCodes.Error, null);
                         return;
@@ -327,7 +327,7 @@ namespace SpaceBridge.Devices.Model1
 
                     SendRawResponse(OpCodes.Compas, StatusCodes.Ok, null);
                 }
-                else if(frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.Ready)
+                else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.Ready)
                 {
                     this.IsReady = true;
                     this.OnReady?.Invoke(this, new EventArgs());
@@ -349,7 +349,7 @@ namespace SpaceBridge.Devices.Model1
             List<byte> command = new List<byte>();
             command.Add(SENTINEL);
             command.Add((byte)FrameType.Response);
-            if(data == null)
+            if (data == null)
             {
                 command.Add(1);
             }
@@ -389,7 +389,7 @@ namespace SpaceBridge.Devices.Model1
                 command.Add((byte)(data.Length + FRAME_RESPONSE_PAYLOAD_OFFSET));
             }
             command.Add((byte)opcode);
-            if(data != null)
+            if (data != null)
             {
                 foreach (byte b in data)
                 {
@@ -422,10 +422,10 @@ namespace SpaceBridge.Devices.Model1
                 {
                     // Sum all odd indexes.
                     result[0] ^= frame[index];
-		        }
-		        // Even
-		        else
-		        {
+                }
+                // Even
+                else
+                {
                     // Sum all even indexes.
                     result[1] ^= frame[index];
                 }

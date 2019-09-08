@@ -22,17 +22,15 @@
     SOFTWARE.
 */
 
-using System;
-
 namespace SpaceObjects.Perturbations
 {
-	/// <summary>
-	/// 
-	/// </summary>
-	interface IPerturbations
-	{
-		double PertInLon();
-		double PertInLat();
-		double PertInDist();
-	}
+    /// <summary>
+    /// 
+    /// </summary>
+    interface IPerturbations
+    {
+        double PertInLon();
+        double PertInLat();
+        double PertInDist();
+    }
 }

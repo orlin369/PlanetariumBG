@@ -26,20 +26,38 @@ using System;
 
 namespace SpaceObjects.SolarSystem
 {
-	/// <summary>
-	/// 
-	/// </summary>
-	public class Earth : APlanet
-	{
-		public Earth(string name){this.name = name;}
+    /// <summary>
+    /// 
+    /// </summary>
+    public class Earth : SolarSystemObject
+    {
+        public Earth()
+        {
+            this.Name = "Earth";
+        }
 
-		public override void OrbitalElements(){d=1.2;	T=365;}
+        public override void OrbitalElements()
+        {
+            d = 1.2;
+            T = 365;
+        }
 
-		public override void HeliocentricPos()
-		{
-			position.x = -location.xs;
-			position.y = -location.ys;
-			position.z = -location.zs;
-		}
-	}
+        public override void HeliocentricPos()
+        {
+            this.Position.X = -this.Location.xs;
+            this.Position.Y = -this.Location.ys;
+            this.Position.Z = -this.Location.zs;
+        }
+
+        public override void Ephemerides()
+        {
+            // TODO: Implement it.
+            //throw new NotImplementedException();
+        }
+
+        public override void Perturbations()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

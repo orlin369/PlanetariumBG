@@ -22,11 +22,6 @@
     SOFTWARE.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace SpaceBridge.Devices.Model1
 {
     /** @brief Status codes types. */

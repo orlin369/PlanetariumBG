@@ -22,36 +22,51 @@
     SOFTWARE.
 */
 
+using SpaceObjects.Data;
 using System;
 
 namespace SpaceObjects.SolarSystem
 {
-	/// <summary>
-	/// Summary description for MoonShadow.
-	/// </summary>
-	public class EarthShadow : APlanet
-	{
-		public EarthShadow(string name){this.name = name;}
+    /// <summary>
+    /// Summary description for MoonShadow.
+    /// </summary>
+    public class EarthShadow : SolarSystemObject
+    {
+        public EarthShadow()
+        {
+            this.Name = "Earth shadow";
+        }
 
-		public override void OrbitalElements(){}
+        public override void OrbitalElements()
+        {
 
-		public override void GeocentricPos()
-		{
-			SkyPosition.RA = (location.sRA+180)%360;
-			SkyPosition.Decl = -location.sDecl;
-		}
+        }
 
-		public double DU 
-		{
-			get {return v_du;}
-			set {v_du = value;}
-		}
-		public double DP 
-		{
-			get {return v_dp;}
-			set {v_dp = value;}
-		}
+        public override void GeocentricPos()
+        {
+            SkyPosition.RA = (this.Location.sRA + 180) % 360;
+            SkyPosition.Decl = -this.Location.sDecl;
+        }
 
-		private double v_du, v_dp;
-	}
+        public override void Ephemerides()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Perturbations()
+        {
+            throw new NotImplementedException();
+        }
+
+        public double DU
+        {
+            get;
+            set;
+        }
+        public double DP
+        {
+            get;
+            set;
+        }
+    }
 }

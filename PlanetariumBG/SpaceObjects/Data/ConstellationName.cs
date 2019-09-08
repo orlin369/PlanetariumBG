@@ -22,23 +22,20 @@
     SOFTWARE.
 */
 
-using SpaceObjects.Position;
-using System;
-
-namespace SpaceObjects
+namespace SpaceObjects.Data
 {
-	/// <summary>
-	/// Summary description for ConstellationName.
-	/// </summary>
-	public class ConstellationName
-	{
-		public string name;
-		public SkyPos skyPos = new SkyPos();
+    /// <summary>
+    /// Summary description for ConstellationName.
+    /// </summary>
+    public class ConstellationName
+    {
+        public string name;
+        public SkyPosition skyPos = new SkyPosition();
 
-		public ConstellationName(string name, SkyPos sp)
-		{
-			this.name = name;
-			this.skyPos = sp;
-		}
-	}
+        public ConstellationName(string name, SkyPosition sp)
+        {
+            this.name = name;
+            this.skyPos = sp;
+        }
+    }
 }

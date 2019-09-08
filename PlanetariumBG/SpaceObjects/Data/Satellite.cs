@@ -1,4 +1,4 @@
-/*
+﻿/*
     MIT License
     
     Copyright (c) [2019] [Daniel Denev and Orlin Dimitrov]
@@ -22,32 +22,25 @@
     SOFTWARE.
 */
 
-using SpaceObjects.Position;
+using System;
 
-namespace SpaceObjects
+namespace SpaceObjects.Data
 {
-	/// <summary>
-	/// Summary description for ADSObject.
-	/// </summary>
-	public abstract class ADSObject : IDSObject
-	{
-		public SkyPos SkyPosition = new SkyPos();
+    public class Satellite : BaseSpaceObject
+    {
+        public override void Ephemerides()
+        {
+            throw new NotImplementedException();
+        }
 
-        public ADSObject(){}
+        public override void OrbitalElements()
+        {
+            throw new NotImplementedException();
+        }
 
-		#region IDSObject Members
-
-		public string designation{
-			get {return v_designation;}
-			set {v_designation = value;}
-		}
-		public string name{
-			get {return v_name;}
-			set {v_name = value;}
-		}
-	
-		private string v_designation, v_name;
- 
-		#endregion
-	}
+        public override void Perturbations()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

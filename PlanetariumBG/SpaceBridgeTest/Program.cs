@@ -22,14 +22,10 @@
     SOFTWARE.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+using SpaceBridge.Data;
 using SpaceBridge.Devices.Model1;
 using SpaceBridge.Events;
-using SpaceBridge.Data;
+using System;
 
 namespace SpaceBridgeTest
 {

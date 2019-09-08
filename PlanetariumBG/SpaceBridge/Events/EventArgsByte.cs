@@ -46,7 +46,7 @@ namespace SpaceBridge.Events
         /// </summary>
         /// <param name="value">Value</param>
         public EventArgsByte(byte[] value)
-    {
+        {
             this.Value = value;
         }
 

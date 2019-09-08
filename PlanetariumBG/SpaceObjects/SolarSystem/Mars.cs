@@ -26,42 +26,50 @@ using System;
 
 namespace SpaceObjects.SolarSystem
 {
-	/// <summary>
-	/// 
-	/// </summary>
-	public class Mars : APlanet
-	{
-		public Mars(string name){this.name = name;}
+    /// <summary>
+    /// 
+    /// </summary>
+    public class Mars : SolarSystemObject
+    {
+        public Mars()
+        {
+            this.Name = "Mars";
+        }
 
-		public override void OrbitalElements()
-		{
-			N = 49.5574 + 2.11081E-5 * location.dayNumber();
-			i = 1.8497 - 1.78E-8 * location.dayNumber();
-			w = 286.5016 + 2.92961E-5 * location.dayNumber();
-			a = 1.523688;
-			ec = 0.093405 + 2.516E-9 * location.dayNumber();
-			M = 18.6021 + 0.5240207766 * location.dayNumber();
-			M += ((int)Math.Abs(M/360)+1)*360;
+        public override void OrbitalElements()
+        {
+            N = 49.5574 + 2.11081E-5 * this.Location.DayNumber();
+            i = 1.8497 - 1.78E-8 * this.Location.DayNumber();
+            w = 286.5016 + 2.92961E-5 * this.Location.DayNumber();
+            a = 1.523688;
+            ec = 0.093405 + 2.516E-9 * this.Location.DayNumber();
+            M = 18.6021 + 0.5240207766 * this.Location.DayNumber();
+            M += ((int)Math.Abs(M / 360) + 1) * 360;
 
-			d=1.7;	T=687;	d0=9.36;	name="Mars";
-		}
+            d = 1.7; T = 687; d0 = 9.36;
+        }
 
-		public override void Ephemerides()
-		{
-			diam = d0/dist;
-			double test = (sunDist*sunDist + dist*dist - helDist*helDist)/
-				          (2*sunDist*dist+0.000000001);
-			if (test < -1) test=-1;
-			if (test > 1) test=1;
-			elong = Math.Acos(test)*180/PI;
+        public override void Ephemerides()
+        {
+            diam = d0 / dist;
+            double test = (sunDist * sunDist + dist * dist - helDist * helDist) /
+                          (2 * sunDist * dist + 0.000000001);
+            if (test < -1) test = -1;
+            if (test > 1) test = 1;
+            elong = Math.Acos(test) * 180 / Math.PI;
 
-			test = (helDist*helDist + dist*dist - sunDist*sunDist)/
-				   (2*helDist*dist+0.000000001);
-			if (test < -1) test=-1;
-			if (test > 1) test=1;
-			FV = Math.Acos(test)*180/PI;
-			phase = (1+Math.Cos(FV*PI/180))/2;
-			magnitude = -1.51 + 5*Math.Log10(helDist*dist) + 0.016*FV;
-		}
-	}
+            test = (helDist * helDist + dist * dist - sunDist * sunDist) /
+                   (2 * helDist * dist + 0.000000001);
+            if (test < -1) test = -1;
+            if (test > 1) test = 1;
+            FV = Math.Acos(test) * 180 / Math.PI;
+            phase = (1 + Math.Cos(FV * Math.PI / 180)) / 2;
+            this.Magnitude = -1.51 + 5 * Math.Log10(helDist * dist) + 0.016 * FV;
+        }
+
+        public override void Perturbations()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

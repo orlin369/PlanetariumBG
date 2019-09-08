@@ -22,144 +22,138 @@
     SOFTWARE.
 */
 
-using System;
-using System.Drawing;
-using System.Collections;
-using System.ComponentModel;
-using System.Windows.Forms;
-using System.Data;
-using System.IO;
-using System.Drawing.Drawing2D;
-using System.Globalization;
-using Microsoft.Win32;
-using System.Reflection;
-using System.Diagnostics;
+using SpaceBridge.Data;
 using SpaceBridge.Devices.Model1;
 using SpaceBridge.Events;
-using SpaceBridge.Data;
-using SpaceObjects.Position;
+using SpaceObjects.Data;
 using SpaceObjects.SolarSystem;
+using System;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.IO;
+using System.Reflection;
+using System.Windows.Forms;
 
 namespace Planetarium
 {
-	/// <summary>
-	/// Summary description for Form1.
-	/// </summary>
-	public class f_MainForm : System.Windows.Forms.Form
-	{
+    /// <summary>
+    /// Summary description for Form1.
+    /// </summary>
+    public class f_MainForm : System.Windows.Forms.Form
+    {
         #region Variables
 
         private System.Windows.Forms.Panel panel1;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.Label label10;
-		private System.Windows.Forms.Label label11;
-		private System.Windows.Forms.Label label15;
-		private System.Windows.Forms.Label label16;
-		private System.Windows.Forms.Label label18;
-		private System.Windows.Forms.Label label17;
-		private System.Windows.Forms.Label label6;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Label label19;
-		private System.Windows.Forms.Label label20;
-		private System.Windows.Forms.Button b_suIn;
-		private System.Windows.Forms.Label l_StepUnit;
-		private System.Windows.Forms.Label l_Step;
-		private System.Windows.Forms.Button b_FlowTime;
-		private System.Windows.Forms.Button b_StepF;
-		private System.Windows.Forms.Button b_PlayF;
-		private System.Windows.Forms.Button b_PlayB;
-		private System.Windows.Forms.Button b_StopTime;
-		private System.Windows.Forms.Button b_StepB;
-		private System.Windows.Forms.Label l_Year;
-		private System.Windows.Forms.Label l_Month;
-		private System.Windows.Forms.Label l_Day;
-		private System.Windows.Forms.Button b_dtDe;
-		private System.Windows.Forms.Button b_dtIn;
-		private System.Windows.Forms.Label l_Sec;
-		private System.Windows.Forms.Label l_Min;
-		private System.Windows.Forms.Label l_Hour;
-		private System.Windows.Forms.Button b_Now;
-		private System.Windows.Forms.Button b_PosDe;
-		private System.Windows.Forms.Button b_PosIn;
-		private System.Windows.Forms.Label l_Lon;
-		private System.Windows.Forms.Label l_Lat;
-		private System.Windows.Forms.Button b_Home;
-		private System.Windows.Forms.Label l_ViewAngle;
-		private System.Windows.Forms.Button b_ViewDe;
-		private System.Windows.Forms.Button b_ViewIn;
-		private System.Windows.Forms.Timer timer1;
-		private System.Windows.Forms.Button b_ViewMax;
-		private System.Windows.Forms.Button b_suDe;
-		private System.Windows.Forms.Timer timer3;
-		private System.Windows.Forms.Timer timer2;
-		private System.Windows.Forms.MenuItem m_Select;
-		private System.Windows.Forms.MenuItem m_Deselect;
-		private System.Windows.Forms.MenuItem m_Sun;
-		private System.Windows.Forms.MenuItem m_Moon;
-		private System.Windows.Forms.MenuItem m_Mercury;
-		private System.Windows.Forms.MenuItem m_Venus;
-		private System.Windows.Forms.MenuItem m_Mars;
-		private System.Windows.Forms.MenuItem m_Jupiter;
-		private System.Windows.Forms.MenuItem m_Saturn;
-		private System.Windows.Forms.MenuItem m_Uranus;
-		private System.Windows.Forms.MenuItem m_Neptune;
-		private System.Windows.Forms.MenuItem m_Pluto;
-		private System.Windows.Forms.ToolTip tt_Stop;
-		private System.Windows.Forms.ToolTip tt_StepBack;
-		private System.Windows.Forms.ToolTip tt_StepForward;
-		private System.Windows.Forms.ToolTip tt_PlayBack;
-		private System.Windows.Forms.ToolTip tt_PlayForward;
-		private System.Windows.Forms.ToolTip tt_RealTimeFlow;
-		private System.Windows.Forms.ToolTip tt_ZoomIn;
-		private System.Windows.Forms.ToolTip tt_ZoomOut;
-		private System.Windows.Forms.ToolTip tt_StandardView;
-		private System.Windows.Forms.TextBox t_Decoy;
-		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.Panel panel2;
-		private System.Windows.Forms.Label lm_Data;
-		private System.Windows.Forms.Label lm_Tools;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Label lm_Select;
-		private System.Windows.Forms.PictureBox pB_Space;
-		private System.Windows.Forms.Panel p_Data;
-		private System.Windows.Forms.Label lm_PlanetPositions;
-		private System.Windows.Forms.Label lm_Ephemerides;
-		private System.Windows.Forms.Label lm_ViewData;
-		private System.Windows.Forms.Panel p_Tools;
-		private System.Windows.Forms.Label lm_SolarEvents;
-		private System.Windows.Forms.Label lm_ConjunctionFinder;
-		private System.Windows.Forms.Label lm_SolarSystemView;
-		private System.Windows.Forms.Panel p_Select;
-		private System.Windows.Forms.Button b_Select;
-		private System.Windows.Forms.TreeView tV_Select;
-		private System.Windows.Forms.Label lt_GridLabel;
-		private System.Windows.Forms.Label lt_HorGrid;
-		private System.Windows.Forms.Label lt_EqGrid;
-		private System.Windows.Forms.Label lt_MessierLabel;
-		private System.Windows.Forms.Label lt_Messiers;
-		private System.Windows.Forms.Label lt_StarLabel;
-		private System.Windows.Forms.Label lt_Stars;
-		private System.Windows.Forms.Label lt_PlanetLabel;
-		private System.Windows.Forms.Label lt_Planets;
-		private System.Windows.Forms.Label lt_HorizonLabel;
-		private System.Windows.Forms.Label lt_LineHorizon;
-		private System.Windows.Forms.Label lt_FullHorizon;
-		private System.Windows.Forms.Label lt_Daylight;
-		private System.Windows.Forms.ToolTip tt_ShowDaylight;
-		private System.Windows.Forms.ToolTip tt_FullHor;
-		private System.Windows.Forms.ToolTip tt_LineHor;
-		private System.Windows.Forms.ToolTip tt_Label;
-		private System.Windows.Forms.ToolTip tt_ShowPlanets;
-		private System.Windows.Forms.ToolTip tt_ShowStars;
-		private System.Windows.Forms.ToolTip tt_ShowMessiers;
-		private System.Windows.Forms.ToolTip tt_EQGrid;
-		private System.Windows.Forms.ToolTip tt_HORGrid;
-		private System.Windows.Forms.Label lt_ConstellationLabel;
-		private System.Windows.Forms.Label lt_Constellation;
-		private System.Windows.Forms.ToolTip tt_ShowConstellations;
-		private System.Windows.Forms.Label lt_EarthShadow;
-		private System.Windows.Forms.ToolTip tt_ES;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Button b_suIn;
+        private System.Windows.Forms.Label l_StepUnit;
+        private System.Windows.Forms.Label l_Step;
+        private System.Windows.Forms.Button b_FlowTime;
+        private System.Windows.Forms.Button b_StepF;
+        private System.Windows.Forms.Button b_PlayF;
+        private System.Windows.Forms.Button b_PlayB;
+        private System.Windows.Forms.Button b_StopTime;
+        private System.Windows.Forms.Button b_StepB;
+        private System.Windows.Forms.Label l_Year;
+        private System.Windows.Forms.Label l_Month;
+        private System.Windows.Forms.Label l_Day;
+        private System.Windows.Forms.Button b_dtDe;
+        private System.Windows.Forms.Button b_dtIn;
+        private System.Windows.Forms.Label l_Sec;
+        private System.Windows.Forms.Label l_Min;
+        private System.Windows.Forms.Label l_Hour;
+        private System.Windows.Forms.Button b_Now;
+        private System.Windows.Forms.Button b_PosDe;
+        private System.Windows.Forms.Button b_PosIn;
+        private System.Windows.Forms.Label l_Lon;
+        private System.Windows.Forms.Label l_Lat;
+        private System.Windows.Forms.Button b_Home;
+        private System.Windows.Forms.Label l_ViewAngle;
+        private System.Windows.Forms.Button b_ViewDe;
+        private System.Windows.Forms.Button b_ViewIn;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button b_ViewMax;
+        private System.Windows.Forms.Button b_suDe;
+        private System.Windows.Forms.Timer timer3;
+        private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.MenuItem m_Select;
+        private System.Windows.Forms.MenuItem m_Deselect;
+        private System.Windows.Forms.MenuItem m_Sun;
+        private System.Windows.Forms.MenuItem m_Moon;
+        private System.Windows.Forms.MenuItem m_Mercury;
+        private System.Windows.Forms.MenuItem m_Venus;
+        private System.Windows.Forms.MenuItem m_Mars;
+        private System.Windows.Forms.MenuItem m_Jupiter;
+        private System.Windows.Forms.MenuItem m_Saturn;
+        private System.Windows.Forms.MenuItem m_Uranus;
+        private System.Windows.Forms.MenuItem m_Neptune;
+        private System.Windows.Forms.MenuItem m_Pluto;
+        private System.Windows.Forms.ToolTip tt_Stop;
+        private System.Windows.Forms.ToolTip tt_StepBack;
+        private System.Windows.Forms.ToolTip tt_StepForward;
+        private System.Windows.Forms.ToolTip tt_PlayBack;
+        private System.Windows.Forms.ToolTip tt_PlayForward;
+        private System.Windows.Forms.ToolTip tt_RealTimeFlow;
+        private System.Windows.Forms.ToolTip tt_ZoomIn;
+        private System.Windows.Forms.ToolTip tt_ZoomOut;
+        private System.Windows.Forms.ToolTip tt_StandardView;
+        private System.Windows.Forms.TextBox t_Decoy;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label lm_Data;
+        private System.Windows.Forms.Label lm_Tools;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lm_Select;
+        private System.Windows.Forms.PictureBox pB_Space;
+        private System.Windows.Forms.Panel p_Data;
+        private System.Windows.Forms.Label lm_PlanetPositions;
+        private System.Windows.Forms.Label lm_Ephemerides;
+        private System.Windows.Forms.Label lm_ViewData;
+        private System.Windows.Forms.Panel p_Tools;
+        private System.Windows.Forms.Label lm_SolarEvents;
+        private System.Windows.Forms.Label lm_ConjunctionFinder;
+        private System.Windows.Forms.Label lm_SolarSystemView;
+        private System.Windows.Forms.Panel p_Select;
+        private System.Windows.Forms.Button b_Select;
+        private System.Windows.Forms.TreeView tV_Select;
+        private System.Windows.Forms.Label lt_GridLabel;
+        private System.Windows.Forms.Label lt_HorGrid;
+        private System.Windows.Forms.Label lt_EqGrid;
+        private System.Windows.Forms.Label lt_MessierLabel;
+        private System.Windows.Forms.Label lt_Messiers;
+        private System.Windows.Forms.Label lt_StarLabel;
+        private System.Windows.Forms.Label lt_Stars;
+        private System.Windows.Forms.Label lt_PlanetLabel;
+        private System.Windows.Forms.Label lt_Planets;
+        private System.Windows.Forms.Label lt_HorizonLabel;
+        private System.Windows.Forms.Label lt_LineHorizon;
+        private System.Windows.Forms.Label lt_FullHorizon;
+        private System.Windows.Forms.Label lt_Daylight;
+        private System.Windows.Forms.ToolTip tt_ShowDaylight;
+        private System.Windows.Forms.ToolTip tt_FullHor;
+        private System.Windows.Forms.ToolTip tt_LineHor;
+        private System.Windows.Forms.ToolTip tt_Label;
+        private System.Windows.Forms.ToolTip tt_ShowPlanets;
+        private System.Windows.Forms.ToolTip tt_ShowStars;
+        private System.Windows.Forms.ToolTip tt_ShowMessiers;
+        private System.Windows.Forms.ToolTip tt_EQGrid;
+        private System.Windows.Forms.ToolTip tt_HORGrid;
+        private System.Windows.Forms.Label lt_ConstellationLabel;
+        private System.Windows.Forms.Label lt_Constellation;
+        private System.Windows.Forms.ToolTip tt_ShowConstellations;
+        private System.Windows.Forms.Label lt_EarthShadow;
+        private System.Windows.Forms.ToolTip tt_ES;
         private Label lblDevice;
         private System.ComponentModel.IContainer components;
 
@@ -169,45 +163,60 @@ namespace Planetarium
         /// Constructor
         /// </summary>
         public f_MainForm()
-		{
-			//
-			// Required for Windows Form Designer support
-			//
-			InitializeComponent();
+        {
+            //
+            // Required for Windows Form Designer support
+            //
+            InitializeComponent();
 
-			Assembly asembly = Assembly.GetExecutingAssembly();
-			Stream curStream = asembly.GetManifestResourceStream("Planetarium.Resources.Cursors.open_hand.cur");
-			openH = new Cursor(curStream);
-			curStream = asembly.GetManifestResourceStream("Planetarium.Resources.Cursors.closed_hand.cur");
-			closedH = new Cursor(curStream);
-			
-			pB_Space.Cursor = openH;
-		}
+            Assembly asembly = Assembly.GetExecutingAssembly();
+            Stream curStream = asembly.GetManifestResourceStream("Planetarium.Resources.Cursors.open_hand.cur");
+            openH = new Cursor(curStream);
+            curStream = asembly.GetManifestResourceStream("Planetarium.Resources.Cursors.closed_hand.cur");
+            closedH = new Cursor(curStream);
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose( bool disposing )
-		{
-			if( disposing )
-			{
-				if (components != null) 
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose( disposing );
+            pB_Space.Cursor = openH;
+
+            for (int i = 0, a = 90; i < 19; ++i, a -= 10)
+            {
+                for (int j = 0, A = 0; j < 25; ++j, A += 15)
+                {
+                    skyView.grid[i, j] = new SkyPosition();
+                    skyView.EQgrid[i, j] = new SkyPosition();
+                }
+            }
+            for (int index = 0; index < skyView.direction.Length; index++)
+            {
+                skyView.direction[index] = new SkyPosition();
+            }
+            skyView.center = new SkyPosition();
+
+        }
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+            }
+            base.Dispose(disposing);
 
             this.DisconnectFromSpaceBoard();
         }
 
-		#region Windows Form Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        #region Windows Form Designer generated code
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(f_MainForm));
             System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Mercury");
@@ -1562,75 +1571,84 @@ namespace Planetarium
             this.p_Select.ResumeLayout(false);
             this.ResumeLayout(false);
 
-		}
-		#endregion
+        }
+        #endregion
 
-		/// <summary>
-		/// The main entry point for the application.
-		/// </summary>
-		[STAThread]
-		static void Main() 
-		{
-			Application.Run(new f_MainForm());
-		}
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
+        {
+            Application.Run(new f_MainForm());
+        }
 
-		private void f_MainForm_Load(object sender, System.EventArgs e)
-		{
-			location.TimeNow();
-			UpdateLabel();
+        private void f_MainForm_Load(object sender, System.EventArgs e)
+        {
+            location.TimeNow();
+            UpdateLabel();
 
-			skyView.origin.X = pB_Space.Width/2;
-			skyView.origin.Y = pB_Space.Height/2;
+            skyView.origin.X = pB_Space.Width / 2;
+            skyView.origin.Y = pB_Space.Height / 2;
 
-			for (int i=0, a=90; i<19; ++i,a-=10){
-				for (int j=0, A=0; j<25; ++j,A+=15){
-					skyView.grid[i,j].a = a;
-					skyView.grid[i,j].A = A;
+            for (int i = 0, a = 90; i < 19; ++i, a -= 10)
+            {
+                for (int j = 0, A = 0; j < 25; ++j, A += 15)
+                {
+                    skyView.grid[i, j] = new SkyPosition();
+                    skyView.EQgrid[i, j] = new SkyPosition();
 
-					skyView.EQgrid[i,j].Decl = a;
-					skyView.EQgrid[i,j].RA = A;
-				}
-			}
+                    skyView.grid[i, j].a = a;
+                    skyView.grid[i, j].A = A;
 
-			for (int i=0; i<8; ++i){
-				skyView.direction[i].a = 0;
-				skyView.direction[i].A = i*45;
-			}
-			skyView.direction[8].a = 90;
-			skyView.direction[8].A = 0;
-			skyView.direction[9].a = -90;
-			skyView.direction[9].A = 0;
+                    skyView.EQgrid[i, j].Decl = a;
+                    skyView.EQgrid[i, j].RA = A;
+                }
+            }
 
-			skyView.center.a = 0;
-			skyView.center.A = 180;
 
-			skyView.Calculations (true);
 
-			if (skyView.bDay == true)         lt_Daylight.BackColor = Color.Red;
-			if (skyView.bFull == true)        lt_FullHorizon.BackColor = Color.Red;
-			if (skyView.bLine == true)        lt_LineHorizon.BackColor = Color.Red;
-			if (skyView.bComp == true)        lt_HorizonLabel.BackColor = Color.Red;
+            for (int i = 0; i < 8; ++i)
+            {
+                skyView.direction[i].a = 0;
+                skyView.direction[i].A = i * 45;
+            }
 
-			if (skyView.bShowPl == true)      lt_Planets.BackColor = Color.Red;
-			if (skyView.bPlLabel == true)     lt_PlanetLabel.BackColor = Color.Red;
+            skyView.direction[8].a = 90;
+            skyView.direction[8].A = 0;
+            skyView.direction[9].a = -90;
+            skyView.direction[9].A = 0;
 
-			if (skyView.bShowSt == true)      lt_Stars.BackColor = Color.Red;
-			if (skyView.bStLabel == true)     lt_StarLabel.BackColor = Color.Red;
+            skyView.center.a = 0;
+            skyView.center.A = 180;
 
-			if (skyView.bShowCo == true)      lt_Constellation.BackColor = Color.Red;
-			if (skyView.bCoLabel == true)     lt_ConstellationLabel.BackColor = Color.Red;
+            skyView.Calculations(true);
 
-			if (skyView.bShowM == true)       lt_Messiers.BackColor = Color.Red;
-			if (skyView.bMLabel == true)      lt_MessierLabel.BackColor = Color.Red;
-			
-			if (skyView.bShowHOR == true)     lt_HorGrid.BackColor = Color.Red;
-			if (skyView.bShowEQ == true)      lt_EqGrid.BackColor = Color.Red;
-			if (skyView.bGridLabel == true)   lt_GridLabel.BackColor = Color.Red;
+            if (skyView.bDay == true) lt_Daylight.BackColor = Color.Red;
+            if (skyView.bFull == true) lt_FullHorizon.BackColor = Color.Red;
+            if (skyView.bLine == true) lt_LineHorizon.BackColor = Color.Red;
+            if (skyView.bComp == true) lt_HorizonLabel.BackColor = Color.Red;
 
-			tV_Select.ExpandAll();
+            if (skyView.bShowPl == true) lt_Planets.BackColor = Color.Red;
+            if (skyView.bPlLabel == true) lt_PlanetLabel.BackColor = Color.Red;
+
+            if (skyView.bShowSt == true) lt_Stars.BackColor = Color.Red;
+            if (skyView.bStLabel == true) lt_StarLabel.BackColor = Color.Red;
+
+            if (skyView.bShowCo == true) lt_Constellation.BackColor = Color.Red;
+            if (skyView.bCoLabel == true) lt_ConstellationLabel.BackColor = Color.Red;
+
+            if (skyView.bShowM == true) lt_Messiers.BackColor = Color.Red;
+            if (skyView.bMLabel == true) lt_MessierLabel.BackColor = Color.Red;
+
+            if (skyView.bShowHOR == true) lt_HorGrid.BackColor = Color.Red;
+            if (skyView.bShowEQ == true) lt_EqGrid.BackColor = Color.Red;
+            if (skyView.bGridLabel == true) lt_GridLabel.BackColor = Color.Red;
+
+            tV_Select.ExpandAll();
 
             this.ConnectToSpaceBoard();
-		}
+        }
 
         #region Space Board
 
@@ -1649,7 +1667,7 @@ namespace Planetarium
 
                 Console.WriteLine("Waiting for device...");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
             }
@@ -1719,9 +1737,9 @@ namespace Planetarium
             // If you cannot find your Declination, comment out these two lines, your compass will be slightly off.
             double declinationAngle = 0.22f;
             heading += declinationAngle;
-  
+
             // Correct for when signs are reversed.
-            if(heading< 0)
+            if (heading < 0)
             {
                 heading += (2 * Math.PI);
             }
@@ -1736,1381 +1754,1435 @@ namespace Planetarium
             double headingDegrees = (heading * (180 / Math.PI));
 
             return headingDegrees;
-    }
+        }
 
         #endregion
 
         private void m_SolarSystemView_Click(object sender, System.EventArgs e)
-		{
-			timer2.Stop(); timer3.Stop();
-			timerRun = false;
-			T = "";
-			NormalizeButton();
-			skyView.f_pp.Close();
-			f_SolarSystem f_ssv = new f_SolarSystem();
-			f_ssv.ShowDialog();
-		}
+        {
+            timer2.Stop(); timer3.Stop();
+            timerRun = false;
+            T = "";
+            NormalizeButton();
+            skyView.f_pp.Close();
+            f_SolarSystem f_ssv = new f_SolarSystem();
+            f_ssv.ShowDialog();
+        }
 
-		private void m_ConjunctionFinder_Click(object sender, System.EventArgs e)
-		{
-			timer2.Stop(); timer3.Stop();
-			timerRun = false;
-			T = "";
-			skyView.f_pp.Close();
-			NormalizeButton();
-			f_SolarSystem f_cf = new f_SolarSystem("cf");
-			f_cf.ShowDialog();
-		}
+        private void m_ConjunctionFinder_Click(object sender, System.EventArgs e)
+        {
+            timer2.Stop(); timer3.Stop();
+            timerRun = false;
+            T = "";
+            skyView.f_pp.Close();
+            NormalizeButton();
+            f_SolarSystem f_cf = new f_SolarSystem("cf");
+            f_cf.ShowDialog();
+        }
 
-		private void m_SolarEvents_Click(object sender, System.EventArgs e)
-		{
-			skyView.f_pp.Close();
-			f_SolarEvents f_sv = new f_SolarEvents();
-			f_sv.ShowDialog();
-		}
+        private void m_SolarEvents_Click(object sender, System.EventArgs e)
+        {
+            skyView.f_pp.Close();
+            f_SolarEvents f_sv = new f_SolarEvents();
+            f_sv.ShowDialog();
+        }
 
-		private void m_Exit_Click(object sender, System.EventArgs e)
-		{
-			Close();
-		}
+        private void m_Exit_Click(object sender, System.EventArgs e)
+        {
+            Close();
+        }
 
-		private void UpdateLabel()
-		{
-			l_ViewAngle.Text = (2*skyView.viewAngle).ToString();
-			l_Lat.Text = location.v_Lat.ToString();
-			l_Lon.Text = location.v_Lon.ToString();
+        private void UpdateLabel()
+        {
+            l_ViewAngle.Text = (2 * skyView.viewAngle).ToString();
+            l_Lat.Text = location.Latitude.ToString();
+            l_Lon.Text = location.Longitude.ToString();
 
-			l_Hour.Text = location.v_mainDT.Hour.ToString();
-			l_Min.Text = location.v_mainDT.Minute.ToString();
-			l_Sec.Text = location.v_mainDT.Second.ToString();
-			l_Day.Text = location.v_mainDT.Day.ToString();
-			l_Month.Text = location.v_mainDT.Month.ToString();
-			l_Year.Text = location.v_mainDT.Year.ToString();
+            l_Hour.Text = location.MainDateTime.Hour.ToString();
+            l_Min.Text = location.MainDateTime.Minute.ToString();
+            l_Sec.Text = location.MainDateTime.Second.ToString();
+            l_Day.Text = location.MainDateTime.Day.ToString();
+            l_Month.Text = location.MainDateTime.Month.ToString();
+            l_Year.Text = location.MainDateTime.Year.ToString();
 
-			l_Step.Text = location.v_step.ToString();
-			l_StepUnit.Text = location.v_unit;
-		}
+            l_Step.Text = location.Step.ToString();
+            l_StepUnit.Text = location.v_unit;
+        }
 
-		private void NormalizeLabel()
-		{
-			switch (selected){
-				case "l_Lat":{
-					b_PosIn.Visible = false;
-					b_PosDe.Visible = false;
-					b_dtIn.Visible = false;
-					b_dtDe.Visible = false;
-					l_Lat.BackColor = Color.FromArgb(175,175,100);
-					l_Lat.ForeColor = Color.Black;
-					break;
-				}
-				case "l_Lon":{
-					b_PosIn.Visible = false;
-					b_PosDe.Visible = false;
-					b_dtIn.Visible = false;
-					b_dtDe.Visible = false;
-					l_Lon.BackColor = Color.FromArgb(175,175,100);
-					l_Lon.ForeColor = Color.Black;
-					break;
-				}
-				case "l_Hour":{
-					b_PosIn.Visible = false;
-					b_PosDe.Visible = false;
-					b_dtIn.Visible = false;
-					b_dtDe.Visible = false;
-					l_Hour.BackColor = Color.FromArgb(175,175,100);
-					l_Hour.ForeColor = Color.Black;
-					break;
-				}
-				case "l_Min":{
-					b_PosIn.Visible = false;
-					b_PosDe.Visible = false;
-					b_dtIn.Visible = false;
-					b_dtDe.Visible = false;
-					l_Min.BackColor = Color.FromArgb(175,175,100);
-					l_Min.ForeColor = Color.Black;
-					break;
-				}
-				case "l_Sec":{
-					b_PosIn.Visible = false;
-					b_PosDe.Visible = false;
-					b_dtIn.Visible = false;
-					b_dtDe.Visible = false;
-					l_Sec.BackColor = Color.FromArgb(175,175,100);
-					l_Sec.ForeColor = Color.Black;
-					break;
-				}
-				case "l_Day":{
-					b_PosIn.Visible = false;
-					b_PosDe.Visible = false;
-					b_dtIn.Visible = false;
-					b_dtDe.Visible = false;
-					l_Day.BackColor = Color.FromArgb(175,175,100);
-					l_Day.ForeColor = Color.Black;
-					break;
-				}
-				case "l_Month":{
-					b_PosIn.Visible = false;
-					b_PosDe.Visible = false;
-					b_dtIn.Visible = false;
-					b_dtDe.Visible = false;
-					l_Month.BackColor = Color.FromArgb(175,175,100);
-					l_Month.ForeColor = Color.Black;
-					break;
-				}
-				case "l_Year":{
-					b_PosIn.Visible = false;
-					b_PosDe.Visible = false;
-					b_dtIn.Visible = false;
-					b_dtDe.Visible = false;
-					l_Year.BackColor = Color.FromArgb(175,175,100);
-					l_Year.ForeColor = Color.Black;
-					break;
-				}
-				case "l_Step":{
-					b_suIn.Visible = false;
-					b_suDe.Visible = false;
-					b_dtIn.Visible = false;
-					b_dtDe.Visible = false;
-					l_Step.BackColor = Color.FromArgb(175,175,100);
-					l_Step.ForeColor = Color.Black;
-					break;
-				}
-				case "l_StepUnit":{
-					b_suIn.Visible = false;
-					b_suDe.Visible = false;
-					b_dtIn.Visible = false;
-					b_dtDe.Visible = false;
-					l_StepUnit.BackColor = Color.FromArgb(175,175,100);
-					l_StepUnit.ForeColor = Color.Black;
-					break;
-				}
-			}
-			selected = "";
-		}
+        private void NormalizeLabel()
+        {
+            switch (selected)
+            {
+                case "l_Lat":
+                    {
+                        b_PosIn.Visible = false;
+                        b_PosDe.Visible = false;
+                        b_dtIn.Visible = false;
+                        b_dtDe.Visible = false;
+                        l_Lat.BackColor = Color.FromArgb(175, 175, 100);
+                        l_Lat.ForeColor = Color.Black;
+                        break;
+                    }
+                case "l_Lon":
+                    {
+                        b_PosIn.Visible = false;
+                        b_PosDe.Visible = false;
+                        b_dtIn.Visible = false;
+                        b_dtDe.Visible = false;
+                        l_Lon.BackColor = Color.FromArgb(175, 175, 100);
+                        l_Lon.ForeColor = Color.Black;
+                        break;
+                    }
+                case "l_Hour":
+                    {
+                        b_PosIn.Visible = false;
+                        b_PosDe.Visible = false;
+                        b_dtIn.Visible = false;
+                        b_dtDe.Visible = false;
+                        l_Hour.BackColor = Color.FromArgb(175, 175, 100);
+                        l_Hour.ForeColor = Color.Black;
+                        break;
+                    }
+                case "l_Min":
+                    {
+                        b_PosIn.Visible = false;
+                        b_PosDe.Visible = false;
+                        b_dtIn.Visible = false;
+                        b_dtDe.Visible = false;
+                        l_Min.BackColor = Color.FromArgb(175, 175, 100);
+                        l_Min.ForeColor = Color.Black;
+                        break;
+                    }
+                case "l_Sec":
+                    {
+                        b_PosIn.Visible = false;
+                        b_PosDe.Visible = false;
+                        b_dtIn.Visible = false;
+                        b_dtDe.Visible = false;
+                        l_Sec.BackColor = Color.FromArgb(175, 175, 100);
+                        l_Sec.ForeColor = Color.Black;
+                        break;
+                    }
+                case "l_Day":
+                    {
+                        b_PosIn.Visible = false;
+                        b_PosDe.Visible = false;
+                        b_dtIn.Visible = false;
+                        b_dtDe.Visible = false;
+                        l_Day.BackColor = Color.FromArgb(175, 175, 100);
+                        l_Day.ForeColor = Color.Black;
+                        break;
+                    }
+                case "l_Month":
+                    {
+                        b_PosIn.Visible = false;
+                        b_PosDe.Visible = false;
+                        b_dtIn.Visible = false;
+                        b_dtDe.Visible = false;
+                        l_Month.BackColor = Color.FromArgb(175, 175, 100);
+                        l_Month.ForeColor = Color.Black;
+                        break;
+                    }
+                case "l_Year":
+                    {
+                        b_PosIn.Visible = false;
+                        b_PosDe.Visible = false;
+                        b_dtIn.Visible = false;
+                        b_dtDe.Visible = false;
+                        l_Year.BackColor = Color.FromArgb(175, 175, 100);
+                        l_Year.ForeColor = Color.Black;
+                        break;
+                    }
+                case "l_Step":
+                    {
+                        b_suIn.Visible = false;
+                        b_suDe.Visible = false;
+                        b_dtIn.Visible = false;
+                        b_dtDe.Visible = false;
+                        l_Step.BackColor = Color.FromArgb(175, 175, 100);
+                        l_Step.ForeColor = Color.Black;
+                        break;
+                    }
+                case "l_StepUnit":
+                    {
+                        b_suIn.Visible = false;
+                        b_suDe.Visible = false;
+                        b_dtIn.Visible = false;
+                        b_dtDe.Visible = false;
+                        l_StepUnit.BackColor = Color.FromArgb(175, 175, 100);
+                        l_StepUnit.ForeColor = Color.Black;
+                        break;
+                    }
+            }
+            selected = "";
+        }
 
-		private void ChangeTime(double n)
-		{
-			switch (selected){
-				case "l_Sec":{
-					location.v_mainDT = location.v_mainDT.AddSeconds(n);
-					UpdateLabel();	break;
-				}
-				case "l_Min":{
-					location.v_mainDT = location.v_mainDT.AddMinutes(n);
-					UpdateLabel();	break;
-				}
-				case "l_Hour":{
-					location.v_mainDT = location.v_mainDT.AddHours(n);
-					UpdateLabel();	break;
-				}
-				case "l_Day":{
-					location.v_mainDT = location.v_mainDT.AddDays(n);
-					UpdateLabel();	break;
-				}
-				case "l_Month":{
-					location.v_mainDT = location.v_mainDT.AddMonths((int)n);
-					UpdateLabel();	break;
-				}
-				case "l_Year":{
-					location.v_mainDT = location.v_mainDT.AddYears((int)n);
-					UpdateLabel();	break;
-				}
-			}
-			if (location.v_mainDT < location.dtMin){
-				location.v_mainDT = location.dtMin;
-				UpdateLabel();
-			}
-			if (location.v_mainDT > location.dtMax){
-				location.v_mainDT = location.dtMax;
-				UpdateLabel();
-			}
-			changePos = true;
-			pB_Space.Invalidate();
-		}
+        private void ChangeTime(double n)
+        {
+            switch (selected)
+            {
+                case "l_Sec":
+                    {
+                        location.MainDateTime = location.MainDateTime.AddSeconds(n);
+                        UpdateLabel(); break;
+                    }
+                case "l_Min":
+                    {
+                        location.MainDateTime = location.MainDateTime.AddMinutes(n);
+                        UpdateLabel(); break;
+                    }
+                case "l_Hour":
+                    {
+                        location.MainDateTime = location.MainDateTime.AddHours(n);
+                        UpdateLabel(); break;
+                    }
+                case "l_Day":
+                    {
+                        location.MainDateTime = location.MainDateTime.AddDays(n);
+                        UpdateLabel(); break;
+                    }
+                case "l_Month":
+                    {
+                        location.MainDateTime = location.MainDateTime.AddMonths((int)n);
+                        UpdateLabel(); break;
+                    }
+                case "l_Year":
+                    {
+                        location.MainDateTime = location.MainDateTime.AddYears((int)n);
+                        UpdateLabel(); break;
+                    }
+            }
+            if (location.MainDateTime < location.dtMin)
+            {
+                location.MainDateTime = location.dtMin;
+                UpdateLabel();
+            }
+            if (location.MainDateTime > location.dtMax)
+            {
+                location.MainDateTime = location.dtMax;
+                UpdateLabel();
+            }
+            changePos = true;
+            pB_Space.Invalidate();
+        }
 
-		private void l_Lat_Click(object sender, System.Windows.Forms.MouseEventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			NormalizeLabel();
-			selected = "l_Lat";
-			b_PosIn.Visible = true;
-			b_PosDe.Visible = true;
-			l_Lat.BackColor = Color.Brown;
-			l_Lat.ForeColor = Color.White;
-		}
+        private void l_Lat_Click(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            NormalizeLabel();
+            selected = "l_Lat";
+            b_PosIn.Visible = true;
+            b_PosDe.Visible = true;
+            l_Lat.BackColor = Color.Brown;
+            l_Lat.ForeColor = Color.White;
+        }
 
-		private void l_Lon_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			NormalizeLabel();
-			selected = "l_Lon";
-			b_PosIn.Visible = true;
-			b_PosDe.Visible = true;
-			l_Lon.BackColor = Color.Brown;
-			l_Lon.ForeColor = Color.White;
-		}
+        private void l_Lon_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            NormalizeLabel();
+            selected = "l_Lon";
+            b_PosIn.Visible = true;
+            b_PosDe.Visible = true;
+            l_Lon.BackColor = Color.Brown;
+            l_Lon.ForeColor = Color.White;
+        }
 
-		private void b_PosIn_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			changePos = true;
-			if (selected == "l_Lat" && location.v_Lat < 90){
-				++location.v_Lat;
-				UpdateLabel();
-				pB_Space.Invalidate();
-			}
-			if (selected == "l_Lon" && location.v_Lon < 180){
-				++location.v_Lon;
-				UpdateLabel();
-				pB_Space.Invalidate();
-			}
-		}
+        private void b_PosIn_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            changePos = true;
+            if (selected == "l_Lat" && location.Latitude < 90)
+            {
+                ++location.Latitude;
+                UpdateLabel();
+                pB_Space.Invalidate();
+            }
+            if (selected == "l_Lon" && location.Longitude < 180)
+            {
+                ++location.Longitude;
+                UpdateLabel();
+                pB_Space.Invalidate();
+            }
+        }
 
-		private void b_PosDe_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			changePos = true;
-			if (selected == "l_Lat" && location.v_Lat > -90){
-				--location.v_Lat;
-				UpdateLabel();
-				pB_Space.Invalidate();
-			}
-			if (selected == "l_Lon" && location.v_Lon > -179){
-				--location.v_Lon;
-				UpdateLabel();
-				pB_Space.Invalidate();
-			}
-		}
+        private void b_PosDe_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            changePos = true;
+            if (selected == "l_Lat" && location.Latitude > -90)
+            {
+                --location.Latitude;
+                UpdateLabel();
+                pB_Space.Invalidate();
+            }
+            if (selected == "l_Lon" && location.Longitude > -179)
+            {
+                --location.Longitude;
+                UpdateLabel();
+                pB_Space.Invalidate();
+            }
+        }
 
-		private void l_Hour_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			NormalizeLabel();
-			selected = "l_Hour";
-			b_dtIn.Visible = true;
-			b_dtDe.Visible = true;
-			l_Hour.BackColor = Color.Brown;
-			l_Hour.ForeColor = Color.White;
-		}
+        private void l_Hour_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            NormalizeLabel();
+            selected = "l_Hour";
+            b_dtIn.Visible = true;
+            b_dtDe.Visible = true;
+            l_Hour.BackColor = Color.Brown;
+            l_Hour.ForeColor = Color.White;
+        }
 
-		private void l_Min_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			NormalizeLabel();
-			selected = "l_Min";
-			b_dtIn.Visible = true;
-			b_dtDe.Visible = true;
-			l_Min.BackColor = Color.Brown;
-			l_Min.ForeColor = Color.White;
-		}
+        private void l_Min_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            NormalizeLabel();
+            selected = "l_Min";
+            b_dtIn.Visible = true;
+            b_dtDe.Visible = true;
+            l_Min.BackColor = Color.Brown;
+            l_Min.ForeColor = Color.White;
+        }
 
-		private void l_Sec_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			NormalizeLabel();
-			selected = "l_Sec";
-			b_dtIn.Visible = true;
-			b_dtDe.Visible = true;
-			l_Sec.BackColor = Color.Brown;
-			l_Sec.ForeColor = Color.White;
-		}
+        private void l_Sec_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            NormalizeLabel();
+            selected = "l_Sec";
+            b_dtIn.Visible = true;
+            b_dtDe.Visible = true;
+            l_Sec.BackColor = Color.Brown;
+            l_Sec.ForeColor = Color.White;
+        }
 
-		private void l_Day_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			NormalizeLabel();
-			selected = "l_Day";
-			b_dtIn.Visible = true;
-			b_dtDe.Visible = true;
-			l_Day.BackColor = Color.Brown;
-			l_Day.ForeColor = Color.White;
-		}
+        private void l_Day_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            NormalizeLabel();
+            selected = "l_Day";
+            b_dtIn.Visible = true;
+            b_dtDe.Visible = true;
+            l_Day.BackColor = Color.Brown;
+            l_Day.ForeColor = Color.White;
+        }
 
-		private void l_Month_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			NormalizeLabel();
-			selected = "l_Month";
-			b_dtIn.Visible = true;
-			b_dtDe.Visible = true;
-			l_Month.BackColor = Color.Brown;
-			l_Month.ForeColor = Color.White;
-		}
+        private void l_Month_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            NormalizeLabel();
+            selected = "l_Month";
+            b_dtIn.Visible = true;
+            b_dtDe.Visible = true;
+            l_Month.BackColor = Color.Brown;
+            l_Month.ForeColor = Color.White;
+        }
 
-		private void l_Year_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			NormalizeLabel();
-			selected = "l_Year";
-			b_dtIn.Visible = true;
-			b_dtDe.Visible = true;
-			l_Year.BackColor = Color.Brown;
-			l_Year.ForeColor = Color.White;
-		}
+        private void l_Year_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            NormalizeLabel();
+            selected = "l_Year";
+            b_dtIn.Visible = true;
+            b_dtDe.Visible = true;
+            l_Year.BackColor = Color.Brown;
+            l_Year.ForeColor = Color.White;
+        }
 
-		private void b_dtIn_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			changePos = true;
-			ChangeTime (1);
-		}
+        private void b_dtIn_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            changePos = true;
+            ChangeTime(1);
+        }
 
-		private void b_dtDe_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			changePos = true;
-			ChangeTime (-1);
-		}
+        private void b_dtDe_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            changePos = true;
+            ChangeTime(-1);
+        }
 
-		private void b_Now_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			location.TimeNow();
-			UpdateLabel();
-			NormalizeLabel();
-			changePos = true;
-			pB_Space.Invalidate();
-		}
+        private void b_Now_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            location.TimeNow();
+            UpdateLabel();
+            NormalizeLabel();
+            changePos = true;
+            pB_Space.Invalidate();
+        }
 
-		private void b_Home_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			changePos = true;
-			location.v_Lat = location.v_HomeLat;
-			location.v_Lon = location.v_HomeLon;
-			UpdateLabel();
-			NormalizeLabel();
-			pB_Space.Invalidate();
-		}
+        private void b_Home_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            changePos = true;
+            location.Latitude = location.HomeLatitude;
+            location.Longitude = location.HomeLongitude;
+            UpdateLabel();
+            NormalizeLabel();
+            pB_Space.Invalidate();
+        }
 
-		private void f_MainForm_Activated(object sender, System.EventArgs e)
-		{
-			UpdateLabel();
-			changePos = true;
-			pB_Space.Invalidate();
-		}
+        private void f_MainForm_Activated(object sender, System.EventArgs e)
+        {
+            UpdateLabel();
+            changePos = true;
+            pB_Space.Invalidate();
+        }
 
-		private void pB_Space_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
-		{	
-			e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+        private void pB_Space_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
+        {
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-			skyView.Calculations (changePos);
-			
-			double sun = skyView.SunAlt;
-			if (skyView.bDay){
-				if (sun>=-15 && sun<0) 
-					pB_Space.BackColor = Color.FromArgb((int)(155+10*sun),(int)(205+13*sun),(int)(254+15*sun));
-				if (sun >= 0) pB_Space.BackColor = Color.FromArgb(155,205,254);
-				if (sun < -15) pB_Space.BackColor = Color.Black;
-			}
-			else pB_Space.BackColor = Color.Black;
-			Color c = pB_Space.BackColor;
-			if (pB_Space.BackColor == Color.Black) 
-				skyView.moonColor = Color.FromArgb(230,10,10,10);
-			else skyView.moonColor = Color.FromArgb(240,c.R,c.G,c.B);
+            skyView.Calculations(changePos);
 
-			skyView.DrawGrid (e.Graphics);
-			if (skyView.bShowCo && (!skyView.bDay || sun<=0))
-				skyView.DrawConstellations (e.Graphics);
-			if (skyView.bShowSt && (!skyView.bDay || sun<=0))
-				skyView.DrawStars (e.Graphics);
-			if (skyView.bShowM)     skyView.DrawMessier (e.Graphics);
-			if (skyView.bShowPl)	skyView.DrawSol (e.Graphics);
-			if (skyView.bFull || skyView.bLine)   skyView.DrawHorizon (e.Graphics);
-			if (skyView.bComp)		skyView.DrawDirection (e.Graphics, zenith);
-			skyView.textPtArr.Clear();
-			changePos = false;
-		}
+            double sun = skyView.SunAlt;
+            if (skyView.bDay)
+            {
+                if (sun >= -15 && sun < 0)
+                    pB_Space.BackColor = Color.FromArgb((int)(155 + 10 * sun), (int)(205 + 13 * sun), (int)(254 + 15 * sun));
+                if (sun >= 0) pB_Space.BackColor = Color.FromArgb(155, 205, 254);
+                if (sun < -15) pB_Space.BackColor = Color.Black;
+            }
+            else pB_Space.BackColor = Color.Black;
+            Color c = pB_Space.BackColor;
+            if (pB_Space.BackColor == Color.Black)
+                skyView.moonColor = Color.FromArgb(230, 10, 10, 10);
+            else skyView.moonColor = Color.FromArgb(240, c.R, c.G, c.B);
 
-		private void f_MainForm_Resize(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			skyView.origin.X = pB_Space.Width/2;
-			skyView.origin.Y = pB_Space.Height/2;
-			pB_Space.Invalidate();
-		}
+            skyView.DrawGrid(e.Graphics);
+            if (skyView.bShowCo && (!skyView.bDay || sun <= 0))
+                skyView.DrawConstellations(e.Graphics);
+            if (skyView.bShowSt && (!skyView.bDay || sun <= 0))
+                skyView.DrawStars(e.Graphics);
+            if (skyView.bShowM) skyView.DrawMessier(e.Graphics);
+            if (skyView.bShowPl) skyView.DrawSol(e.Graphics);
+            if (skyView.bFull || skyView.bLine) skyView.DrawHorizon(e.Graphics);
+            if (skyView.bComp) skyView.DrawDirection(e.Graphics, zenith);
+            skyView.textPtArr.Clear();
+            changePos = false;
+        }
 
-		private void m_ViewLocation_Click(object sender, System.EventArgs e)
-		{
-			timer2.Stop(); timer3.Stop();
-			timerRun = false;
-			T = "";
-			NormalizeButton();
-			skyView.f_pp.Close();
-			changePos = true;
-			f_ViewLocation f_vl = new f_ViewLocation();
-			f_vl.ShowDialog();
-		}
+        private void f_MainForm_Resize(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            skyView.origin.X = pB_Space.Width / 2;
+            skyView.origin.Y = pB_Space.Height / 2;
+            pB_Space.Invalidate();
+        }
 
-		private void pB_Space_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
-		{
-			if (e.Button==MouseButtons.Left){
-				p_Data.Visible = false;
-				p_Tools.Visible = false;
-				p_Select.Visible = false;
-				NormalizeLabel();
-				skyView.selected = false;
-				skyView.Calculations (true);
-				timer2.Stop(); timer3.Stop();
-				NormalizeLabel();
-				pB_Space.Cursor = closedH;
-				mDown = true;	zenith = true;
-				pOld.X=e.X;	pOld.Y=e.Y;
-			}
-		}
+        private void m_ViewLocation_Click(object sender, System.EventArgs e)
+        {
+            timer2.Stop(); timer3.Stop();
+            timerRun = false;
+            T = "";
+            NormalizeButton();
+            skyView.f_pp.Close();
+            changePos = true;
+            f_ViewLocation f_vl = new f_ViewLocation();
+            f_vl.ShowDialog();
+        }
 
-		private void pB_Space_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
-		{
-			if (mDown){
-				skyView.selected = false;
-				skyView.selPl = "";
-				pNew.X = e.X;
-				pNew.Y = e.Y;
-				double dx = pNew.X-pOld.X;
-				double dy = pNew.Y-pOld.Y;
-				double f = pB_Space.Width/(2*skyView.viewAngle);
-                
-				skyView.center.A = (skyView.center.A - dx/f + 360)%360;
-				skyView.center.a += dy/f;
-				if (skyView.center.a > 90)  skyView.center.a=90;
-				if (skyView.center.a < -90) skyView.center.a=-90;
+        private void pB_Space_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                p_Data.Visible = false;
+                p_Tools.Visible = false;
+                p_Select.Visible = false;
+                NormalizeLabel();
+                skyView.selected = false;
+                skyView.Calculations(true);
+                timer2.Stop(); timer3.Stop();
+                NormalizeLabel();
+                pB_Space.Cursor = closedH;
+                mDown = true; zenith = true;
+                pOld.X = e.X; pOld.Y = e.Y;
+            }
+        }
+
+        private void pB_Space_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (mDown)
+            {
+                skyView.selected = false;
+                skyView.selPl = "";
+                pNew.X = e.X;
+                pNew.Y = e.Y;
+                double dx = pNew.X - pOld.X;
+                double dy = pNew.Y - pOld.Y;
+                double f = pB_Space.Width / (2 * skyView.viewAngle);
+
+                skyView.center.A = (skyView.center.A - dx / f + 360) % 360;
+                skyView.center.a += dy / f;
+                if (skyView.center.a > 90) skyView.center.a = 90;
+                if (skyView.center.a < -90) skyView.center.a = -90;
 
                 //Console.WriteLine("a: {0}, A: {1}", skyView.center.a, skyView.center.A);
                 pOld.X = pNew.X;
-				pOld.Y = pNew.Y;
-				pB_Space.Invalidate();
-			}
-		}
-
-		private void pB_Space_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
-		{
-			pB_Space.Cursor = openH;
-			mDown = false;	zenith = false;
-			pB_Space.Invalidate();
-			if (T == "timer2")	timer2.Start();
-			if (T == "timer3")	timer3.Start();
-		}
-
-		private void ChangeVA()
-		{
-			timer1 = new Timer();
-			timer1.Interval = 20;
-			timer1.Tick += new EventHandler(timer1_Tick);
-			timer1.Enabled = true;
-			timer1.Start();
-		}
-
-		private void timer1_Tick(object sender, System.EventArgs e)
-		{
-			double step=1;
-			if (skyView.viewAngle < 1)	step=0.125;
-			if (XX == 'D'){
-				if (skyView.viewAngle <= 2)	step=0.25;
-				if (skyView.viewAngle > 0.25){
-					skyView.viewAngle -= step;
-					UpdateLabel();
-					pB_Space.Invalidate();
-				}
-			}
-			if (XX == 'I'){
-				if (skyView.viewAngle < 2)	step=0.25;
-				if (skyView.viewAngle < 50){
-					skyView.viewAngle += step;
-					UpdateLabel();
-					pB_Space.Invalidate();
-				}
-			}
-		}
-
-		private void b_ViewDe_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			if (e.Button == MouseButtons.Left){
-				skyView.Calculations (true);
-				timer2.Stop();
-				timer3.Stop();
-				XX = 'D';
-				changePos = false;
-				ChangeVA();
-			}
-		}
-
-		private void b_ViewDe_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Left){
-				timer1.Stop();
-				if (T == "timer2")	timer2.Start();
-				if (T == "timer3")	timer3.Start();
-			}
-		}
-
-		private void b_ViewMax_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			skyView.viewAngle = 50;
-			UpdateLabel();
-			pB_Space.Invalidate();
-		}
-
-		private void b_ViewIn_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			if (e.Button == MouseButtons.Left){
-				skyView.Calculations (true);
-				timer2.Stop();
-				timer3.Stop();
-				XX = 'I';
-				changePos = false;
-				ChangeVA();
-			}
-		}
-
-		private void b_ViewIn_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Left){
-				timer1.Stop();
-				if (T == "timer2")	timer2.Start();
-				if (T == "timer3")	timer3.Start();
-			}
-		}
-
-		private void l_Step_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			NormalizeLabel();
-			selected = "l_Step";
-			b_suIn.Visible = true;
-			b_suDe.Visible = true;
-			l_Step.BackColor = Color.Brown;
-			l_Step.ForeColor = Color.White;
-		}
-
-		private void l_StepUnit_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			NormalizeLabel();
-			selected = "l_StepUnit";
-			b_suIn.Visible = true;
-			b_suDe.Visible = true;
-			l_StepUnit.BackColor = Color.Brown;
-			l_StepUnit.ForeColor = Color.White;
-		}
-
-		private void b_suIn_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			if (selected=="l_Step" && location.v_step<60){
-				++location.v_step;
-				l_Step.Text = location.v_step.ToString();
-			}
-			if (selected == "l_StepUnit" && strIndex<5){
-				++strIndex;
-				location.v_unit = timeUnit[strIndex];
-				l_StepUnit.Text = location.v_unit.ToString();
-			}
-		}
-
-		private void b_suDe_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			if (selected=="l_Step" && location.v_step>1){
-				--location.v_step;
-				l_Step.Text = location.v_step.ToString();
-			}
-			if (selected=="l_StepUnit" && strIndex>0){
-				--strIndex;
-				location.v_unit = timeUnit[strIndex];
-				l_StepUnit.Text = location.v_unit.ToString();
-			}
-		}
-
-		private void timer2_Tick(object sender, System.EventArgs e)
-		{
-			TimerWork(n);
-		}
-
-		private void TimerWork (short i)
-		{
-			switch (location.v_unit){
-				case "seconds":{
-					location.v_mainDT = location.v_mainDT.AddSeconds(i*location.v_step);
-					UpdateLabel();
-					changePos = true;
-					pB_Space.Invalidate(); 
-					break;
-				}
-				case "minutes":{
-					location.v_mainDT = location.v_mainDT.AddMinutes(i*location.v_step);
-					UpdateLabel();
-					changePos = true;
-					pB_Space.Invalidate(); 
-					break;
-				}
-				case "hours":{
-					location.v_mainDT = location.v_mainDT.AddHours(i*location.v_step);
-					UpdateLabel();
-					changePos = true;
-					pB_Space.Invalidate(); 
-					break;
-				}
-				case "days":{
-					location.v_mainDT = location.v_mainDT.AddDays(i*location.v_step);
-					UpdateLabel();
-					changePos = true;
-					pB_Space.Invalidate(); 
-					break;
-				}
-				case "months":{
-					location.v_mainDT = location.v_mainDT.AddMonths(i*location.v_step);
-					UpdateLabel();
-					changePos = true;
-					pB_Space.Invalidate(); 
-					break;
-				}
-				case "years":{
-					location.v_mainDT = location.v_mainDT.AddYears(i*location.v_step);
-					UpdateLabel();
-					changePos = true;
-					pB_Space.Invalidate(); 
-					break;
-				}
-			}
-			if (location.v_mainDT < location.dtMin){
-				location.v_mainDT = location.dtMin;
-				UpdateLabel();
-				NormalizeButton();
-				timerRun = false;
-			}
-			if (location.v_mainDT > location.dtMax){
-				location.v_mainDT = location.dtMax;
-				UpdateLabel();
-				NormalizeButton();
-				timerRun = false;
-			}
-		}
-
-		private void b_PlayF_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			if (location.v_mainDT < location.dtMax){
-				timerRun = true;
-				NormalizeButton();
-				b_PlayF.FlatStyle = FlatStyle.Flat;
-				timer2.Stop();
-				timer3.Stop();
-				n = 1;
-				timer2 = new Timer();
-				timer2.Interval = 20;
-				timer2.Tick += new EventHandler(timer2_Tick);
-				timer2.Enabled = true;
-				timer2.Start();
-				T = "timer2";
-			}
-		}
-
-		private void b_StopTime_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			timerRun = false;
-			changePos = true;
-			NormalizeButton();
-			T = "";
-		}
-
-		private void b_StepB_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			timerRun = false;
-			NormalizeButton();
-			T = "";
-			TimerWork(-1);
-		}
-
-		private void b_StepF_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			timerRun = false;
-			NormalizeButton();
-			T = "";
-			TimerWork(1);
-		}
-
-		private void b_PlayB_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			if (location.v_mainDT > location.dtMin){
-				timerRun = true;
-				NormalizeButton();
-				b_PlayB.FlatStyle = FlatStyle.Flat;
-				n = -1;
-				timer2 = new Timer();
-				timer2.Interval = 20;
-				timer2.Tick += new EventHandler(timer2_Tick);
-				timer2.Enabled = true;
-				timer2.Start();
-				T = "timer2";
-			}
-		}
-
-		private void b_FlowTime_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			if (location.v_mainDT < location.dtMax){
-				timerRun = true;
-				NormalizeButton();
-				b_FlowTime.FlatStyle = FlatStyle.Flat;
-				timer3 = new Timer();
-				timer3.Interval = 1000;
-				timer3.Tick += new EventHandler(timer3_Tick);
-				timer3.Enabled = true;
-				timer3.Start();
-				T = "timer3";
-			}
-		}
-
-		private void timer3_Tick(object sender, System.EventArgs e)
-		{
-			location.v_mainDT = location.v_mainDT.AddSeconds(1);
-			UpdateLabel();
-			changePos = true;
-			pB_Space.Invalidate();
-		}
-
-		private void NormalizeButton()
-		{
-			timer2.Stop();
-			timer3.Stop();
-			NormalizeLabel();
-			b_FlowTime.FlatStyle = FlatStyle.Standard;
-			b_PlayB.FlatStyle = FlatStyle.Standard;
-			b_PlayF.FlatStyle = FlatStyle.Standard;
-			b_StopTime.FlatStyle = FlatStyle.Standard;
-			pB_Space.Invalidate();
-		}
-
-		private void m_Ephemerides_Click(object sender, System.EventArgs e)
-		{
-			timer2.Stop();
-			timer3.Stop();
-			timerRun = false;
-			T = "";
-			skyView.f_pp.Close();
-			NormalizeButton();
-			f_PlanetData f_pd = new f_PlanetData();
-			f_pd.ShowDialog();
-		}
-
-		private void m_PlanetPosition_Click(object sender, System.EventArgs e)
-		{
-			timer2.Stop();
-			timer3.Stop();
-			timerRun = false;
-			T = "";
-			NormalizeButton();
-			skyView.f_pp = new f_PlanetPosition();
-			skyView.f_pp.Show();
-		}
-
-		private void UnCheckSel()
-		{
-			m_Sun.Checked = false;
-			m_Moon.Checked = false;
-			m_Mercury.Checked = false;
-			m_Venus.Checked = false;
-			m_Mars.Checked = false;
-			m_Jupiter.Checked = false;
-			m_Saturn.Checked = false;
-			m_Uranus.Checked = false;
-			m_Neptune.Checked = false;
-			m_Pluto.Checked = false;
-		}
-
-		private double dt = 1;
-		private void t_Decoy_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
-		{
-			if (selected != "")
-			{
-				if (e.KeyCode == Keys.Up)
-					ChangeTime(dt);
-				if (e.KeyCode == Keys.Down)
-					ChangeTime(-dt);
-				dt += 0.1;
-			}
-			else
-			{
-				if (e.KeyCode == Keys.Left)
-				{
-					skyView.selected = false;
-					timer2.Stop(); timer3.Stop();	zenith = true;
-					skyView.center.A = (skyView.center.A - (skyView.viewAngle/10))%360;
-					pB_Space.Invalidate();
-				}
-				if (e.KeyCode == Keys.Right)
-				{
-					skyView.selected = false;
-					timer2.Stop(); timer3.Stop();	zenith = true;
-					skyView.center.A = (skyView.center.A + (skyView.viewAngle/10))%360;
-					pB_Space.Invalidate();
-				}
-				if (e.KeyCode == Keys.Up)
-				{
-					skyView.selected = false;
-					timer2.Stop(); timer3.Stop();	zenith = true;
-					if (skyView.center.a < 90)
-						skyView.center.a += (skyView.viewAngle/10);
-					else
-						skyView.center.a = 90;
-					pB_Space.Invalidate();
-				}
-				if (e.KeyCode == Keys.Down)
-				{
-					skyView.selected = false;
-					timer2.Stop(); timer3.Stop();	zenith = true;
-					if (skyView.center.a > -90)
-						skyView.center.a -= (skyView.viewAngle/10);
-					else
-						skyView.center.a = -90;
-					pB_Space.Invalidate();
-				}
-				if (e.KeyCode == Keys.PageUp)
-				{
-					timer2.Stop(); timer3.Stop();
-					double step=1;
-					if (skyView.viewAngle <= 2)	step=0.25;
-					if (skyView.viewAngle < 1)	step=0.125;
-					if (skyView.viewAngle > 0.25)
-					{
-						skyView.viewAngle -= step;
-						UpdateLabel();
-						pB_Space.Invalidate();
-					}
-				}
-				if (e.KeyCode == Keys.PageDown)
-				{
-					timer2.Stop(); timer3.Stop();
-					double step=1;
-					if (skyView.viewAngle < 2)	step=0.25;
-					if (skyView.viewAngle < 1)	step=0.125;
-					if (skyView.viewAngle < 50)
-					{
-						skyView.viewAngle += step;
-						UpdateLabel();
-						pB_Space.Invalidate();
-					}
-				}
-			}
-		}
-
-		private void t_Decoy_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
-		{
-			if (e.KeyCode==Keys.Left || e.KeyCode==Keys.Right || 
-				e.KeyCode==Keys.Up || e.KeyCode==Keys.Down){
-				zenith = false;
-				dt = 1;
-				pB_Space.Invalidate();
-				if (T == "timer2")	timer2.Start();
-				if (T == "timer3")	timer3.Start();
-			}
-			if (e.KeyCode==Keys.PageUp || e.KeyCode==Keys.PageDown){
-				if (T == "timer2")	timer2.Start();
-				if (T == "timer3")	timer3.Start();
-			}
-		}
-
-		private void t_Decoy_MouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
-		{
-			timer2.Stop(); timer3.Stop();
-			double step=1;
-
-			if (e.Delta < 0)
-			{
-				if (skyView.viewAngle < 2)	step=0.25;
-				if (skyView.viewAngle < 1)	step=0.125;
-				if (skyView.viewAngle < 50) skyView.viewAngle += step;
-			}
-			else if (e.Delta > 0)
-			{
-				step = 1;
-				if (skyView.viewAngle <= 2)	step=0.25;
-				if (skyView.viewAngle < 1)	step=0.125;
-				if (skyView.viewAngle > 0.25) skyView.viewAngle -= step;
-			}
-			UpdateLabel();
-			pB_Space.Invalidate();
-		}
-
-		private void t_Decoy_Leave(object sender, System.EventArgs e)
-		{
-			t_Decoy.Select();
-		}
-
-		private void lm_Data_MouseEnter(object sender, System.EventArgs e)
-		{
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-			lm_Data.BackColor = Color.Brown;
-			lm_Data.ForeColor = Color.White;
-			p_Data.Visible = true;
-		}
-
-		private void lm_Data_MouseLeave(object sender, System.EventArgs e)
-		{
-			lm_Data.BackColor = Color.FromArgb(175,175,100);
-			lm_Data.ForeColor = Color.Black;
-		}
-
-		private void lm_ViewData_MouseEnter(object sender, System.EventArgs e)
-		{
-			lm_ViewData.BackColor = Color.Brown;
-			lm_ViewData.ForeColor = Color.White;
-		}
-
-		private void lm_ViewData_MouseLeave(object sender, System.EventArgs e)
-		{
-			lm_ViewData.BackColor = Color.FromArgb(175,175,100);
-			lm_ViewData.ForeColor = Color.Black;
-		}
-
-		private void lm_ViewData_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			timer2.Stop(); timer3.Stop();
-			timerRun = false;
-			T = "";
-			NormalizeButton();
-			skyView.f_pp.Close();
-			changePos = true;
-			f_ViewLocation f_vl = new f_ViewLocation();
-			f_vl.ShowDialog();
-		}
-
-		private void lm_Ephemerides_MouseEnter(object sender, System.EventArgs e)
-		{
-			lm_Ephemerides.BackColor = Color.Brown;
-			lm_Ephemerides.ForeColor = Color.White;
-		}
-
-		private void lm_Ephemerides_MouseLeave(object sender, System.EventArgs e)
-		{
-			lm_Ephemerides.BackColor = Color.FromArgb(175,175,100);
-			lm_Ephemerides.ForeColor = Color.Black;
-		}
-
-		private void lm_Ephemerides_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			timer2.Stop();
-			timer3.Stop();
-			timerRun = false;
-			T = "";
-			skyView.f_pp.Close();
-			NormalizeButton();
-			f_PlanetData f_pd = new f_PlanetData();
-			f_pd.ShowDialog();
-		}
-
-		private void lm_PlanetPositions_MouseEnter(object sender, System.EventArgs e)
-		{
-			lm_PlanetPositions.BackColor = Color.Brown;
-			lm_PlanetPositions.ForeColor = Color.White;
-		}
-
-		private void lm_PlanetPositions_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			timer2.Stop();
-			timer3.Stop();
-			timerRun = false;
-			T = "";
-			NormalizeButton();
-			skyView.f_pp = new f_PlanetPosition();
-			skyView.f_pp.Show();
-		}
-
-		private void lm_PlanetPositions_MouseLeave(object sender, System.EventArgs e)
-		{
-			lm_PlanetPositions.BackColor = Color.FromArgb(175,175,100);
-			lm_PlanetPositions.ForeColor = Color.Black;
-		}
-
-		private void lm_Tools_MouseEnter(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Select.Visible = false;
-			lm_Tools.BackColor = Color.Brown;
-			lm_Tools.ForeColor = Color.White;
-			p_Tools.Visible = true;
-		}
-
-		private void lm_Tools_MouseLeave(object sender, System.EventArgs e)
-		{
-			lm_Tools.BackColor = Color.FromArgb(175,175,100);
-			lm_Tools.ForeColor = Color.Black;
-		}
-
-		private void lm_SolarSystemView_MouseEnter(object sender, System.EventArgs e)
-		{
-			lm_SolarSystemView.BackColor = Color.Brown;
-			lm_SolarSystemView.ForeColor = Color.White;
-		}
-
-		private void lm_SolarSystemView_MouseLeave(object sender, System.EventArgs e)
-		{
-			lm_SolarSystemView.BackColor = Color.FromArgb(175,175,100);
-			lm_SolarSystemView.ForeColor = Color.Black;
-		}
-
-		private void lm_SolarSystemView_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			timer2.Stop(); timer3.Stop();
-			timerRun = false;
-			T = "";
-			NormalizeButton();
-			skyView.f_pp.Close();
-			f_SolarSystem f_ssv = new f_SolarSystem();
-			f_ssv.ShowDialog();
-		}
-
-		private void lm_ConjunctionFinder_MouseEnter(object sender, System.EventArgs e)
-		{
-			lm_ConjunctionFinder.BackColor = Color.Brown;
-			lm_ConjunctionFinder.ForeColor = Color.White;
-		}
-
-		private void lm_ConjunctionFinder_MouseLeave(object sender, System.EventArgs e)
-		{
-			lm_ConjunctionFinder.BackColor = Color.FromArgb(175,175,100);
-			lm_ConjunctionFinder.ForeColor = Color.Black;
-		}
-
-		private void lm_ConjunctionFinder_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			timer2.Stop(); timer3.Stop();
-			timerRun = false;
-			T = "";
-			skyView.f_pp.Close();
-			NormalizeButton();
-			f_SolarSystem f_cf = new f_SolarSystem("cf");
-			f_cf.ShowDialog();
-		}
-
-		private void lm_SolarEvents_MouseEnter(object sender, System.EventArgs e)
-		{
-			lm_SolarEvents.BackColor = Color.Brown;
-			lm_SolarEvents.ForeColor = Color.White;
-		}
-
-		private void lm_SolarEvents_MouseLeave(object sender, System.EventArgs e)
-		{
-			lm_SolarEvents.BackColor = Color.FromArgb(175,175,100);
-			lm_SolarEvents.ForeColor = Color.Black;
-		}
-
-		private void lm_SolarEvents_Click(object sender, System.EventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			timer2.Stop(); timer3.Stop();
-			timerRun = false;
-			T = "";
-			skyView.f_pp.Close();
-			NormalizeButton();
-			skyView.f_pp.Close();
-			f_SolarEvents f_sv = new f_SolarEvents();
-			f_sv.ShowDialog();
-		}
-
-		private void panel2_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
-		{
-			p_Data.Visible = false;
-			p_Tools.Visible = false;
-			p_Select.Visible = false;
-		}
-
-		private void lm_Select_MouseEnter(object sender, System.EventArgs e)
-		{
-			p_Tools.Visible = false;
-			p_Data.Visible = false;
-			lm_Select.BackColor = Color.Brown;
-			lm_Select.ForeColor = Color.White;
-			p_Select.Visible = true;
-		}
-
-		private void lm_Select_MouseLeave(object sender, System.EventArgs e)
-		{
-			lm_Select.BackColor = Color.FromArgb(175,175,100);
-			lm_Select.ForeColor = Color.Black;
-		}
-
-		private void tV_Select_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)
-		{
-			if (e.Node.Text != "Earth")
-				tempSelect = e.Node.Text;
-			else
-				tempSelect = "";
-		}
-
-		private void b_Select_Click(object sender, System.EventArgs e)
-		{
-			if (tempSelect != ""){
-				skyView.selPl = tempSelect;
-				skyView.selected = true;
-				p_Select.Visible = false;
-				changePos = true;
-				pB_Space.Invalidate();
-			}
-		}
-
-		private void lt_Daylight_Click(object sender, System.EventArgs e)
-		{
-			if (lt_Daylight.BackColor == Color.Red)
-				lt_Daylight.BackColor = Color.FromArgb(175,175,100);
-			else
-				lt_Daylight.BackColor = Color.Red;
-			skyView.bDay = !skyView.bDay;
-			pB_Space.Invalidate();
-		}
-
-		private void lt_FullHorizon_Click(object sender, System.EventArgs e)
-		{
-			skyView.bFull = !skyView.bFull;
-			skyView.bLine = !skyView.bLine;
-			if (lt_FullHorizon.BackColor == Color.Red)
-				lt_FullHorizon.BackColor = Color.FromArgb(175,175,100);
-			else
-				lt_FullHorizon.BackColor = Color.Red;
-			if (lt_LineHorizon.BackColor == Color.Red)
-				lt_LineHorizon.BackColor = Color.FromArgb(175,175,100);
-			else
-				lt_LineHorizon.BackColor = Color.Red;
-			pB_Space.Invalidate();
-		}
-
-		private void lt_LineHorizon_Click(object sender, System.EventArgs e)
-		{
-			skyView.bLine = !skyView.bLine;
-			skyView.bFull = !skyView.bFull;
-			if (lt_LineHorizon.BackColor == Color.Red)
-				lt_LineHorizon.BackColor = Color.FromArgb(175,175,100);
-			else
-				lt_LineHorizon.BackColor = Color.Red;
-			if (lt_FullHorizon.BackColor == Color.Red)
-				lt_FullHorizon.BackColor = Color.FromArgb(175,175,100);
-			else
-				lt_FullHorizon.BackColor = Color.Red;
-			pB_Space.Invalidate();
-		}
-
-		private void lt_HorizonLabel_Click(object sender, System.EventArgs e)
-		{
-			if (lt_HorizonLabel.BackColor == Color.Red)
-				lt_HorizonLabel.BackColor = Color.FromArgb(175,175,100);
-			else
-				lt_HorizonLabel.BackColor = Color.Red;
-			skyView.bComp = !skyView.bComp;
-			pB_Space.Invalidate();
-		}
-
-		private void lt_Planets_Click(object sender, System.EventArgs e)
-		{
-			if (lt_Planets.BackColor == Color.Red)
-				lt_Planets.BackColor = Color.FromArgb(175,175,100);
-			else
-				lt_Planets.BackColor = Color.Red;
-			skyView.bShowPl = !skyView.bShowPl;
-			pB_Space.Invalidate();
-		}
-
-		private void lt_EarthShadow_Click(object sender, System.EventArgs e)
-		{
-			if (lt_EarthShadow.BackColor == Color.Red)
-				lt_EarthShadow.BackColor = Color.FromArgb(175,175,100);
-			else
-				lt_EarthShadow.BackColor = Color.Red;
-			skyView.bShowES = !skyView.bShowES;
-			pB_Space.Invalidate();
-		}
-
-		private void lt_PlanetLabel_Click(object sender, System.EventArgs e)
-		{
-			if (lt_PlanetLabel.BackColor == Color.Red)
-				lt_PlanetLabel.BackColor = Color.FromArgb(175,175,100);
-			else
-				lt_PlanetLabel.BackColor = Color.Red;
-			skyView.bPlLabel = !skyView.bPlLabel;
-			pB_Space.Invalidate();
-		}
-
-		private void lt_Stars_Click(object sender, System.EventArgs e)
-		{
-			if (lt_Stars.BackColor == Color.Red)
-				lt_Stars.BackColor = Color.FromArgb(175,175,100);
-			else
-				lt_Stars.BackColor = Color.Red;
-			skyView.bShowSt = !skyView.bShowSt;
-			pB_Space.Invalidate();
-		}
-
-		private void lt_StarLabel_Click(object sender, System.EventArgs e)
-		{
-			if (lt_StarLabel.BackColor == Color.Red)
-				lt_StarLabel.BackColor = Color.FromArgb(175,175,100);
-			else
-				lt_StarLabel.BackColor = Color.Red;
-			skyView.bStLabel = !skyView.bStLabel;
-			pB_Space.Invalidate();
-		}
-
-		private void lt_Constellation_Click(object sender, System.EventArgs e)
-		{
-			if (lt_Constellation.BackColor == Color.Red)
-				lt_Constellation.BackColor = Color.FromArgb(175,175,100);
-			else
-				lt_Constellation.BackColor = Color.Red;
-			skyView.bShowCo = !skyView.bShowCo;
-			pB_Space.Invalidate();
-		}
-
-		private void lt_ConstellationLabel_Click(object sender, System.EventArgs e)
-		{
-			if (lt_ConstellationLabel.BackColor == Color.Red)
-				lt_ConstellationLabel.BackColor = Color.FromArgb(175,175,100);
-			else
-				lt_ConstellationLabel.BackColor = Color.Red;
-			skyView.bCoLabel = !skyView.bCoLabel;
-			pB_Space.Invalidate();
-		}
-
-		private void lt_Messiers_Click(object sender, System.EventArgs e)
-		{
-			if (lt_Messiers.BackColor == Color.Red)
-				lt_Messiers.BackColor = Color.FromArgb(175,175,100);
-			else
-				lt_Messiers.BackColor = Color.Red;
-			skyView.bShowM = !skyView.bShowM;
-			pB_Space.Invalidate();
-		}
-
-		private void lt_MessierLabel_Click(object sender, System.EventArgs e)
-		{
-			if (lt_MessierLabel.BackColor == Color.Red)
-				lt_MessierLabel.BackColor = Color.FromArgb(175,175,100);
-			else
-				lt_MessierLabel.BackColor = Color.Red;
-			skyView.bMLabel = !skyView.bMLabel;
-			pB_Space.Invalidate();
-		}
-
-		private void lt_EqGrid_Click(object sender, System.EventArgs e)
-		{
-			if (lt_EqGrid.BackColor == Color.Red)
-				lt_EqGrid.BackColor = Color.FromArgb(175,175,100);
-			else
-				lt_EqGrid.BackColor = Color.Red;
-			skyView.bShowEQ = !skyView.bShowEQ;
-			pB_Space.Invalidate();
-		}
-
-		private void lt_HorGrid_Click(object sender, System.EventArgs e)
-		{
-			if (lt_HorGrid.BackColor == Color.Red)
-				lt_HorGrid.BackColor = Color.FromArgb(175,175,100);
-			else
-				lt_HorGrid.BackColor = Color.Red;
-			skyView.bShowHOR = !skyView.bShowHOR;
-			pB_Space.Invalidate();
-		}
-
-		private void lt_GridLabel_Click(object sender, System.EventArgs e)
-		{
-			if (lt_GridLabel.BackColor == Color.Red)
-				lt_GridLabel.BackColor = Color.FromArgb(175,175,100);
-			else
-				lt_GridLabel.BackColor = Color.Red;
-			skyView.bGridLabel = !skyView.bGridLabel;
-			pB_Space.Invalidate();
-		}
-
-		private LocationST location = LocationST.GetInstance();
-		private PlanetData planetData = PlanetData.GetInstance();
-		private SkyView skyView = new SkyView();
-		private string selected;
-		private bool changePos = false;
-		private Cursor openH, closedH;
-		private string[] timeUnit = {"seconds", "minutes", "hours", "days", "months", "years"};
-		private int strIndex=1;
-		private short n;
-		private bool timerRun = false;
-		private string T = "";
-		private Point pOld = new Point();
-		private Point pNew = new Point();
-		private bool mDown = false;
-		private char XX = 'N';
-		private string tempSelect="";
-		private bool zenith = false;
+                pOld.Y = pNew.Y;
+                pB_Space.Invalidate();
+            }
+        }
+
+        private void pB_Space_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            pB_Space.Cursor = openH;
+            mDown = false; zenith = false;
+            pB_Space.Invalidate();
+            if (T == "timer2") timer2.Start();
+            if (T == "timer3") timer3.Start();
+        }
+
+        private void ChangeVA()
+        {
+            timer1 = new Timer();
+            timer1.Interval = 20;
+            timer1.Tick += new EventHandler(timer1_Tick);
+            timer1.Enabled = true;
+            timer1.Start();
+        }
+
+        private void timer1_Tick(object sender, System.EventArgs e)
+        {
+            double step = 1;
+            if (skyView.viewAngle < 1) step = 0.125;
+            if (XX == 'D')
+            {
+                if (skyView.viewAngle <= 2) step = 0.25;
+                if (skyView.viewAngle > 0.25)
+                {
+                    skyView.viewAngle -= step;
+                    UpdateLabel();
+                    pB_Space.Invalidate();
+                }
+            }
+            if (XX == 'I')
+            {
+                if (skyView.viewAngle < 2) step = 0.25;
+                if (skyView.viewAngle < 50)
+                {
+                    skyView.viewAngle += step;
+                    UpdateLabel();
+                    pB_Space.Invalidate();
+                }
+            }
+        }
+
+        private void b_ViewDe_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            if (e.Button == MouseButtons.Left)
+            {
+                skyView.Calculations(true);
+                timer2.Stop();
+                timer3.Stop();
+                XX = 'D';
+                changePos = false;
+                ChangeVA();
+            }
+        }
+
+        private void b_ViewDe_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                timer1.Stop();
+                if (T == "timer2") timer2.Start();
+                if (T == "timer3") timer3.Start();
+            }
+        }
+
+        private void b_ViewMax_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            skyView.viewAngle = 50;
+            UpdateLabel();
+            pB_Space.Invalidate();
+        }
+
+        private void b_ViewIn_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            if (e.Button == MouseButtons.Left)
+            {
+                skyView.Calculations(true);
+                timer2.Stop();
+                timer3.Stop();
+                XX = 'I';
+                changePos = false;
+                ChangeVA();
+            }
+        }
+
+        private void b_ViewIn_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                timer1.Stop();
+                if (T == "timer2") timer2.Start();
+                if (T == "timer3") timer3.Start();
+            }
+        }
+
+        private void l_Step_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            NormalizeLabel();
+            selected = "l_Step";
+            b_suIn.Visible = true;
+            b_suDe.Visible = true;
+            l_Step.BackColor = Color.Brown;
+            l_Step.ForeColor = Color.White;
+        }
+
+        private void l_StepUnit_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            NormalizeLabel();
+            selected = "l_StepUnit";
+            b_suIn.Visible = true;
+            b_suDe.Visible = true;
+            l_StepUnit.BackColor = Color.Brown;
+            l_StepUnit.ForeColor = Color.White;
+        }
+
+        private void b_suIn_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            if (selected == "l_Step" && location.Step < 60)
+            {
+                ++location.Step;
+                l_Step.Text = location.Step.ToString();
+            }
+            if (selected == "l_StepUnit" && strIndex < 5)
+            {
+                ++strIndex;
+                location.v_unit = timeUnit[strIndex];
+                l_StepUnit.Text = location.v_unit.ToString();
+            }
+        }
+
+        private void b_suDe_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            if (selected == "l_Step" && location.Step > 1)
+            {
+                --location.Step;
+                l_Step.Text = location.Step.ToString();
+            }
+            if (selected == "l_StepUnit" && strIndex > 0)
+            {
+                --strIndex;
+                location.v_unit = timeUnit[strIndex];
+                l_StepUnit.Text = location.v_unit.ToString();
+            }
+        }
+
+        private void timer2_Tick(object sender, System.EventArgs e)
+        {
+            TimerWork(n);
+        }
+
+        private void TimerWork(short i)
+        {
+            switch (location.v_unit)
+            {
+                case "seconds":
+                    {
+                        location.MainDateTime = location.MainDateTime.AddSeconds(i * location.Step);
+                        UpdateLabel();
+                        changePos = true;
+                        pB_Space.Invalidate();
+                        break;
+                    }
+                case "minutes":
+                    {
+                        location.MainDateTime = location.MainDateTime.AddMinutes(i * location.Step);
+                        UpdateLabel();
+                        changePos = true;
+                        pB_Space.Invalidate();
+                        break;
+                    }
+                case "hours":
+                    {
+                        location.MainDateTime = location.MainDateTime.AddHours(i * location.Step);
+                        UpdateLabel();
+                        changePos = true;
+                        pB_Space.Invalidate();
+                        break;
+                    }
+                case "days":
+                    {
+                        location.MainDateTime = location.MainDateTime.AddDays(i * location.Step);
+                        UpdateLabel();
+                        changePos = true;
+                        pB_Space.Invalidate();
+                        break;
+                    }
+                case "months":
+                    {
+                        location.MainDateTime = location.MainDateTime.AddMonths(i * location.Step);
+                        UpdateLabel();
+                        changePos = true;
+                        pB_Space.Invalidate();
+                        break;
+                    }
+                case "years":
+                    {
+                        location.MainDateTime = location.MainDateTime.AddYears(i * location.Step);
+                        UpdateLabel();
+                        changePos = true;
+                        pB_Space.Invalidate();
+                        break;
+                    }
+            }
+            if (location.MainDateTime < location.dtMin)
+            {
+                location.MainDateTime = location.dtMin;
+                UpdateLabel();
+                NormalizeButton();
+                timerRun = false;
+            }
+            if (location.MainDateTime > location.dtMax)
+            {
+                location.MainDateTime = location.dtMax;
+                UpdateLabel();
+                NormalizeButton();
+                timerRun = false;
+            }
+        }
+
+        private void b_PlayF_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            if (location.MainDateTime < location.dtMax)
+            {
+                timerRun = true;
+                NormalizeButton();
+                b_PlayF.FlatStyle = FlatStyle.Flat;
+                timer2.Stop();
+                timer3.Stop();
+                n = 1;
+                timer2 = new Timer();
+                timer2.Interval = 20;
+                timer2.Tick += new EventHandler(timer2_Tick);
+                timer2.Enabled = true;
+                timer2.Start();
+                T = "timer2";
+            }
+        }
+
+        private void b_StopTime_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            timerRun = false;
+            changePos = true;
+            NormalizeButton();
+            T = "";
+        }
+
+        private void b_StepB_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            timerRun = false;
+            NormalizeButton();
+            T = "";
+            TimerWork(-1);
+        }
+
+        private void b_StepF_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            timerRun = false;
+            NormalizeButton();
+            T = "";
+            TimerWork(1);
+        }
+
+        private void b_PlayB_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            if (location.MainDateTime > location.dtMin)
+            {
+                timerRun = true;
+                NormalizeButton();
+                b_PlayB.FlatStyle = FlatStyle.Flat;
+                n = -1;
+                timer2 = new Timer();
+                timer2.Interval = 20;
+                timer2.Tick += new EventHandler(timer2_Tick);
+                timer2.Enabled = true;
+                timer2.Start();
+                T = "timer2";
+            }
+        }
+
+        private void b_FlowTime_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            if (location.MainDateTime < location.dtMax)
+            {
+                timerRun = true;
+                NormalizeButton();
+                b_FlowTime.FlatStyle = FlatStyle.Flat;
+                timer3 = new Timer();
+                timer3.Interval = 1000;
+                timer3.Tick += new EventHandler(timer3_Tick);
+                timer3.Enabled = true;
+                timer3.Start();
+                T = "timer3";
+            }
+        }
+
+        private void timer3_Tick(object sender, System.EventArgs e)
+        {
+            location.MainDateTime = location.MainDateTime.AddSeconds(1);
+            UpdateLabel();
+            changePos = true;
+            pB_Space.Invalidate();
+        }
+
+        private void NormalizeButton()
+        {
+            timer2.Stop();
+            timer3.Stop();
+            NormalizeLabel();
+            b_FlowTime.FlatStyle = FlatStyle.Standard;
+            b_PlayB.FlatStyle = FlatStyle.Standard;
+            b_PlayF.FlatStyle = FlatStyle.Standard;
+            b_StopTime.FlatStyle = FlatStyle.Standard;
+            pB_Space.Invalidate();
+        }
+
+        private void m_Ephemerides_Click(object sender, System.EventArgs e)
+        {
+            timer2.Stop();
+            timer3.Stop();
+            timerRun = false;
+            T = "";
+            skyView.f_pp.Close();
+            NormalizeButton();
+            f_PlanetData f_pd = new f_PlanetData();
+            f_pd.ShowDialog();
+        }
+
+        private void m_PlanetPosition_Click(object sender, System.EventArgs e)
+        {
+            timer2.Stop();
+            timer3.Stop();
+            timerRun = false;
+            T = "";
+            NormalizeButton();
+            skyView.f_pp = new f_PlanetPosition();
+            skyView.f_pp.Show();
+        }
+
+        private void UnCheckSel()
+        {
+            m_Sun.Checked = false;
+            m_Moon.Checked = false;
+            m_Mercury.Checked = false;
+            m_Venus.Checked = false;
+            m_Mars.Checked = false;
+            m_Jupiter.Checked = false;
+            m_Saturn.Checked = false;
+            m_Uranus.Checked = false;
+            m_Neptune.Checked = false;
+            m_Pluto.Checked = false;
+        }
+
+        private double dt = 1;
+        private void t_Decoy_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if (selected != "")
+            {
+                if (e.KeyCode == Keys.Up)
+                    ChangeTime(dt);
+                if (e.KeyCode == Keys.Down)
+                    ChangeTime(-dt);
+                dt += 0.1;
+            }
+            else
+            {
+                if (e.KeyCode == Keys.Left)
+                {
+                    skyView.selected = false;
+                    timer2.Stop(); timer3.Stop(); zenith = true;
+                    skyView.center.A = (skyView.center.A - (skyView.viewAngle / 10)) % 360;
+                    pB_Space.Invalidate();
+                }
+                if (e.KeyCode == Keys.Right)
+                {
+                    skyView.selected = false;
+                    timer2.Stop(); timer3.Stop(); zenith = true;
+                    skyView.center.A = (skyView.center.A + (skyView.viewAngle / 10)) % 360;
+                    pB_Space.Invalidate();
+                }
+                if (e.KeyCode == Keys.Up)
+                {
+                    skyView.selected = false;
+                    timer2.Stop(); timer3.Stop(); zenith = true;
+                    if (skyView.center.a < 90)
+                        skyView.center.a += (skyView.viewAngle / 10);
+                    else
+                        skyView.center.a = 90;
+                    pB_Space.Invalidate();
+                }
+                if (e.KeyCode == Keys.Down)
+                {
+                    skyView.selected = false;
+                    timer2.Stop(); timer3.Stop(); zenith = true;
+                    if (skyView.center.a > -90)
+                        skyView.center.a -= (skyView.viewAngle / 10);
+                    else
+                        skyView.center.a = -90;
+                    pB_Space.Invalidate();
+                }
+                if (e.KeyCode == Keys.PageUp)
+                {
+                    timer2.Stop(); timer3.Stop();
+                    double step = 1;
+                    if (skyView.viewAngle <= 2) step = 0.25;
+                    if (skyView.viewAngle < 1) step = 0.125;
+                    if (skyView.viewAngle > 0.25)
+                    {
+                        skyView.viewAngle -= step;
+                        UpdateLabel();
+                        pB_Space.Invalidate();
+                    }
+                }
+                if (e.KeyCode == Keys.PageDown)
+                {
+                    timer2.Stop(); timer3.Stop();
+                    double step = 1;
+                    if (skyView.viewAngle < 2) step = 0.25;
+                    if (skyView.viewAngle < 1) step = 0.125;
+                    if (skyView.viewAngle < 50)
+                    {
+                        skyView.viewAngle += step;
+                        UpdateLabel();
+                        pB_Space.Invalidate();
+                    }
+                }
+            }
+        }
+
+        private void t_Decoy_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Left || e.KeyCode == Keys.Right ||
+                e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
+            {
+                zenith = false;
+                dt = 1;
+                pB_Space.Invalidate();
+                if (T == "timer2") timer2.Start();
+                if (T == "timer3") timer3.Start();
+            }
+            if (e.KeyCode == Keys.PageUp || e.KeyCode == Keys.PageDown)
+            {
+                if (T == "timer2") timer2.Start();
+                if (T == "timer3") timer3.Start();
+            }
+        }
+
+        private void t_Decoy_MouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            timer2.Stop(); timer3.Stop();
+            double step = 1;
+
+            if (e.Delta < 0)
+            {
+                if (skyView.viewAngle < 2) step = 0.25;
+                if (skyView.viewAngle < 1) step = 0.125;
+                if (skyView.viewAngle < 50) skyView.viewAngle += step;
+            }
+            else if (e.Delta > 0)
+            {
+                step = 1;
+                if (skyView.viewAngle <= 2) step = 0.25;
+                if (skyView.viewAngle < 1) step = 0.125;
+                if (skyView.viewAngle > 0.25) skyView.viewAngle -= step;
+            }
+            UpdateLabel();
+            pB_Space.Invalidate();
+        }
+
+        private void t_Decoy_Leave(object sender, System.EventArgs e)
+        {
+            t_Decoy.Select();
+        }
+
+        private void lm_Data_MouseEnter(object sender, System.EventArgs e)
+        {
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+            lm_Data.BackColor = Color.Brown;
+            lm_Data.ForeColor = Color.White;
+            p_Data.Visible = true;
+        }
+
+        private void lm_Data_MouseLeave(object sender, System.EventArgs e)
+        {
+            lm_Data.BackColor = Color.FromArgb(175, 175, 100);
+            lm_Data.ForeColor = Color.Black;
+        }
+
+        private void lm_ViewData_MouseEnter(object sender, System.EventArgs e)
+        {
+            lm_ViewData.BackColor = Color.Brown;
+            lm_ViewData.ForeColor = Color.White;
+        }
+
+        private void lm_ViewData_MouseLeave(object sender, System.EventArgs e)
+        {
+            lm_ViewData.BackColor = Color.FromArgb(175, 175, 100);
+            lm_ViewData.ForeColor = Color.Black;
+        }
+
+        private void lm_ViewData_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            timer2.Stop(); timer3.Stop();
+            timerRun = false;
+            T = "";
+            NormalizeButton();
+            skyView.f_pp.Close();
+            changePos = true;
+            f_ViewLocation f_vl = new f_ViewLocation();
+            f_vl.ShowDialog();
+        }
+
+        private void lm_Ephemerides_MouseEnter(object sender, System.EventArgs e)
+        {
+            lm_Ephemerides.BackColor = Color.Brown;
+            lm_Ephemerides.ForeColor = Color.White;
+        }
+
+        private void lm_Ephemerides_MouseLeave(object sender, System.EventArgs e)
+        {
+            lm_Ephemerides.BackColor = Color.FromArgb(175, 175, 100);
+            lm_Ephemerides.ForeColor = Color.Black;
+        }
+
+        private void lm_Ephemerides_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            timer2.Stop();
+            timer3.Stop();
+            timerRun = false;
+            T = "";
+            skyView.f_pp.Close();
+            NormalizeButton();
+            f_PlanetData f_pd = new f_PlanetData();
+            f_pd.ShowDialog();
+        }
+
+        private void lm_PlanetPositions_MouseEnter(object sender, System.EventArgs e)
+        {
+            lm_PlanetPositions.BackColor = Color.Brown;
+            lm_PlanetPositions.ForeColor = Color.White;
+        }
+
+        private void lm_PlanetPositions_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            timer2.Stop();
+            timer3.Stop();
+            timerRun = false;
+            T = "";
+            NormalizeButton();
+            skyView.f_pp = new f_PlanetPosition();
+            skyView.f_pp.Show();
+        }
+
+        private void lm_PlanetPositions_MouseLeave(object sender, System.EventArgs e)
+        {
+            lm_PlanetPositions.BackColor = Color.FromArgb(175, 175, 100);
+            lm_PlanetPositions.ForeColor = Color.Black;
+        }
+
+        private void lm_Tools_MouseEnter(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Select.Visible = false;
+            lm_Tools.BackColor = Color.Brown;
+            lm_Tools.ForeColor = Color.White;
+            p_Tools.Visible = true;
+        }
+
+        private void lm_Tools_MouseLeave(object sender, System.EventArgs e)
+        {
+            lm_Tools.BackColor = Color.FromArgb(175, 175, 100);
+            lm_Tools.ForeColor = Color.Black;
+        }
+
+        private void lm_SolarSystemView_MouseEnter(object sender, System.EventArgs e)
+        {
+            lm_SolarSystemView.BackColor = Color.Brown;
+            lm_SolarSystemView.ForeColor = Color.White;
+        }
+
+        private void lm_SolarSystemView_MouseLeave(object sender, System.EventArgs e)
+        {
+            lm_SolarSystemView.BackColor = Color.FromArgb(175, 175, 100);
+            lm_SolarSystemView.ForeColor = Color.Black;
+        }
+
+        private void lm_SolarSystemView_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            timer2.Stop(); timer3.Stop();
+            timerRun = false;
+            T = "";
+            NormalizeButton();
+            skyView.f_pp.Close();
+            f_SolarSystem f_ssv = new f_SolarSystem();
+            f_ssv.ShowDialog();
+        }
+
+        private void lm_ConjunctionFinder_MouseEnter(object sender, System.EventArgs e)
+        {
+            lm_ConjunctionFinder.BackColor = Color.Brown;
+            lm_ConjunctionFinder.ForeColor = Color.White;
+        }
+
+        private void lm_ConjunctionFinder_MouseLeave(object sender, System.EventArgs e)
+        {
+            lm_ConjunctionFinder.BackColor = Color.FromArgb(175, 175, 100);
+            lm_ConjunctionFinder.ForeColor = Color.Black;
+        }
+
+        private void lm_ConjunctionFinder_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            timer2.Stop(); timer3.Stop();
+            timerRun = false;
+            T = "";
+            skyView.f_pp.Close();
+            NormalizeButton();
+            f_SolarSystem f_cf = new f_SolarSystem("cf");
+            f_cf.ShowDialog();
+        }
+
+        private void lm_SolarEvents_MouseEnter(object sender, System.EventArgs e)
+        {
+            lm_SolarEvents.BackColor = Color.Brown;
+            lm_SolarEvents.ForeColor = Color.White;
+        }
+
+        private void lm_SolarEvents_MouseLeave(object sender, System.EventArgs e)
+        {
+            lm_SolarEvents.BackColor = Color.FromArgb(175, 175, 100);
+            lm_SolarEvents.ForeColor = Color.Black;
+        }
+
+        private void lm_SolarEvents_Click(object sender, System.EventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            timer2.Stop(); timer3.Stop();
+            timerRun = false;
+            T = "";
+            skyView.f_pp.Close();
+            NormalizeButton();
+            skyView.f_pp.Close();
+            f_SolarEvents f_sv = new f_SolarEvents();
+            f_sv.ShowDialog();
+        }
+
+        private void panel2_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            p_Data.Visible = false;
+            p_Tools.Visible = false;
+            p_Select.Visible = false;
+        }
+
+        private void lm_Select_MouseEnter(object sender, System.EventArgs e)
+        {
+            p_Tools.Visible = false;
+            p_Data.Visible = false;
+            lm_Select.BackColor = Color.Brown;
+            lm_Select.ForeColor = Color.White;
+            p_Select.Visible = true;
+        }
+
+        private void lm_Select_MouseLeave(object sender, System.EventArgs e)
+        {
+            lm_Select.BackColor = Color.FromArgb(175, 175, 100);
+            lm_Select.ForeColor = Color.Black;
+        }
+
+        private void tV_Select_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)
+        {
+            if (e.Node.Text != "Earth")
+                tempSelect = e.Node.Text;
+            else
+                tempSelect = "";
+        }
+
+        private void b_Select_Click(object sender, System.EventArgs e)
+        {
+            if (tempSelect != "")
+            {
+                skyView.selPl = tempSelect;
+                skyView.selected = true;
+                p_Select.Visible = false;
+                changePos = true;
+                pB_Space.Invalidate();
+            }
+        }
+
+        private void lt_Daylight_Click(object sender, System.EventArgs e)
+        {
+            if (lt_Daylight.BackColor == Color.Red)
+                lt_Daylight.BackColor = Color.FromArgb(175, 175, 100);
+            else
+                lt_Daylight.BackColor = Color.Red;
+            skyView.bDay = !skyView.bDay;
+            pB_Space.Invalidate();
+        }
+
+        private void lt_FullHorizon_Click(object sender, System.EventArgs e)
+        {
+            skyView.bFull = !skyView.bFull;
+            skyView.bLine = !skyView.bLine;
+            if (lt_FullHorizon.BackColor == Color.Red)
+                lt_FullHorizon.BackColor = Color.FromArgb(175, 175, 100);
+            else
+                lt_FullHorizon.BackColor = Color.Red;
+            if (lt_LineHorizon.BackColor == Color.Red)
+                lt_LineHorizon.BackColor = Color.FromArgb(175, 175, 100);
+            else
+                lt_LineHorizon.BackColor = Color.Red;
+            pB_Space.Invalidate();
+        }
+
+        private void lt_LineHorizon_Click(object sender, System.EventArgs e)
+        {
+            skyView.bLine = !skyView.bLine;
+            skyView.bFull = !skyView.bFull;
+            if (lt_LineHorizon.BackColor == Color.Red)
+                lt_LineHorizon.BackColor = Color.FromArgb(175, 175, 100);
+            else
+                lt_LineHorizon.BackColor = Color.Red;
+            if (lt_FullHorizon.BackColor == Color.Red)
+                lt_FullHorizon.BackColor = Color.FromArgb(175, 175, 100);
+            else
+                lt_FullHorizon.BackColor = Color.Red;
+            pB_Space.Invalidate();
+        }
+
+        private void lt_HorizonLabel_Click(object sender, System.EventArgs e)
+        {
+            if (lt_HorizonLabel.BackColor == Color.Red)
+                lt_HorizonLabel.BackColor = Color.FromArgb(175, 175, 100);
+            else
+                lt_HorizonLabel.BackColor = Color.Red;
+            skyView.bComp = !skyView.bComp;
+            pB_Space.Invalidate();
+        }
+
+        private void lt_Planets_Click(object sender, System.EventArgs e)
+        {
+            if (lt_Planets.BackColor == Color.Red)
+                lt_Planets.BackColor = Color.FromArgb(175, 175, 100);
+            else
+                lt_Planets.BackColor = Color.Red;
+            skyView.bShowPl = !skyView.bShowPl;
+            pB_Space.Invalidate();
+        }
+
+        private void lt_EarthShadow_Click(object sender, System.EventArgs e)
+        {
+            if (lt_EarthShadow.BackColor == Color.Red)
+                lt_EarthShadow.BackColor = Color.FromArgb(175, 175, 100);
+            else
+                lt_EarthShadow.BackColor = Color.Red;
+            skyView.bShowES = !skyView.bShowES;
+            pB_Space.Invalidate();
+        }
+
+        private void lt_PlanetLabel_Click(object sender, System.EventArgs e)
+        {
+            if (lt_PlanetLabel.BackColor == Color.Red)
+                lt_PlanetLabel.BackColor = Color.FromArgb(175, 175, 100);
+            else
+                lt_PlanetLabel.BackColor = Color.Red;
+            skyView.bPlLabel = !skyView.bPlLabel;
+            pB_Space.Invalidate();
+        }
+
+        private void lt_Stars_Click(object sender, System.EventArgs e)
+        {
+            if (lt_Stars.BackColor == Color.Red)
+                lt_Stars.BackColor = Color.FromArgb(175, 175, 100);
+            else
+                lt_Stars.BackColor = Color.Red;
+            skyView.bShowSt = !skyView.bShowSt;
+            pB_Space.Invalidate();
+        }
+
+        private void lt_StarLabel_Click(object sender, System.EventArgs e)
+        {
+            if (lt_StarLabel.BackColor == Color.Red)
+                lt_StarLabel.BackColor = Color.FromArgb(175, 175, 100);
+            else
+                lt_StarLabel.BackColor = Color.Red;
+            skyView.bStLabel = !skyView.bStLabel;
+            pB_Space.Invalidate();
+        }
+
+        private void lt_Constellation_Click(object sender, System.EventArgs e)
+        {
+            if (lt_Constellation.BackColor == Color.Red)
+                lt_Constellation.BackColor = Color.FromArgb(175, 175, 100);
+            else
+                lt_Constellation.BackColor = Color.Red;
+            skyView.bShowCo = !skyView.bShowCo;
+            pB_Space.Invalidate();
+        }
+
+        private void lt_ConstellationLabel_Click(object sender, System.EventArgs e)
+        {
+            if (lt_ConstellationLabel.BackColor == Color.Red)
+                lt_ConstellationLabel.BackColor = Color.FromArgb(175, 175, 100);
+            else
+                lt_ConstellationLabel.BackColor = Color.Red;
+            skyView.bCoLabel = !skyView.bCoLabel;
+            pB_Space.Invalidate();
+        }
+
+        private void lt_Messiers_Click(object sender, System.EventArgs e)
+        {
+            if (lt_Messiers.BackColor == Color.Red)
+                lt_Messiers.BackColor = Color.FromArgb(175, 175, 100);
+            else
+                lt_Messiers.BackColor = Color.Red;
+            skyView.bShowM = !skyView.bShowM;
+            pB_Space.Invalidate();
+        }
+
+        private void lt_MessierLabel_Click(object sender, System.EventArgs e)
+        {
+            if (lt_MessierLabel.BackColor == Color.Red)
+                lt_MessierLabel.BackColor = Color.FromArgb(175, 175, 100);
+            else
+                lt_MessierLabel.BackColor = Color.Red;
+            skyView.bMLabel = !skyView.bMLabel;
+            pB_Space.Invalidate();
+        }
+
+        private void lt_EqGrid_Click(object sender, System.EventArgs e)
+        {
+            if (lt_EqGrid.BackColor == Color.Red)
+                lt_EqGrid.BackColor = Color.FromArgb(175, 175, 100);
+            else
+                lt_EqGrid.BackColor = Color.Red;
+            skyView.bShowEQ = !skyView.bShowEQ;
+            pB_Space.Invalidate();
+        }
+
+        private void lt_HorGrid_Click(object sender, System.EventArgs e)
+        {
+            if (lt_HorGrid.BackColor == Color.Red)
+                lt_HorGrid.BackColor = Color.FromArgb(175, 175, 100);
+            else
+                lt_HorGrid.BackColor = Color.Red;
+            skyView.bShowHOR = !skyView.bShowHOR;
+            pB_Space.Invalidate();
+        }
+
+        private void lt_GridLabel_Click(object sender, System.EventArgs e)
+        {
+            if (lt_GridLabel.BackColor == Color.Red)
+                lt_GridLabel.BackColor = Color.FromArgb(175, 175, 100);
+            else
+                lt_GridLabel.BackColor = Color.Red;
+            skyView.bGridLabel = !skyView.bGridLabel;
+            pB_Space.Invalidate();
+        }
+
+        private LocationST location = LocationST.GetInstance();
+        private SolarSystemData planetData = SolarSystemData.GetInstance();
+        private SkyView skyView = new SkyView();
+        private string selected;
+        private bool changePos = false;
+        private Cursor openH, closedH;
+        private string[] timeUnit = { "seconds", "minutes", "hours", "days", "months", "years" };
+        private int strIndex = 1;
+        private short n;
+        private bool timerRun = false;
+        private string T = "";
+        private Point pOld = new Point();
+        private Point pNew = new Point();
+        private bool mDown = false;
+        private char XX = 'N';
+        private string tempSelect = "";
+        private bool zenith = false;
 
         private void LblDevice_MouseEnter(object sender, EventArgs e)
         {
