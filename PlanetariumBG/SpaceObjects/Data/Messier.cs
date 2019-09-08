@@ -34,7 +34,7 @@ namespace SpaceObjects.Data
         public Messier()
         { }
 
-        public Messier(string designation, double RA, double Decl, string type, string name)
+        public Messier(string designation, double Rectascence, double Decl, string type, string name)
         {
             if (designation != "")
             {
@@ -45,7 +45,7 @@ namespace SpaceObjects.Data
                 this.Designation = name;
             }
             this.Name = name;
-            this.SkyPosition.RA = RA;
+            this.SkyPosition.Rectascence = Rectascence;
             this.SkyPosition.Decl = Decl;
             this.Type = type;
         }

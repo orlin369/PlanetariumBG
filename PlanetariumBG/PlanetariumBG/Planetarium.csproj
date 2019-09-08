@@ -83,7 +83,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form\AngularDistance.cs">
+    <Compile Include="AngularDistance.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Form\AssemblyInfo.cs">

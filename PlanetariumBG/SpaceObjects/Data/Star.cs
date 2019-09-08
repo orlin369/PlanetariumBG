@@ -11,7 +11,7 @@ namespace SpaceObjects.Data
             this.Designation = designation;
             this.Name = name;
             this.SkyPosition = new SkyPosition();
-            this.SkyPosition.RA = ra;
+            this.SkyPosition.Rectascence = ra;
             this.SkyPosition.Decl = decl;
             this.Magnitude = magnitude;
             this.Spectrum = spectrum;

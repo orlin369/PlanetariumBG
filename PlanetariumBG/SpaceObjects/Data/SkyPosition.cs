@@ -31,7 +31,10 @@ namespace SpaceObjects.Data
     /// </summary>
     public class SkyPosition
     {
-        public double RA
+
+        #region Properties
+
+        public double Rectascence
         {
             get;
             set;
@@ -55,9 +58,13 @@ namespace SpaceObjects.Data
             set;
         }
 
+        #endregion
+
+        #region Public Methods
+
         public void eqToaA(double SIDTIME, double LAT)
         {
-            double ZPX = SIDTIME * 15 - RA;
+            double ZPX = SIDTIME * 15 - Rectascence;
             double AA = 0, Atemp = 0;
 
             a = Math.Asin(
@@ -106,15 +113,19 @@ namespace SpaceObjects.Data
                     (Math.Sin(LAT * Math.PI / 180) * Math.Cos((Decl) * Math.PI / 180));
             if (Rtemp > 1) Rtemp = 1;
             if (Rtemp < -1) Rtemp = -1;
-            RA = SIDTIME - Math.Acos(Rtemp) * 180 / Math.PI;
+            Rectascence = SIDTIME - Math.Acos(Rtemp) * 180 / Math.PI;
 
-            double RRR = (RR - RA + 360) % 360;
-            if ((Math.Round((RA + RR) - ((2 * SIDTIME + 360) % 360), 0)) % 360 == 0 && (RRR < 179.8 || Math.Round(RRR, 1) == 360))
+            double RRR = (RR - Rectascence + 360) % 360;
+            if ((Math.Round((Rectascence + RR) - ((2 * SIDTIME + 360) % 360), 0)) % 360 == 0 && (RRR < 179.8 || Math.Round(RRR, 1) == 360))
             {
-                RA = RR; return;
+                Rectascence = RR; return;
             }
-            if (Math.Round(RRR, 0) == 180) { RA = (180 + 2 * SIDTIME - RR + 360) % 360; ; return; }
-            if (Math.Round((RA + RR) - (2 * SIDTIME), 0) != 0) { RA = (RR - RRR + 360) % 360; return; }
+            if (Math.Round(RRR, 0) == 180) { Rectascence = (180 + 2 * SIDTIME - RR + 360) % 360; ; return; }
+            if (Math.Round((Rectascence + RR) - (2 * SIDTIME), 0) != 0) { Rectascence = (RR - RRR + 360) % 360; return; }
         }
+
+
+
+        #endregion
     }
 }

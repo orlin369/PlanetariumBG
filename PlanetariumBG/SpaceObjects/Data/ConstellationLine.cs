@@ -36,10 +36,10 @@ namespace SpaceObjects.Data
             sp1 = new SkyPosition();
             sp2 = new SkyPosition();
 
-            sp1.RA = RA1;
+            sp1.Rectascence = RA1;
             sp1.Decl = decl1;
 
-            sp2.RA = RA2;
+            sp2.Rectascence = RA2;
             sp2.Decl = decl2;
         }
     }

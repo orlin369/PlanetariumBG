@@ -66,7 +66,7 @@ namespace SpaceObjects.SolarSystem
             double zeq = this.Position.Y * Math.Sin(this.Location.Oblecl * Math.PI / 180) + this.Position.Z * Math.Cos(this.Location.Oblecl * Math.PI / 180);
             dist = Math.Sqrt(xeq * xeq + yeq * yeq + zeq * zeq);
 
-            SkyPosition.RA = (360 + (Math.Atan2(yeq, xeq) * 180 / Math.PI)) % 360;
+            SkyPosition.Rectascence = (360 + (Math.Atan2(yeq, xeq) * 180 / Math.PI)) % 360;
             SkyPosition.Decl = Math.Asin(zeq / dist) * 180 / Math.PI;
 
             pert.Ls = L;
@@ -74,7 +74,7 @@ namespace SpaceObjects.SolarSystem
             this.Location.ys = this.Position.Y;
             this.Location.zs = this.Position.Z;
             this.Location.slon = lon;
-            this.Location.sRA = SkyPosition.RA;
+            this.Location.sRA = SkyPosition.Rectascence;
             this.Location.sDecl = SkyPosition.Decl;
         }
 

@@ -694,7 +694,7 @@ namespace Planetarium
                 g.DrawLine(new Pen(Color.DarkGray), pB_Space.Width / 2, 0, pB_Space.Width / 2, pB_Space.Height);
                 g.DrawLine(new Pen(Color.DarkGray), 0, pB_Space.Height / 2, pB_Space.Width, pB_Space.Height / 2);
 
-                double tempRA = planetData.SolarSystemObjects.GetObjectByName("Earth shadow").SkyPosition.RA - planetData.SolarSystemObjects.GetObjectByName("Moon").SkyPosition.RA;
+                double tempRA = planetData.SolarSystemObjects.GetObjectByName("Earth shadow").SkyPosition.Rectascence - planetData.SolarSystemObjects.GetObjectByName("Moon").SkyPosition.Rectascence;
                 if (tempRA > 300) tempRA -= 360;
                 double dx = (tempRA * pB_Space.Width / 3) / (planetData.SolarSystemObjects.GetObjectByName("Earth shadow").diam / 7200);
                 double dy = ((planetData.SolarSystemObjects.GetObjectByName("Earth shadow").SkyPosition.Decl - planetData.SolarSystemObjects.GetObjectByName("Moon").SkyPosition.Decl) * pB_Space.Width / 3) / (planetData.SolarSystemObjects.GetObjectByName("Earth shadow").diam / 7200);
@@ -708,7 +708,7 @@ namespace Planetarium
                 g.FillEllipse(new SolidBrush(Color.FromArgb(85, 80, 0, 0)),
                     (float)(pB_Space.Width / 2 - DMM / 2), (float)(pB_Space.Height / 2 - DMM / 2), (float)DMM, (float)DMM);
 
-                g.DrawString("RA : " + Math.Round(planetData.SolarSystemObjects.GetObjectByName("Earth shadow").SkyPosition.RA, 3).ToString(), new Font("Arial", 10),
+                g.DrawString("Rectascence : " + Math.Round(planetData.SolarSystemObjects.GetObjectByName("Earth shadow").SkyPosition.Rectascence, 3).ToString(), new Font("Arial", 10),
                     new SolidBrush(Color.DarkGray), pB_Space.Width / 2 + 10, 30);
                 g.DrawString("Decl : " + Math.Round(planetData.SolarSystemObjects.GetObjectByName("Earth shadow").SkyPosition.Decl, 3).ToString(), new Font("Arial", 10),
                     new SolidBrush(Color.DarkGray), 15, pB_Space.Height / 2 + 15);
@@ -731,7 +731,7 @@ namespace Planetarium
                         pB_Space.Width / 2 - pB_Space.Width / 8, pB_Space.Height / 2 - pB_Space.Width / 8,
                         pB_Space.Width / 4, pB_Space.Width / 4);
 
-                    double tempRA = planetData.SolarSystemObjects.GetObjectByName("Sun").SkyPosition.RA - planetData.SolarSystemObjects.GetObjectByName("Moon").SkyPosition.RA;
+                    double tempRA = planetData.SolarSystemObjects.GetObjectByName("Sun").SkyPosition.Rectascence - planetData.SolarSystemObjects.GetObjectByName("Moon").SkyPosition.Rectascence;
                     if (tempRA > 300) tempRA -= 360;
                     double dx = (tempRA * pB_Space.Width / 8) /
                         (planetData.SolarSystemObjects.GetObjectByName("Sun").diam / 7200);
@@ -749,7 +749,7 @@ namespace Planetarium
                     g.DrawString("Mercury enlarged !", new Font("Arial", 12),
                         new SolidBrush(Color.Yellow), 12, pB_Space.Height - 50);
 
-                    double tempRA = planetData.SolarSystemObjects.GetObjectByName("Sun").SkyPosition.RA - planetData.SolarSystemObjects.GetObjectByName("Mercury").SkyPosition.RA;
+                    double tempRA = planetData.SolarSystemObjects.GetObjectByName("Sun").SkyPosition.Rectascence - planetData.SolarSystemObjects.GetObjectByName("Mercury").SkyPosition.Rectascence;
                     if (tempRA > 300) tempRA -= 360;
                     double dx = (tempRA * pB_Space.Width / 4) /
                         (planetData.SolarSystemObjects.GetObjectByName("Sun").diam / 7200);
@@ -765,7 +765,7 @@ namespace Planetarium
                         pB_Space.Width / 2 - pB_Space.Width / 4, pB_Space.Height / 2 - pB_Space.Width / 4,
                         pB_Space.Width / 2, pB_Space.Width / 2);
 
-                    double tempRA = planetData.SolarSystemObjects.GetObjectByName("Sun").SkyPosition.RA - planetData.SolarSystemObjects.GetObjectByName("Venus").SkyPosition.RA;
+                    double tempRA = planetData.SolarSystemObjects.GetObjectByName("Sun").SkyPosition.Rectascence - planetData.SolarSystemObjects.GetObjectByName("Venus").SkyPosition.Rectascence;
                     if (tempRA > 300) tempRA -= 360;
                     double dx = (tempRA * pB_Space.Width / 4) /
                         (planetData.SolarSystemObjects.GetObjectByName("Sun").diam / 7200);
@@ -776,7 +776,7 @@ namespace Planetarium
                         pB_Space.Width / 2 + (int)dx - (int)DM / 2, pB_Space.Height / 2 - (int)dy - (int)DM / 2, (int)DM, (int)DM);
                 }
 
-                g.DrawString("RA : " + Math.Round(planetData.SolarSystemObjects.GetObjectByName("Sun").SkyPosition.RA, 3).ToString(), new Font("Arial", 10),
+                g.DrawString("Rectascence : " + Math.Round(planetData.SolarSystemObjects.GetObjectByName("Sun").SkyPosition.Rectascence, 3).ToString(), new Font("Arial", 10),
                     new SolidBrush(Color.Yellow), pB_Space.Width / 2 + 10, 30);
                 g.DrawString("Decl : " + Math.Round(planetData.SolarSystemObjects.GetObjectByName("Sun").SkyPosition.Decl, 3).ToString(), new Font("Arial", 10),
                     new SolidBrush(Color.Yellow), 15, pB_Space.Height / 2 + 15);

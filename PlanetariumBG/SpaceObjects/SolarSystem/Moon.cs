@@ -69,7 +69,7 @@ namespace SpaceObjects.SolarSystem
             double xequat = xeclip2;
             double yequat = yeclip2 * Math.Cos(this.Location.Oblecl * Math.PI / 180.0D) - zeclip2 * Math.Sin(this.Location.Oblecl * Math.PI / 180.0D);
             double zequat = yeclip2 * Math.Sin(this.Location.Oblecl * Math.PI / 180.0D) + zeclip2 * Math.Cos(this.Location.Oblecl * Math.PI / 180.0D);
-            SkyPosition.RA = (360 + (Math.Atan2(yequat, xequat) * 180.0D / Math.PI)) % 360;
+            SkyPosition.Rectascence = (360 + (Math.Atan2(yequat, xequat) * 180.0D / Math.PI)) % 360;
             SkyPosition.Decl = Math.Atan2(zequat, Math.Sqrt(xequat * xequat + yequat * yequat)) * 180.0D / Math.PI;
         }
 
@@ -80,7 +80,7 @@ namespace SpaceObjects.SolarSystem
             elong = Math.Acos(
                 Math.Sin(SkyPosition.Decl * Math.PI / 180.0D) * Math.Sin(this.Location.sDecl * Math.PI / 180.0D) +
                 Math.Cos(SkyPosition.Decl * Math.PI / 180.0D) * Math.Cos(this.Location.sDecl * Math.PI / 180.0D) *
-                Math.Cos((SkyPosition.RA - this.Location.sRA) * Math.PI / 180.0D)) * 180.0D / Math.PI;
+                Math.Cos((SkyPosition.Rectascence - this.Location.sRA) * Math.PI / 180.0D)) * 180.0D / Math.PI;
             phase = 180.0D - elong;
             this.Magnitude = -10;
         }

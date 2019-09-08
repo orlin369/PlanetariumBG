@@ -481,9 +481,9 @@ namespace Planetarium
             Point[] p = new Point[183];
             for (int i = 0, j = 0; i < 366; i += 2)
             {
-                pd.PlanetPositions();
+                solarSystemData.PlanetPositions();
                 p[j].X = (int)(70 + i * (pB_Graf.Width - 10 - 70) / 365);
-                p[j++].Y = (int)(pB_Graf.Height - 30 - pd.SolarSystemObjects.GetObjectByName(name).elong * (pB_Graf.Height - 50) / 180);
+                p[j++].Y = (int)(pB_Graf.Height - 30 - solarSystemData.SolarSystemObjects.GetObjectByName(name).elong * (pB_Graf.Height - 50) / 180);
                 location.MainDateTime = location.MainDateTime.AddDays(2);
             }
             g.DrawLines(new Pen(c, 2), p);
@@ -507,9 +507,9 @@ namespace Planetarium
             Point[] p = new Point[183];
             for (int i = 0, j = 0; i < 366; i += 2)
             {
-                pd.PlanetPositions();
+                solarSystemData.PlanetPositions();
                 p[j].X = (int)(70 + i * (pB_Graf.Width - 10 - 70) / 365);
-                p[j++].Y = (int)(pB_Graf.Height - 30 - pd.SolarSystemObjects.GetObjectByName(name).diam * (pB_Graf.Height - 50) / 70);
+                p[j++].Y = (int)(pB_Graf.Height - 30 - solarSystemData.SolarSystemObjects.GetObjectByName(name).diam * (pB_Graf.Height - 50) / 70);
                 location.MainDateTime = location.MainDateTime.AddDays(2);
             }
             g.DrawLines(new Pen(c, 2), p);
@@ -533,15 +533,15 @@ namespace Planetarium
             Point[] p = new Point[183];
             for (int i = 0, j = 0; i < 366; i += 2)
             {
-                pd.PlanetPositions();
+                solarSystemData.PlanetPositions();
                 p[j].X = (int)(70 + i * (pB_Graf.Width - 10 - 70) / 365);
-                p[j++].Y = (int)(pB_Graf.Height - 30 - pd.SolarSystemObjects.GetObjectByName(name).phase * 100 * (pB_Graf.Height - 50) / 100);
+                p[j++].Y = (int)(pB_Graf.Height - 30 - solarSystemData.SolarSystemObjects.GetObjectByName(name).phase * 100 * (pB_Graf.Height - 50) / 100);
                 location.MainDateTime = location.MainDateTime.AddDays(2);
             }
             g.DrawLines(new Pen(c, 2), p);
         }
 
-        private SolarSystemData pd = SolarSystemData.GetInstance();
+        private SolarSystemData solarSystemData = SolarSystemData.GetInstance();
         private LocationST location = LocationST.GetInstance();
         private static string[] planetNames = {"Mercury","Venus","Mars","Jupiter",
                                                "Saturn","Uranus","Neptune","Pluto"};

@@ -119,7 +119,7 @@ namespace Planetarium
             {
                 g.DrawString(planetName + " :", new Font("Georgia", 9), new SolidBrush(Color.FromArgb(100, 100, 100)), 5, 5 + 20 * x);
 
-                double rahTemp = planetData.SolarSystemObjects.GetObjectByName(planetName).SkyPosition.RA / 15;
+                double rahTemp = planetData.SolarSystemObjects.GetObjectByName(planetName).SkyPosition.Rectascence / 15;
                 double ramTemp = (rahTemp - (int)rahTemp) * 60;
                 double rasTemp = (ramTemp - (int)ramTemp) * 60;
 

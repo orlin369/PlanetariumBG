@@ -1602,7 +1602,7 @@ namespace Planetarium
                     skyView.grid[i, j].A = A;
 
                     skyView.EQgrid[i, j].Decl = a;
-                    skyView.EQgrid[i, j].RA = A;
+                    skyView.EQgrid[i, j].Rectascence = A;
                 }
             }
 

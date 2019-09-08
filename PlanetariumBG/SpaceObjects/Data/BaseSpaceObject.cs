@@ -181,7 +181,7 @@ namespace SpaceObjects.Data
 
             sunDist = Math.Sqrt(this.Location.xs * this.Location.xs + this.Location.ys * this.Location.ys + this.Location.zs * this.Location.zs);
 
-            SkyPosition.RA = (360 + (Math.Atan2(yequat, xequat) * 180 / Math.PI)) % 360;
+            SkyPosition.Rectascence = (360 + (Math.Atan2(yequat, xequat) * 180 / Math.PI)) % 360;
             SkyPosition.Decl = Math.Atan2(zequat, Math.Sqrt(xequat * xequat + yequat * yequat)) * 180 / Math.PI;
         }
     }
