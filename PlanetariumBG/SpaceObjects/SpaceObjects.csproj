@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{100AEB67-9F5A-42E4-A870-0E563BE69912}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SpaceObjects</RootNamespace>
+    <AssemblyName>SpaceObjects</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DeepSpace\ADSObject.cs" />
+    <Compile Include="DeepSpace\ConstellationLine.cs" />
+    <Compile Include="DeepSpace\ConstellationName.cs" />
+    <Compile Include="DeepSpace\DeepSpaceData.cs" />
+    <Compile Include="DeepSpace\IDSObject.cs" />
+    <Compile Include="DeepSpace\Messier.cs" />
+    <Compile Include="DeepSpace\Stars.cs" />
+    <Compile Include="Perturbations\APerturbations.cs" />
+    <Compile Include="Perturbations\IPerturbations.cs" />
+    <Compile Include="Perturbations\PertElements.cs" />
+    <Compile Include="Perturbations\PertJupiter.cs" />
+    <Compile Include="Perturbations\PertMoon.cs" />
+    <Compile Include="Perturbations\PertSaturn.cs" />
+    <Compile Include="Perturbations\PertUranus.cs" />
+    <Compile Include="Position\LocationST.cs" />
+    <Compile Include="Position\PlanetPos.cs" />
+    <Compile Include="Position\SkyPos.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SolarSystem\APlanet.cs" />
+    <Compile Include="SolarSystem\Earth.cs" />
+    <Compile Include="SolarSystem\EarthShadow.cs" />
+    <Compile Include="SolarSystem\ISolarSystemObject.cs" />
+    <Compile Include="SolarSystem\Jupiter.cs" />
+    <Compile Include="SolarSystem\Mars.cs" />
+    <Compile Include="SolarSystem\Mercury.cs" />
+    <Compile Include="SolarSystem\Moon.cs" />
+    <Compile Include="SolarSystem\Neptune.cs" />
+    <Compile Include="SolarSystem\Orbits.cs" />
+    <Compile Include="SolarSystem\PlanetData.cs" />
+    <Compile Include="SolarSystem\Planets.cs" />
+    <Compile Include="SolarSystem\Pluto.cs" />
+    <Compile Include="SolarSystem\Saturn.cs" />
+    <Compile Include="SolarSystem\Sun.cs" />
+    <Compile Include="SolarSystem\Uranus.cs" />
+    <Compile Include="SolarSystem\Venus.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Messier.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\HYG.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Constellations.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

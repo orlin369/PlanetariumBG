@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>7.10.3077</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8C3EB103-E765-4B58-8210-414499D57E3E}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>Form\App.ico</ApplicationIcon>
+    <AssemblyKeyContainerName />
+    <AssemblyName>Planetarium</AssemblyName>
+    <AssemblyOriginatorKeyFile />
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Planetarium</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject />
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>0.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile />
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile />
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn />
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile />
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile />
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn />
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Form\AngularDistance.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Form\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Form\f_MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\f_PlanetData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\f_PlanetPosition.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\f_SolarEvents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\f_SolarSystem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\f_ViewLocation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\SkyView.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Content Include="Form\App.ico" />
+    <Content Include="Resources\ButtonIcons\label.bmp" />
+    <Content Include="Resources\Icons\minus.ico" />
+    <EmbeddedResource Include="Form\f_MainForm.resx">
+      <DependentUpon>f_MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\f_PlanetData.resx">
+      <DependentUpon>f_PlanetData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\f_PlanetPosition.resx">
+      <DependentUpon>f_PlanetPosition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\f_SolarEvents.resx">
+      <DependentUpon>f_SolarEvents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\f_SolarSystem.resx">
+      <DependentUpon>f_SolarSystem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\f_ViewLocation.resx">
+      <DependentUpon>f_ViewLocation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Cursors\closed_hand.cur" />
+    <EmbeddedResource Include="Resources\ButtonIcons\cn.bmp" />
+    <EmbeddedResource Include="Resources\ButtonIcons\constellations.bmp" />
+    <EmbeddedResource Include="Resources\ButtonIcons\daylight.bmp" />
+    <EmbeddedResource Include="Resources\ButtonIcons\dn.bmp" />
+    <EmbeddedResource Include="Resources\Directions\E.bmp" />
+    <EmbeddedResource Include="Resources\earth.jpg" />
+    <EmbeddedResource Include="Resources\ButtonIcons\eqGrid.bmp" />
+    <EmbeddedResource Include="Resources\Icons\flow.ico" />
+    <EmbeddedResource Include="Resources\ButtonIcons\fullHor.bmp" />
+    <EmbeddedResource Include="Resources\ButtonIcons\gal.bmp" />
+    <EmbeddedResource Include="Resources\ButtonIcons\gc.bmp" />
+    <EmbeddedResource Include="Resources\halo.gif" />
+    <EmbeddedResource Include="Resources\ButtonIcons\horGrid.bmp" />
+    <EmbeddedResource Include="Resources\ButtonIcons\lineHor.bmp" />
+    <EmbeddedResource Include="Resources\Icons\maxAV.ico" />
+    <EmbeddedResource Include="Resources\Stars\maxStar.bmp" />
+    <EmbeddedResource Include="Resources\ButtonIcons\meesier.bmp" />
+    <EmbeddedResource Include="Resources\Stars\minBlue.bmp" />
+    <EmbeddedResource Include="Resources\Stars\minRed.bmp" />
+    <EmbeddedResource Include="Resources\Stars\minYellow.bmp" />
+    <EmbeddedResource Include="Resources\moon.PNG" />
+    <EmbeddedResource Include="Resources\Directions\N.bmp" />
+    <EmbeddedResource Include="Resources\Directions\NE.bmp" />
+    <EmbeddedResource Include="Resources\Directions\NW.bmp" />
+    <EmbeddedResource Include="Resources\ButtonIcons\oc.bmp" />
+    <EmbeddedResource Include="Resources\Cursors\open_hand.cur" />
+    <EmbeddedResource Include="Resources\ButtonIcons\planets.bmp" />
+    <EmbeddedResource Include="Resources\Icons\play.ico" />
+    <EmbeddedResource Include="Resources\Icons\playB.ico" />
+    <EmbeddedResource Include="Resources\Icons\plus.ico" />
+    <EmbeddedResource Include="Resources\ButtonIcons\pn.bmp" />
+    <EmbeddedResource Include="Resources\Directions\S.bmp" />
+    <EmbeddedResource Include="Resources\Directions\SE.bmp" />
+    <EmbeddedResource Include="Resources\Stars\starBlue.bmp" />
+    <EmbeddedResource Include="Resources\Stars\starRed.bmp" />
+    <EmbeddedResource Include="Resources\Stars\stars.bmp" />
+    <EmbeddedResource Include="Resources\Stars\starYellow.bmp" />
+    <EmbeddedResource Include="Resources\Icons\stepB.ico" />
+    <EmbeddedResource Include="Resources\Icons\stepF.ico" />
+    <EmbeddedResource Include="Resources\Icons\stop.ico" />
+    <EmbeddedResource Include="Resources\Directions\SW.bmp" />
+    <EmbeddedResource Include="Resources\Directions\W.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SpaceBridge\SpaceBridge.csproj">
+      <Project>{e0fd8d95-2945-4ced-a2a7-491e48fc2b20}</Project>
+      <Name>SpaceBridge</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpaceObjects\SpaceObjects.csproj">
+      <Project>{100aeb67-9f5a-42e4-a870-0e563be69912}</Project>
+      <Name>SpaceObjects</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent />
+    <PostBuildEvent />
+  </PropertyGroup>
+</Project>
