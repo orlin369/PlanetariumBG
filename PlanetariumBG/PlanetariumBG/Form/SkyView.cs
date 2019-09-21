@@ -367,33 +367,33 @@ namespace Planetarium
 
         public void DrawConstellations(Graphics g)
         {
-            foreach (ConstellationLine c in DSData.constellation)
+            foreach (ConstellationLine constellation in DSData.Constellation)
             {
-                double ad1 = angDist.Distance(c.SkyPosition1.Rectascence, c.SkyPosition1.Declination, center.Rectascence, center.Declination);
-                double ad2 = angDist.Distance(c.SkyPosition2.Rectascence, c.SkyPosition2.Declination, center.Rectascence, center.Declination);
+                double ad1 = angDist.Distance(constellation.SkyPosition1.Rectascence, constellation.SkyPosition1.Declination, center.Rectascence, center.Declination);
+                double ad2 = angDist.Distance(constellation.SkyPosition2.Rectascence, constellation.SkyPosition2.Declination, center.Rectascence, center.Declination);
                 if (ad1 < 2 * viewAngle || ad2 < 2 * viewAngle)
                 {
                     PointF p1 = new PointF();
                     PointF p2 = new PointF();
-                    c.SkyPosition1.eqToaA(this.Location.SIDTIME, this.Location.Latitude);
-                    p1 = ToScreanPt(c.SkyPosition1);
-                    c.SkyPosition2.eqToaA(this.Location.SIDTIME, this.Location.Latitude);
-                    p2 = ToScreanPt(c.SkyPosition2);
+                    constellation.SkyPosition1.eqToaA(this.Location.SIDTIME, this.Location.Latitude);
+                    p1 = ToScreanPt(constellation.SkyPosition1);
+                    constellation.SkyPosition2.eqToaA(this.Location.SIDTIME, this.Location.Latitude);
+                    p2 = ToScreanPt(constellation.SkyPosition2);
                     g.DrawLine(Pens.YellowGreen, p1, p2);
                 }
             }
 
             if (bCoLabel == true)
             {
-                foreach (ConstellationName cn in DSData.constellationNames)
+                foreach (ConstellationName constellationNames in DSData.ConstellationNames)
                 {
-                    double ad = angDist.Distance(cn.skyPos.Rectascence, cn.skyPos.Declination, center.Rectascence, center.Declination);
+                    double ad = angDist.Distance(constellationNames.skyPos.Rectascence, constellationNames.skyPos.Declination, center.Rectascence, center.Declination);
                     if (ad < 1.2 * viewAngle)
                     {
-                        cn.skyPos.eqToaA(this.Location.SIDTIME, this.Location.Latitude);
-                        PointF p = ToScreanPt(cn.skyPos);
-                        g.DrawString(cn.name, new Font("Arial", 12), Brushes.Aqua,
-                            (int)(p.X - cn.name.Length * 4), (int)(p.Y + 5));
+                        constellationNames.skyPos.eqToaA(this.Location.SIDTIME, this.Location.Latitude);
+                        PointF p = ToScreanPt(constellationNames.skyPos);
+                        g.DrawString(constellationNames.name, new Font("Arial", 12), Brushes.Aqua,
+                            (int)(p.X - constellationNames.name.Length * 4), (int)(p.Y + 5));
                     }
                 }
             }
@@ -401,7 +401,7 @@ namespace Planetarium
 
         public void DrawStars(Graphics g)
         {
-            foreach (Star s in DSData.stars)
+            foreach (Star s in DSData.Stars)
             {
                 int w = 0;
                 switch ((int)Math.Round(s.Magnitude, 0))
@@ -474,7 +474,7 @@ namespace Planetarium
 
         public void DrawMessier(Graphics g)
         {
-            foreach (Messier m in DSData.messier)
+            foreach (Messier m in DSData.Messier)
             {
                 double ad = angDist.Distance(m.SkyPosition.Rectascence, m.SkyPosition.Declination, center.Rectascence, center.Declination);
                 if (ad < 1.2 * viewAngle)
@@ -570,19 +570,19 @@ namespace Planetarium
                                 else
                                     w = (int)((origin.X) / ((20 * 3600) / this.solarSystemData.SolarSystemObjects[i].diam));
                             }
-                            Color c = Color.Red;
+                            Color color = Color.Red;
                             switch (this.solarSystemData.SolarSystemObjects[i].Name)
                             {
-                                case "Pluto": { c = Color.Wheat; break; }
-                                case "Neptune": { c = Color.Blue; break; }
-                                case "Uranus": { c = Color.Aqua; break; }
-                                case "Saturn": { c = Color.SandyBrown; break; }
-                                case "Jupiter": { c = Color.Goldenrod; break; }
-                                case "Mars": { c = Color.Salmon; break; }
-                                case "Venus": { c = Color.LightYellow; break; }
-                                case "Mercury": { c = Color.LightGray; break; }
-                                case "Moon": { c = Color.LightGray; break; }
-                                case "Sun": { c = Color.Yellow; break; }
+                                case "Pluto": { color = Color.Wheat; break; }
+                                case "Neptune": { color = Color.Blue; break; }
+                                case "Uranus": { color = Color.Aqua; break; }
+                                case "Saturn": { color = Color.SandyBrown; break; }
+                                case "Jupiter": { color = Color.Goldenrod; break; }
+                                case "Mars": { color = Color.Salmon; break; }
+                                case "Venus": { color = Color.LightYellow; break; }
+                                case "Mercury": { color = Color.LightGray; break; }
+                                case "Moon": { color = Color.LightGray; break; }
+                                case "Sun": { color = Color.Yellow; break; }
                             }
 
                             if (this.solarSystemData.SolarSystemObjects[i].Name == "Sun" && bFull && bDay)
@@ -605,7 +605,7 @@ namespace Planetarium
                                 if (name == "Moon")
                                     moonGr.DrawImage(bmpMoon, 0, 0, bmp.Width, bmp.Height);
                                 else
-                                    moonGr.FillEllipse(new SolidBrush(c), 0, 0, bmp.Width, bmp.Height);
+                                    moonGr.FillEllipse(new SolidBrush(color), 0, 0, bmp.Width, bmp.Height);
                                 GraphicsPath gp = new GraphicsPath();
 
                                 int n = (int)(this.solarSystemData.SolarSystemObjects[i].SkyPosition.Rectascence + 360 - this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").SkyPosition.Rectascence) % 360;
@@ -733,7 +733,7 @@ namespace Planetarium
                                 g.DrawEllipse(new Pen(Color.FromArgb(80, 255, 0, 0)), (float)(p.X - W / 2), (float)(p.Y - W / 2), (float)W, (float)W);
                             }
                             else if (name != "Earth shadow")
-                                g.FillEllipse(new SolidBrush(c), (float)(p.X - w / 2), (float)(p.Y - w / 2), w, w);
+                                g.FillEllipse(new SolidBrush(color), (float)(p.X - w / 2), (float)(p.Y - w / 2), w, w);
 
                             if ((bPlLabel || (selPl == this.solarSystemData.SolarSystemObjects[i].Name && selected == true)) && (name != "Earth shadow" || this.bShowES == true))
                             {

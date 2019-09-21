@@ -1098,8 +1098,6 @@ namespace Planetarium
             this.lblDevice.TabIndex = 66;
             this.lblDevice.Text = "Device";
             this.lblDevice.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblDevice.MouseEnter += new System.EventHandler(this.LblDevice_MouseEnter);
-            this.lblDevice.MouseLeave += new System.EventHandler(this.LblDevice_MouseLeave);
             // 
             // lt_EarthShadow
             // 
@@ -2173,10 +2171,10 @@ namespace Planetarium
                 if (sun < -15) pB_Space.BackColor = Color.Black;
             }
             else pB_Space.BackColor = Color.Black;
-            Color c = pB_Space.BackColor;
+            Color color = pB_Space.BackColor;
             if (pB_Space.BackColor == Color.Black)
                 skyView.moonColor = Color.FromArgb(230, 10, 10, 10);
-            else skyView.moonColor = Color.FromArgb(240, c.R, c.G, c.B);
+            else skyView.moonColor = Color.FromArgb(240, color.R, color.G, color.B);
 
             skyView.DrawGrid(e.Graphics);
             if (skyView.bShowCo && (!skyView.bDay || sun <= 0))
@@ -3181,16 +3179,6 @@ namespace Planetarium
         private char XX = 'N';
         private string tempSelect = "";
         private bool zenith = false;
-
-        private void LblDevice_MouseEnter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void LblDevice_MouseLeave(object sender, EventArgs e)
-        {
-
-        }
 
         private Model1 device;
     }

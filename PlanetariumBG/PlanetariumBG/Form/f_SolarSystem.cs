@@ -981,7 +981,7 @@ namespace Planetarium
             pB_Space.Invalidate();
         }
 
-        private void DrawSS(Graphics g, string name, Color c)
+        private void DrawSS(Graphics g, string name, Color color)
         {
             if (mag == 0) mag = (short)((originTop.Y - 10) / this.solarSystemData.SolarSystemObjects.GetObjectByName(name).d);
             if (c_Orbits.Checked)
@@ -997,7 +997,7 @@ namespace Planetarium
             }
 
             this.solarSystemData.SolarSystemObjects.GetObjectByName(name).Position.Rotate(angle_X, angle_Z);
-            g.FillRectangle(new SolidBrush(c),
+            g.FillRectangle(new SolidBrush(color),
                 (int)(originTop.X + this.solarSystemData.SolarSystemObjects.GetObjectByName(name).Position.X * mag) - 2,
                 (int)(originTop.Y - this.solarSystemData.SolarSystemObjects.GetObjectByName(name).Position.Y * mag) - 2, 4, 4);
             if (isFor == "cf")

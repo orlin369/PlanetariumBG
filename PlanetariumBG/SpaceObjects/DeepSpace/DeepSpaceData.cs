@@ -37,20 +37,46 @@ namespace SpaceObjects.DeepSpace
     public class DeepSpaceData
     {
 
-        public ArrayList stars = new ArrayList();
-        public ArrayList messier = new ArrayList();
-        public ArrayList constellation = new ArrayList();
-        public ArrayList constellationNames = new ArrayList();
+        #region Variables
 
-        public static DeepSpaceData GetInstance()
+        private static DeepSpaceData instance;
+
+        #endregion
+
+        #region Properties
+
+        public ArrayList Stars
         {
-            if (instance == null)
-                instance = new DeepSpaceData();
-            return instance;
+            get;
+            set;
         }
+        public ArrayList Messier
+        {
+            get;
+            set;
+        }
+        public ArrayList Constellation
+        {
+            get;
+            set;
+        }
+        public ArrayList ConstellationNames
+        {
+            get;
+            set;
+        }
+
+        #endregion
+
+        #region Constructor
 
         private DeepSpaceData()
         {
+            this.Stars = new ArrayList();
+            this.Messier = new ArrayList();
+            this.Constellation = new ArrayList();
+            this.ConstellationNames = new ArrayList();
+
             Assembly a = Assembly.GetExecutingAssembly();
             Stream txtStream = a.GetManifestResourceStream("SpaceObjects.Resources.HYG.txt");
             StreamReader sr = new StreamReader(txtStream);
@@ -62,11 +88,11 @@ namespace SpaceObjects.DeepSpace
             while (sr.Peek() >= 0)
             {
                 string[] split = sr.ReadLine().Split(delimiter, 20);
-                stars.Add(new Star(split[0], split[1], Convert.ToDouble(split[2], provider) * 15,
+                Stars.Add(new Star(split[0], split[1], Convert.ToDouble(split[2], provider) * 15,
                                     Convert.ToDouble(split[3], provider),
                                     Convert.ToDouble(split[4], provider), split[5]));
             }
-            stars.TrimToSize();
+            Stars.TrimToSize();
 
             a = Assembly.GetExecutingAssembly();
             txtStream = a.GetManifestResourceStream("SpaceObjects.Resources.Messier.txt");
@@ -75,10 +101,10 @@ namespace SpaceObjects.DeepSpace
             while (sr.Peek() >= 0)
             {
                 string[] split = sr.ReadLine().Split(delimiter, 20);
-                messier.Add(new Messier(split[0], Convert.ToDouble(split[1], provider) * 15,
+                Messier.Add(new Messier(split[0], Convert.ToDouble(split[1], provider) * 15,
                                Convert.ToDouble(split[2], provider), split[3], split[4]));
             }
-            messier.TrimToSize();
+            Messier.TrimToSize();
 
             a = Assembly.GetExecutingAssembly();
             txtStream = a.GetManifestResourceStream("SpaceObjects.Resources.Constellations.txt");
@@ -90,7 +116,7 @@ namespace SpaceObjects.DeepSpace
                 if (str[0] != 'C')
                 {
                     string[] split = str.Split(delimiter, 20);
-                    constellation.Add(new ConstellationLine(Convert.ToDouble(split[0], provider) * 15, Convert.ToDouble(split[1], provider),
+                    Constellation.Add(new ConstellationLine(Convert.ToDouble(split[0], provider) * 15, Convert.ToDouble(split[1], provider),
                         Convert.ToDouble(split[2], provider) * 15, Convert.ToDouble(split[3], provider)));
                 }
                 else
@@ -99,13 +125,22 @@ namespace SpaceObjects.DeepSpace
                     SkyPosition sp = new SkyPosition();
                     sp.Rectascence = Convert.ToDouble(split[2], provider) * 15;
                     sp.Declination = Convert.ToDouble(split[3], provider);
-                    constellationNames.Add(new ConstellationName(split[1], sp));
+                    ConstellationNames.Add(new ConstellationName(split[1], sp));
                 }
             }
-            constellation.TrimToSize();
-            constellationNames.TrimToSize();
+            Constellation.TrimToSize();
+            ConstellationNames.TrimToSize();
         }
 
-        private static DeepSpaceData instance;
+        #endregion
+
+        public static DeepSpaceData GetInstance()
+        {
+            if (instance == null)
+                instance = new DeepSpaceData();
+            return instance;
+        }
+
+
     }
 }

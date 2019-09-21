@@ -32,10 +32,32 @@ namespace SpaceObjects.SolarSystem
     /// </summary>
     public class EarthShadow : SolarSystemObject
     {
+
+        #region Properties
+
+        public double DU
+        {
+            get;
+            set;
+        }
+        public double DP
+        {
+            get;
+            set;
+        }
+
+        #endregion
+
+        #region Constructor
+
         public EarthShadow()
         {
             this.Name = "Earth shadow";
         }
+
+        #endregion
+
+        #region Public Methods
 
         public override void OrbitalElements()
         {
@@ -58,15 +80,7 @@ namespace SpaceObjects.SolarSystem
             throw new NotImplementedException();
         }
 
-        public double DU
-        {
-            get;
-            set;
-        }
-        public double DP
-        {
-            get;
-            set;
-        }
+        #endregion
+
     }
 }

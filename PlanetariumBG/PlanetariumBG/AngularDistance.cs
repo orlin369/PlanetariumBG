@@ -228,7 +228,6 @@ namespace Planetarium
             return 0;
         }
 
-
         public double Distance(SkyPosition a, SkyPosition b)
         {
             return Distance(a.Rectascence, a.Declination, b.Rectascence, b.Declination);
