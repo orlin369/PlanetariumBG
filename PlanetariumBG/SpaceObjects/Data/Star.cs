@@ -2,8 +2,12 @@
 
 namespace SpaceObjects.Data
 {
+    [Serializable]
     public class Star : BaseSpaceObject
     {
+
+        #region Constructor
+
         public Star() { }
 
         public Star(string designation, string name, double rectascence, double declination, double magnitude, string spectrum)
@@ -16,6 +20,10 @@ namespace SpaceObjects.Data
             this.Magnitude = magnitude;
             this.Spectrum = spectrum;
         }
+
+        #endregion
+
+        #region Public Methods
 
         public override void Ephemerides()
         {
@@ -31,5 +39,8 @@ namespace SpaceObjects.Data
         {
             throw new NotImplementedException();
         }
+
+        #endregion
+
     }
 }

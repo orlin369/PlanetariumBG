@@ -38,8 +38,8 @@ namespace SpaceObjects.SolarSystem
 
         public override void OrbitalElements()
         {
-            d = 1.2;
-            T = 365;
+            this.MeanMotion = 1.2;
+            this.TrueAnomaly = 365;
         }
 
         public override void HeliocentricPos()

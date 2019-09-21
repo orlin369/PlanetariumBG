@@ -160,7 +160,7 @@ namespace Planetarium
                     minV = this.solarSystemData.SolarSystemObjects[i]; minI = i;
                     for (int j = i + 1; j < 10; ++j)
                     {
-                        if (this.solarSystemData.SolarSystemObjects[j].dist > minV.dist)
+                        if (this.solarSystemData.SolarSystemObjects[j].Distance > minV.Distance)
                         {
                             minV = this.solarSystemData.SolarSystemObjects[j]; minI = j;
                         }
@@ -188,7 +188,7 @@ namespace Planetarium
                 {
                     for (int j = 0; j < 25; ++j)
                     {
-                        double ad = angDist.Distance(grid[i, j].A, grid[i, j].a, center.A, center.a);
+                        double ad = angularDistances.Distance(grid[i, j].A, grid[i, j].a, center.A, center.a);
                         if (2 * viewAngle > 50) nn = 1.5;
                         if (2 * viewAngle < 50) nn = 5;
                         if (2 * viewAngle < 10) nn = 40;
@@ -226,7 +226,7 @@ namespace Planetarium
                 {
                     for (int i = 0; i < 19; ++i)
                     {
-                        double ad = angDist.Distance(grid[i, j].A, grid[i, j].a, center.A, center.a);
+                        double ad = angularDistances.Distance(grid[i, j].A, grid[i, j].a, center.A, center.a);
                         if (2 * viewAngle > 50) nn = 1.5;
                         if (2 * viewAngle < 50) nn = 5;
                         if (2 * viewAngle < 10) nn = 40;
@@ -279,7 +279,7 @@ namespace Planetarium
                 {
                     for (int j = 0; j < 25; ++j)
                     {
-                        double ad = angDist.Distance(EQgrid[i, j].Rectascence, EQgrid[i, j].Declination, center.Rectascence, center.Declination);
+                        double ad = angularDistances.Distance(EQgrid[i, j].Rectascence, EQgrid[i, j].Declination, center.Rectascence, center.Declination);
                         if (2 * viewAngle > 50) nn = 1.5;
                         if (2 * viewAngle < 50) nn = 5;
                         if (2 * viewAngle < 10) nn = 40;
@@ -322,7 +322,7 @@ namespace Planetarium
                 {
                     for (int i = 0; i < 19; ++i)
                     {
-                        double ad = angDist.Distance(EQgrid[i, j].Rectascence, EQgrid[i, j].Declination, center.Rectascence, center.Declination);
+                        double ad = angularDistances.Distance(EQgrid[i, j].Rectascence, EQgrid[i, j].Declination, center.Rectascence, center.Declination);
                         if (2 * viewAngle > 50) nn = 1.5;
                         if (2 * viewAngle < 50) nn = 5;
                         if (2 * viewAngle < 10) nn = 40;
@@ -369,8 +369,8 @@ namespace Planetarium
         {
             foreach (ConstellationLine constellation in DSData.Constellation)
             {
-                double ad1 = angDist.Distance(constellation.SkyPosition1.Rectascence, constellation.SkyPosition1.Declination, center.Rectascence, center.Declination);
-                double ad2 = angDist.Distance(constellation.SkyPosition2.Rectascence, constellation.SkyPosition2.Declination, center.Rectascence, center.Declination);
+                double ad1 = angularDistances.Distance(constellation.SkyPosition1.Rectascence, constellation.SkyPosition1.Declination, center.Rectascence, center.Declination);
+                double ad2 = angularDistances.Distance(constellation.SkyPosition2.Rectascence, constellation.SkyPosition2.Declination, center.Rectascence, center.Declination);
                 if (ad1 < 2 * viewAngle || ad2 < 2 * viewAngle)
                 {
                     PointF p1 = new PointF();
@@ -387,13 +387,13 @@ namespace Planetarium
             {
                 foreach (ConstellationName constellationNames in DSData.ConstellationNames)
                 {
-                    double ad = angDist.Distance(constellationNames.skyPos.Rectascence, constellationNames.skyPos.Declination, center.Rectascence, center.Declination);
+                    double ad = angularDistances.Distance(constellationNames.SkyPosition.Rectascence, constellationNames.SkyPosition.Declination, center.Rectascence, center.Declination);
                     if (ad < 1.2 * viewAngle)
                     {
-                        constellationNames.skyPos.eqToaA(this.Location.SIDTIME, this.Location.Latitude);
-                        PointF p = ToScreanPt(constellationNames.skyPos);
-                        g.DrawString(constellationNames.name, new Font("Arial", 12), Brushes.Aqua,
-                            (int)(p.X - constellationNames.name.Length * 4), (int)(p.Y + 5));
+                        constellationNames.SkyPosition.eqToaA(this.Location.SIDTIME, this.Location.Latitude);
+                        PointF p = ToScreanPt(constellationNames.SkyPosition);
+                        g.DrawString(constellationNames.Name, new Font("Arial", 12), Brushes.Aqua,
+                            (int)(p.X - constellationNames.Name.Length * 4), (int)(p.Y + 5));
                     }
                 }
             }
@@ -420,7 +420,7 @@ namespace Planetarium
                 w += magX;
                 if (w > 0)
                 {
-                    double ad = angDist.Distance(s.SkyPosition.Rectascence, s.SkyPosition.Declination, center.Rectascence, center.Declination);
+                    double ad = angularDistances.Distance(s.SkyPosition.Rectascence, s.SkyPosition.Declination, center.Rectascence, center.Declination);
                     if (ad < 1.2 * viewAngle)
                     {
                         s.SkyPosition.eqToaA(this.Location.SIDTIME, this.Location.Latitude);
@@ -476,7 +476,7 @@ namespace Planetarium
         {
             foreach (Messier m in DSData.Messier)
             {
-                double ad = angDist.Distance(m.SkyPosition.Rectascence, m.SkyPosition.Declination, center.Rectascence, center.Declination);
+                double ad = angularDistances.Distance(m.SkyPosition.Rectascence, m.SkyPosition.Declination, center.Rectascence, center.Declination);
                 if (ad < 1.2 * viewAngle)
                 {
                     m.SkyPosition.eqToaA(this.Location.SIDTIME, this.Location.Latitude);
@@ -529,7 +529,7 @@ namespace Planetarium
                 if (this.solarSystemData.SolarSystemObjects[i].Name != "Earth" &&
                     (bLine == true || this.solarSystemData.SolarSystemObjects[i].SkyPosition.a > (-8)))
                 {
-                    double ad = angDist.Distance(this.solarSystemData.SolarSystemObjects[i].SkyPosition.Rectascence, this.solarSystemData.SolarSystemObjects[i].SkyPosition.Declination, center.Rectascence, center.Declination);
+                    double ad = angularDistances.Distance(this.solarSystemData.SolarSystemObjects[i].SkyPosition.Rectascence, this.solarSystemData.SolarSystemObjects[i].SkyPosition.Declination, center.Rectascence, center.Declination);
                     double dawn = -100;
                     if (this.solarSystemData.SolarSystemObjects[i].Name != "Sun" && this.solarSystemData.SolarSystemObjects[i].Name != "Moon")
                         dawn = (2 * (Math.Round(this.solarSystemData.SolarSystemObjects[i].Magnitude, 0) + 2)) - 1;
@@ -538,7 +538,7 @@ namespace Planetarium
                         dawn = 10;
                     if (ad < 1.2 * viewAngle || (viewAngle < 1 && ad < 8))
                     {
-                        if (this.solarSystemData.SolarSystemObjects[i].elong < 0.3 || selPl == name ||
+                        if (this.solarSystemData.SolarSystemObjects[i].Elongation < 0.3 || selPl == name ||
                             !bDay || dawn * (-1) >= SunAlt)
                         {
                             PointF p = ToScreanPt(this.solarSystemData.SolarSystemObjects[i].SkyPosition);
@@ -561,14 +561,14 @@ namespace Planetarium
                             }
                             if (w > 7) w = 7;
                             if (w < 2) w = 2;
-                            int w2 = (int)((origin.X) / ((viewAngle * 3600) / this.solarSystemData.SolarSystemObjects[i].diam));
+                            int w2 = (int)((origin.X) / ((viewAngle * 3600) / this.solarSystemData.SolarSystemObjects[i].Diameter));
                             if (w2 > w) w = w2;
                             if (name == "Sun" || name == "Moon")
                             {
                                 if (viewAngle < 25)
-                                    w = (int)((origin.X) / ((viewAngle * 3600) / this.solarSystemData.SolarSystemObjects[i].diam));
+                                    w = (int)((origin.X) / ((viewAngle * 3600) / this.solarSystemData.SolarSystemObjects[i].Diameter));
                                 else
-                                    w = (int)((origin.X) / ((20 * 3600) / this.solarSystemData.SolarSystemObjects[i].diam));
+                                    w = (int)((origin.X) / ((20 * 3600) / this.solarSystemData.SolarSystemObjects[i].Diameter));
                             }
                             Color color = Color.Red;
                             switch (this.solarSystemData.SolarSystemObjects[i].Name)
@@ -609,42 +609,42 @@ namespace Planetarium
                                 GraphicsPath gp = new GraphicsPath();
 
                                 int n = (int)(this.solarSystemData.SolarSystemObjects[i].SkyPosition.Rectascence + 360 - this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").SkyPosition.Rectascence) % 360;
-                                double elong = 0;
-                                if (name == "Moon") elong = this.solarSystemData.SolarSystemObjects[i].elong;
-                                else elong = 180 - this.solarSystemData.SolarSystemObjects[i].FV;
+                                double Elongation = 0;
+                                if (name == "Moon") Elongation = this.solarSystemData.SolarSystemObjects[i].Elongation;
+                                else Elongation = 180 - this.solarSystemData.SolarSystemObjects[i].FV;
                                 double dx = 0;
                                 if (n < 180)
                                 {
                                     gp.AddArc(0, 0, bmp.Width, bmp.Height, 90, 180);
-                                    if (elong <= 90)
+                                    if (Elongation <= 90)
                                     {
-                                        dx = bmp.Width / 2 * Math.Cos(elong * Math.PI / 180);
+                                        dx = bmp.Width / 2 * Math.Cos(Elongation * Math.PI / 180);
                                         gp.AddArc((float)(bmp.Width / 2 - dx), 0, (float)(2 * dx), bmp.Height, 270, 180);
                                     }
                                     else
                                     {
-                                        dx = bmp.Width / 2 * Math.Cos((180 - elong) * Math.PI / 180);
+                                        dx = bmp.Width / 2 * Math.Cos((180 - Elongation) * Math.PI / 180);
                                         gp.AddArc((float)(bmp.Width / 2 - dx), 0, (float)(2 * dx), bmp.Height, 90, 180);
                                     }
                                 }
                                 else
                                 {
                                     gp.AddArc(0, 0, bmp.Width, bmp.Height, 270, 180);
-                                    if (elong <= 90)
+                                    if (Elongation <= 90)
                                     {
-                                        dx = bmp.Width / 2 * Math.Cos(elong * Math.PI / 180);
+                                        dx = bmp.Width / 2 * Math.Cos(Elongation * Math.PI / 180);
                                         gp.AddArc((float)(bmp.Width / 2 - dx), 0, (float)(2 * dx), bmp.Height, 90, 180);
                                     }
                                     else
                                     {
-                                        dx = bmp.Width / 2 * Math.Cos((180 - elong) * Math.PI / 180);
+                                        dx = bmp.Width / 2 * Math.Cos((180 - Elongation) * Math.PI / 180);
                                         gp.AddArc((float)(bmp.Width / 2 - dx), 0, (float)(2 * dx), bmp.Height, 270, 180);
                                     }
                                 }
                                 moonGr.FillPath(new SolidBrush(moonColor), gp);
 
                                 PointF[] pM = new PointF[3];
-                                double halfDiam = this.solarSystemData.SolarSystemObjects[i].diam / 7200;
+                                double halfDiam = this.solarSystemData.SolarSystemObjects[i].Diameter / 7200;
                                 if (name == "Moon" && viewAngle > 20)
                                     halfDiam *= (viewAngle / 20);
 
@@ -658,23 +658,23 @@ namespace Planetarium
                                 bottom.eqToaA(this.Location.SIDTIME, this.Location.Latitude);
                                 PointF pt = ToScreanPt(top);
                                 PointF pb = ToScreanPt(bottom);
-                                double d = Math.Sqrt((pb.Y - pt.Y) * (pb.Y - pt.Y) + (pb.X - pt.X) * (pb.X - pt.X));
+                                double distance = Math.Sqrt((pb.Y - pt.Y) * (pb.Y - pt.Y) + (pb.X - pt.X) * (pb.X - pt.X));
                                 if (pt.Y <= pb.Y)
                                 {
                                     if (pt.X <= pb.X)
                                     {
-                                        double alpha = Math.Asin((pb.X - pt.X) / d) * 180 / Math.PI;
-                                        double dX = d / 2 * Math.Cos(alpha * Math.PI / 180);
-                                        double dY = d / 2 * Math.Sin(alpha * Math.PI / 180);
+                                        double alpha = Math.Asin((pb.X - pt.X) / distance) * 180 / Math.PI;
+                                        double dX = distance / 2 * Math.Cos(alpha * Math.PI / 180);
+                                        double dY = distance / 2 * Math.Sin(alpha * Math.PI / 180);
                                         pM[0].X = (float)(pt.X - dX); pM[0].Y = (float)(pt.Y + dY);
                                         pM[1].X = (float)(pt.X + dX); pM[1].Y = (float)(pt.Y - dY);
                                         pM[2].X = (float)(pb.X - dX); pM[2].Y = (float)(pb.Y + dY);
                                     }
                                     else
                                     {
-                                        double alpha = Math.Asin((pt.X - pb.X) / d) * 180 / Math.PI;
-                                        double dX = d / 2 * Math.Cos(alpha * Math.PI / 180);
-                                        double dY = d / 2 * Math.Sin(alpha * Math.PI / 180);
+                                        double alpha = Math.Asin((pt.X - pb.X) / distance) * 180 / Math.PI;
+                                        double dX = distance / 2 * Math.Cos(alpha * Math.PI / 180);
+                                        double dY = distance / 2 * Math.Sin(alpha * Math.PI / 180);
                                         pM[0].X = (float)(pt.X - dX); pM[0].Y = (float)(pt.Y - dY);
                                         pM[1].X = (float)(pt.X + dX); pM[1].Y = (float)(pt.Y + dY);
                                         pM[2].X = (float)(pb.X - dX); pM[2].Y = (float)(pb.Y - dY);
@@ -684,18 +684,18 @@ namespace Planetarium
                                 {
                                     if (pt.X <= pb.X)
                                     {
-                                        double alpha = Math.Asin((pb.X - pt.X) / d) * 180 / Math.PI;
-                                        double dX = d / 2 * Math.Cos(alpha * Math.PI / 180);
-                                        double dY = d / 2 * Math.Sin(alpha * Math.PI / 180);
+                                        double alpha = Math.Asin((pb.X - pt.X) / distance) * 180 / Math.PI;
+                                        double dX = distance / 2 * Math.Cos(alpha * Math.PI / 180);
+                                        double dY = distance / 2 * Math.Sin(alpha * Math.PI / 180);
                                         pM[0].X = (float)(pt.X + dX); pM[0].Y = (float)(pt.Y + dY);
                                         pM[1].X = (float)(pt.X - dX); pM[1].Y = (float)(pt.Y - dY);
                                         pM[2].X = (float)(pb.X + dX); pM[2].Y = (float)(pb.Y + dY);
                                     }
                                     else
                                     {
-                                        double alpha = Math.Asin((pt.X - pb.X) / d) * 180 / Math.PI;
-                                        double dX = d / 2 * Math.Cos(alpha * Math.PI / 180);
-                                        double dY = d / 2 * Math.Sin(alpha * Math.PI / 180);
+                                        double alpha = Math.Asin((pt.X - pb.X) / distance) * 180 / Math.PI;
+                                        double dX = distance / 2 * Math.Cos(alpha * Math.PI / 180);
+                                        double dY = distance / 2 * Math.Sin(alpha * Math.PI / 180);
                                         pM[0].X = (float)(pt.X + dX); pM[0].Y = (float)(pt.Y - dY);
                                         pM[1].X = (float)(pt.X - dX); pM[1].Y = (float)(pt.Y + dY);
                                         pM[2].X = (float)(pb.X + dX); pM[2].Y = (float)(pb.Y - dY);
@@ -712,13 +712,13 @@ namespace Planetarium
                                 //penumbra
                                 double RZ = 6378.140;
                                 double RS = 696000;
-                                double dS = this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").dist * 1.49597870E8;
-                                double dM = this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").dist * 1.49597870E8;
+                                double dS = this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").Distance * 1.49597870E8;
+                                double dM = this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").Distance * 1.49597870E8;
                                 ((EarthShadow)this.solarSystemData.SolarSystemObjects.GetObjectByName("Earth shadow")).DP = RES = (RZ + RS) * (dS + dM) / dS - RS;
 
-                                this.solarSystemData.SolarSystemObjects.GetObjectByName("Earth shadow").diam = 7200 * Math.Atan(RES / dM) * 180 / Math.PI;
+                                this.solarSystemData.SolarSystemObjects.GetObjectByName("Earth shadow").Diameter = 7200 * Math.Atan(RES / dM) * 180 / Math.PI;
 
-                                double dd = this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").diam / 7200 + this.solarSystemData.SolarSystemObjects.GetObjectByName("Earth shadow").diam / 7200;
+                                double dd = this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").Diameter / 7200 + this.solarSystemData.SolarSystemObjects.GetObjectByName("Earth shadow").Diameter / 7200;
 
                                 float W = 0;
                                 W = (float)((origin.X) / ((viewAngle * 3600) / RES));
@@ -802,7 +802,7 @@ namespace Planetarium
             for (int i = 0; i < 10; ++i)
             {
                 if (zn == false && i == 8) break;
-                double ad = angDist.Distance(direction[i].A, direction[i].a, center.A, center.a);
+                double ad = angularDistances.Distance(direction[i].A, direction[i].a, center.A, center.a);
 
                 if (ad < 1.2 * viewAngle)
                 {
@@ -860,23 +860,23 @@ namespace Planetarium
             }
         }
 
-        PointF ToScreanPt(SkyPosition sp)
+        PointF ToScreanPt(SkyPosition skyPosition)
         {
-            double ZPX = (center.A + 180) % 360 - sp.A;
+            double ZPX = (center.A + 180) % 360 - skyPosition.A;
             double AA = 0, Atemp = 0, A = 0, a = 0;
 
             a = Math.Asin(
-                Math.Sin(sp.a * Math.PI / 180) * Math.Sin((90 - center.a + 0.000001) * Math.PI / 180) +
-                Math.Cos(sp.a * Math.PI / 180) * Math.Cos((90 - center.a + 0.000001) * Math.PI / 180) * Math.Cos(ZPX * Math.PI / 180)) * 180 / Math.PI;
+                Math.Sin(skyPosition.a * Math.PI / 180) * Math.Sin((90 - center.a + 0.000001) * Math.PI / 180) +
+                Math.Cos(skyPosition.a * Math.PI / 180) * Math.Cos((90 - center.a + 0.000001) * Math.PI / 180) * Math.Cos(ZPX * Math.PI / 180)) * 180 / Math.PI;
 
-            Atemp = (-Math.Sin(sp.a * Math.PI / 180) * Math.Cos((90 - center.a + 0.000001) * Math.PI / 180) +
-                Math.Sin((90 - center.a + 0.000001) * Math.PI / 180) * Math.Cos(sp.a * Math.PI / 180) * Math.Cos(ZPX * Math.PI / 180)) /
+            Atemp = (-Math.Sin(skyPosition.a * Math.PI / 180) * Math.Cos((90 - center.a + 0.000001) * Math.PI / 180) +
+                Math.Sin((90 - center.a + 0.000001) * Math.PI / 180) * Math.Cos(skyPosition.a * Math.PI / 180) * Math.Cos(ZPX * Math.PI / 180)) /
                 Math.Sin((90 - a + 0.000001) * Math.PI / 180);
             if (Atemp > 1) Atemp = 1;
             if (Atemp < -1) Atemp = -1;
             A = Math.Acos(Atemp) * 180 / Math.PI;
 
-            Atemp = Math.Sin(ZPX * Math.PI / 180) * Math.Cos(sp.a * Math.PI / 180) / Math.Sin((90 - a + 0.000001) * Math.PI / 180);
+            Atemp = Math.Sin(ZPX * Math.PI / 180) * Math.Cos(skyPosition.a * Math.PI / 180) / Math.Sin((90 - a + 0.000001) * Math.PI / 180);
             if (Atemp > 1) Atemp = 1;
             if (Atemp < -1) Atemp = -1;
             AA = Math.Asin(Atemp) * 180 / Math.PI;
@@ -916,6 +916,6 @@ namespace Planetarium
         private Bitmap openCluster, globularCluster, planetaryNebula, clusterWithNebula,
                        difuzeNebula, galaxy;
         private int magX = 0;
-        private AngularDistances angDist = new AngularDistances();
+        private AngularDistances angularDistances = new AngularDistances();
     }
 }

@@ -40,32 +40,32 @@ namespace SpaceObjects.SolarSystem
         public override void OrbitalElements()
         {
             N = 48.3313 + 3.24587E-5 * this.Location.DayNumber();
-            i = 7.0047 + 5E-8 * this.Location.DayNumber();
-            w = 29.1241 + 1.01444E-5 * this.Location.DayNumber();
-            a = 0.387098;
+            this.Inclination = 7.0047 + 5E-8 * this.Location.DayNumber();
+            this.Perihelion = 29.1241 + 1.01444E-5 * this.Location.DayNumber();
+            this.MeanDistance = 0.387098;
             ec = 0.205635 + 5.59E-10 * this.Location.DayNumber();
-            M = 168.6562 + 4.0923344368 * this.Location.DayNumber();
-            M += ((int)Math.Abs(M / 360) + 1) * 360;
+            this.MeanAnomaly = 168.6562 + 4.0923344368 * this.Location.DayNumber();
+            this.MeanAnomaly += ((int)Math.Abs(this.MeanAnomaly / 360) + 1) * 360;
 
-            d = 0.7; T = 87; d0 = 6.74;
+            this.MeanMotion = 0.7; this.TrueAnomaly = 87; d0 = 6.74;
         }
 
         public override void Ephemerides()
         {
-            diam = d0 / dist;
-            double test = (sunDist * sunDist + dist * dist - helDist * helDist) /
-                          (2 * sunDist * dist + 0.000000001);
+            Diameter = d0 / this.Distance;
+            double test = (this.SunDistance * this.SunDistance + this.Distance * this.Distance - helDist * helDist) /
+                          (2 * this.SunDistance * this.Distance + 0.000000001);
             if (test < -1) test = -1;
             if (test > 1) test = 1;
-            elong = Math.Acos(test) * 180 / Math.PI;
+            Elongation = Math.Acos(test) * 180 / Math.PI;
 
-            test = (helDist * helDist + dist * dist - sunDist * sunDist) /
-                   (2 * helDist * dist + 0.000000001);
+            test = (helDist * helDist + this.Distance * this.Distance - this.SunDistance * this.SunDistance) /
+                   (2 * helDist * this.Distance + 0.000000001);
             if (test < -1) test = -1;
             if (test > 1) test = 1;
             FV = Math.Acos(test) * 180 / Math.PI;
-            phase = (1 + Math.Cos(FV * Math.PI / 180)) / 2;
-            this.Magnitude = -0.36 + 5 * Math.Log10(helDist * dist) + 0.027 * FV + (2.2E-13) * Math.Pow(FV, 6);
+            this.Phase = (1 + Math.Cos(FV * Math.PI / 180)) / 2;
+            this.Magnitude = -0.36 + 5 * Math.Log10(helDist * this.Distance) + 0.027 * FV + (2.2E-13) * Math.Pow(FV, 6);
         }
 
         public override void Perturbations()

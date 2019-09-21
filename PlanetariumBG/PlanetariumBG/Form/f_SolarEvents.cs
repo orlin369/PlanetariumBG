@@ -433,7 +433,7 @@ namespace Planetarium
                 location.MainDateTime = new DateTime((int)nUD_From.Value, 1, 1);
                 location.MainDateTime = location.MainDateTime.AddDays(-1);
                 this.solarSystemData.PlanetPositions();
-                oldElong = this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").elong;
+                oldElong = this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").Elongation;
                 step = "day";
                 while (location.MainDateTime.Year < (int)nUD_To.Value + 1)
                 {
@@ -441,7 +441,7 @@ namespace Planetarium
                     l_Progress.Invalidate();
                     AddTime(step, 1);
                     this.solarSystemData.PlanetPositions();
-                    newElong = this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").elong;
+                    newElong = this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").Elongation;
                     if (newElong < 15 && newElong > 1) step = "hour";
                     if (newElong < 1) step = "minute";
                     if (step == "hour" && newElong > oldElong)
@@ -451,7 +451,7 @@ namespace Planetarium
                     }
                     if (step == "minute" && newElong > oldElong)
                     {
-                        if (oldElong < (this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").diam / 7200 + this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").diam / 7200))
+                        if (oldElong < (this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").Diameter / 7200 + this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").Diameter / 7200))
                         {
                             AddTime(step, -1);
                             ++NoEcl;
@@ -486,7 +486,7 @@ namespace Planetarium
                 location.MainDateTime = new DateTime((int)nUD_From.Value, 1, 1);
                 location.MainDateTime = location.MainDateTime.AddDays(-1);
                 this.solarSystemData.PlanetPositions();
-                oldElong = this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").elong;
+                oldElong = this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").Elongation;
                 step = "day";
                 while (location.MainDateTime.Year < (int)nUD_To.Value + 1)
                 {
@@ -494,7 +494,7 @@ namespace Planetarium
                     l_Progress.Invalidate();
                     AddTime(step, 1);
                     this.solarSystemData.PlanetPositions();
-                    newElong = this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").elong;
+                    newElong = this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").Elongation;
                     if (newElong > 165 && newElong < 179) step = "hour";
                     if (newElong > 179) step = "minute";
                     if (step == "hour" && newElong < oldElong)
@@ -506,12 +506,12 @@ namespace Planetarium
                     {
                         double RZ = 6378.140;
                         double RS = 696000;
-                        double dS = this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").dist * 1.49597870E8;
-                        double dM = this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").dist * 1.49597870E8;
+                        double dS = this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").Distance * 1.49597870E8;
+                        double dM = this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").Distance * 1.49597870E8;
                         double RES = (RZ + RS) * (dS + dM) / dS - RS;
-                        this.solarSystemData.SolarSystemObjects.GetObjectByName("Earth shadow").diam = 7200 * Math.Atan(RES / dM) * 180 / Math.PI;
+                        this.solarSystemData.SolarSystemObjects.GetObjectByName("Earth shadow").Diameter = 7200 * Math.Atan(RES / dM) * 180 / Math.PI;
 
-                        if (oldElong > 180 - (this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").diam / 7200 + this.solarSystemData.SolarSystemObjects.GetObjectByName("Earth shadow").diam / 7200))
+                        if (oldElong > 180 - (this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").Diameter / 7200 + this.solarSystemData.SolarSystemObjects.GetObjectByName("Earth shadow").Diameter / 7200))
                         {
                             AddTime(step, -1);
                             ++NoEcl;
@@ -546,7 +546,7 @@ namespace Planetarium
                 location.MainDateTime = new DateTime((int)nUD_From.Value, 1, 1);
                 location.MainDateTime = location.MainDateTime.AddDays(-1);
                 this.solarSystemData.PlanetPositions();
-                oldElong = this.solarSystemData.SolarSystemObjects.GetObjectByName("Mercury").elong;
+                oldElong = this.solarSystemData.SolarSystemObjects.GetObjectByName("Mercury").Elongation;
                 step = "day";
                 while (location.MainDateTime.Year < (int)nUD_To.Value + 1)
                 {
@@ -554,7 +554,7 @@ namespace Planetarium
                     l_Progress.Invalidate();
                     AddTime(step, 1);
                     this.solarSystemData.PlanetPositions();
-                    newElong = this.solarSystemData.SolarSystemObjects.GetObjectByName("Mercury").elong;
+                    newElong = this.solarSystemData.SolarSystemObjects.GetObjectByName("Mercury").Elongation;
                     if (newElong < 2) step = "hour";
                     if (newElong < 0.4) step = "minute";
                     if (step == "hour" && newElong > oldElong)
@@ -564,9 +564,9 @@ namespace Planetarium
                     }
                     if (step == "minute" && newElong > oldElong)
                     {
-                        if (oldElong < (this.solarSystemData.SolarSystemObjects.GetObjectByName("Mercury").diam / 7200 + this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").diam / 7200))
+                        if (oldElong < (this.solarSystemData.SolarSystemObjects.GetObjectByName("Mercury").Diameter / 7200 + this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").Diameter / 7200))
                         {
-                            if (this.solarSystemData.SolarSystemObjects.GetObjectByName("Mercury").dist < this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").dist)
+                            if (this.solarSystemData.SolarSystemObjects.GetObjectByName("Mercury").Distance < this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").Distance)
                             {
                                 AddTime(step, -1);
                                 ++NoEcl;
@@ -602,7 +602,7 @@ namespace Planetarium
                 location.MainDateTime = new DateTime((int)nUD_From.Value, 1, 1);
                 location.MainDateTime = location.MainDateTime.AddDays(-1);
                 this.solarSystemData.PlanetPositions();
-                oldElong = this.solarSystemData.SolarSystemObjects.GetObjectByName("Venus").elong;
+                oldElong = this.solarSystemData.SolarSystemObjects.GetObjectByName("Venus").Elongation;
                 step = "day";
                 while (location.MainDateTime.Year < (int)nUD_To.Value + 1)
                 {
@@ -610,7 +610,7 @@ namespace Planetarium
                     l_Progress.Invalidate();
                     AddTime(step, 1);
                     this.solarSystemData.PlanetPositions();
-                    newElong = this.solarSystemData.SolarSystemObjects.GetObjectByName("Venus").elong;
+                    newElong = this.solarSystemData.SolarSystemObjects.GetObjectByName("Venus").Elongation;
                     if (newElong < 2) step = "hour";
                     if (newElong < 0.4) step = "minute";
                     if (step == "hour" && newElong > oldElong)
@@ -620,9 +620,9 @@ namespace Planetarium
                     }
                     if (step == "minute" && newElong > oldElong)
                     {
-                        if (oldElong < (this.solarSystemData.SolarSystemObjects.GetObjectByName("Venus").diam / 7200 + this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").diam / 7200))
+                        if (oldElong < (this.solarSystemData.SolarSystemObjects.GetObjectByName("Venus").Diameter / 7200 + this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").Diameter / 7200))
                         {
-                            if (this.solarSystemData.SolarSystemObjects.GetObjectByName("Venus").dist < this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").dist)
+                            if (this.solarSystemData.SolarSystemObjects.GetObjectByName("Venus").Distance < this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").Distance)
                             {
                                 AddTime(step, -1);
                                 ++NoEcl;
@@ -696,10 +696,10 @@ namespace Planetarium
 
                 double tempRA = this.solarSystemData.SolarSystemObjects.GetObjectByName("Earth shadow").SkyPosition.Rectascence - this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").SkyPosition.Rectascence;
                 if (tempRA > 300) tempRA -= 360;
-                double dx = (tempRA * pB_Space.Width / 3) / (this.solarSystemData.SolarSystemObjects.GetObjectByName("Earth shadow").diam / 7200);
-                double dy = ((this.solarSystemData.SolarSystemObjects.GetObjectByName("Earth shadow").SkyPosition.Declination - this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").SkyPosition.Declination) * pB_Space.Width / 3) / (this.solarSystemData.SolarSystemObjects.GetObjectByName("Earth shadow").diam / 7200);
+                double dx = (tempRA * pB_Space.Width / 3) / (this.solarSystemData.SolarSystemObjects.GetObjectByName("Earth shadow").Diameter / 7200);
+                double dy = ((this.solarSystemData.SolarSystemObjects.GetObjectByName("Earth shadow").SkyPosition.Declination - this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").SkyPosition.Declination) * pB_Space.Width / 3) / (this.solarSystemData.SolarSystemObjects.GetObjectByName("Earth shadow").Diameter / 7200);
                 double DMM = (((EarthShadow)this.solarSystemData.SolarSystemObjects.GetObjectByName("Earth shadow")).DU * pB_Space.Width / 1.5) / ((EarthShadow)this.solarSystemData.SolarSystemObjects.GetObjectByName("Earth shadow")).DP;
-                double DM = (this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").diam * pB_Space.Width / 1.5) / this.solarSystemData.SolarSystemObjects.GetObjectByName("Earth shadow").diam;
+                double DM = (this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").Diameter * pB_Space.Width / 1.5) / this.solarSystemData.SolarSystemObjects.GetObjectByName("Earth shadow").Diameter;
                 g.FillEllipse(new SolidBrush(Color.DarkSlateGray),
                     pB_Space.Width / 2 + (int)dx - (int)DM / 2, pB_Space.Height / 2 - (int)dy - (int)DM / 2, (int)DM, (int)DM);
                 g.FillEllipse(new SolidBrush(Color.FromArgb(85, 50, 50, 50)),
@@ -734,10 +734,10 @@ namespace Planetarium
                     double tempRA = this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").SkyPosition.Rectascence - this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").SkyPosition.Rectascence;
                     if (tempRA > 300) tempRA -= 360;
                     double dx = (tempRA * pB_Space.Width / 8) /
-                        (this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").diam / 7200);
+                        (this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").Diameter / 7200);
                     double dy = ((this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").SkyPosition.Declination - this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").SkyPosition.Declination) * pB_Space.Width / 8) /
-                        (this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").diam / 7200);
-                    double DM = (this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").diam * pB_Space.Width / 4) / this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").diam;
+                        (this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").Diameter / 7200);
+                    double DM = (this.solarSystemData.SolarSystemObjects.GetObjectByName("Moon").Diameter * pB_Space.Width / 4) / this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").Diameter;
                     g.FillEllipse(new SolidBrush(Color.DarkSlateGray),
                         pB_Space.Width / 2 + (int)dx - (int)DM / 2, pB_Space.Height / 2 - (int)dy - (int)DM / 2, (int)DM, (int)DM);
                 }
@@ -752,9 +752,9 @@ namespace Planetarium
                     double tempRA = this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").SkyPosition.Rectascence - this.solarSystemData.SolarSystemObjects.GetObjectByName("Mercury").SkyPosition.Rectascence;
                     if (tempRA > 300) tempRA -= 360;
                     double dx = (tempRA * pB_Space.Width / 4) /
-                        (this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").diam / 7200);
+                        (this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").Diameter / 7200);
                     double dy = ((this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").SkyPosition.Declination - this.solarSystemData.SolarSystemObjects.GetObjectByName("Mercury").SkyPosition.Declination) * pB_Space.Width / 4) /
-                        (this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").diam / 7200);
+                        (this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").Diameter / 7200);
                     double DM = 6;
                     g.FillEllipse(new SolidBrush(Color.DarkSlateGray),
                         pB_Space.Width / 2 + (int)dx - (int)DM / 2, pB_Space.Height / 2 - (int)dy - (int)DM / 2, (int)DM, (int)DM);
@@ -768,10 +768,10 @@ namespace Planetarium
                     double tempRA = this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").SkyPosition.Rectascence - this.solarSystemData.SolarSystemObjects.GetObjectByName("Venus").SkyPosition.Rectascence;
                     if (tempRA > 300) tempRA -= 360;
                     double dx = (tempRA * pB_Space.Width / 4) /
-                        (this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").diam / 7200);
+                        (this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").Diameter / 7200);
                     double dy = ((this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").SkyPosition.Declination - this.solarSystemData.SolarSystemObjects.GetObjectByName("Venus").SkyPosition.Declination) * pB_Space.Width / 4) /
-                        (this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").diam / 7200);
-                    double DM = (this.solarSystemData.SolarSystemObjects.GetObjectByName("Venus").diam * pB_Space.Width / 2) / this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").diam;
+                        (this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").Diameter / 7200);
+                    double DM = (this.solarSystemData.SolarSystemObjects.GetObjectByName("Venus").Diameter * pB_Space.Width / 2) / this.solarSystemData.SolarSystemObjects.GetObjectByName("Sun").Diameter;
                     g.FillEllipse(new SolidBrush(Color.DarkSlateGray),
                         pB_Space.Width / 2 + (int)dx - (int)DM / 2, pB_Space.Height / 2 - (int)dy - (int)DM / 2, (int)DM, (int)DM);
                 }

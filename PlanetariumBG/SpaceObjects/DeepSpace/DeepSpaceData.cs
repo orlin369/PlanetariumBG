@@ -77,42 +77,47 @@ namespace SpaceObjects.DeepSpace
             this.Constellation = new ArrayList();
             this.ConstellationNames = new ArrayList();
 
-            Assembly a = Assembly.GetExecutingAssembly();
-            Stream txtStream = a.GetManifestResourceStream("SpaceObjects.Resources.HYG.txt");
-            StreamReader sr = new StreamReader(txtStream);
+            Assembly asembly = Assembly.GetExecutingAssembly();
+            Stream txtStream = asembly.GetManifestResourceStream("SpaceObjects.Resources.HYG.txt");
+            StreamReader streamReader = new StreamReader(txtStream);
 
             string delimStr = ";";
             char[] delimiter = delimStr.ToCharArray();
             NumberFormatInfo provider = new NumberFormatInfo();
             provider.NumberDecimalSeparator = ".";
-            while (sr.Peek() >= 0)
+            while (streamReader.Peek() >= 0)
             {
-                string[] split = sr.ReadLine().Split(delimiter, 20);
-                Stars.Add(new Star(split[0], split[1], Convert.ToDouble(split[2], provider) * 15,
-                                    Convert.ToDouble(split[3], provider),
-                                    Convert.ToDouble(split[4], provider), split[5]));
+                string[] split = streamReader.ReadLine().Split(delimiter, 20);
+                Stars.Add(
+                    new Star(
+                        split[0],
+                        split[1],
+                        Convert.ToDouble(split[2], provider) * 15,
+                        Convert.ToDouble(split[3], provider),
+                        Convert.ToDouble(split[4], provider),
+                        split[5]));
             }
             Stars.TrimToSize();
 
-            a = Assembly.GetExecutingAssembly();
-            txtStream = a.GetManifestResourceStream("SpaceObjects.Resources.Messier.txt");
-            sr = new StreamReader(txtStream);
+            asembly = Assembly.GetExecutingAssembly();
+            txtStream = asembly.GetManifestResourceStream("SpaceObjects.Resources.Messier.txt");
+            streamReader = new StreamReader(txtStream);
 
-            while (sr.Peek() >= 0)
+            while (streamReader.Peek() >= 0)
             {
-                string[] split = sr.ReadLine().Split(delimiter, 20);
+                string[] split = streamReader.ReadLine().Split(delimiter, 20);
                 Messier.Add(new Messier(split[0], Convert.ToDouble(split[1], provider) * 15,
                                Convert.ToDouble(split[2], provider), split[3], split[4]));
             }
             Messier.TrimToSize();
 
-            a = Assembly.GetExecutingAssembly();
-            txtStream = a.GetManifestResourceStream("SpaceObjects.Resources.Constellations.txt");
-            sr = new StreamReader(txtStream);
+            asembly = Assembly.GetExecutingAssembly();
+            txtStream = asembly.GetManifestResourceStream("SpaceObjects.Resources.Constellations.txt");
+            streamReader = new StreamReader(txtStream);
 
-            while (sr.Peek() >= 0)
+            while (streamReader.Peek() >= 0)
             {
-                string str = sr.ReadLine();
+                string str = streamReader.ReadLine();
                 if (str[0] != 'C')
                 {
                     string[] split = str.Split(delimiter, 20);
@@ -122,10 +127,10 @@ namespace SpaceObjects.DeepSpace
                 else
                 {
                     string[] split = str.Split(delimiter, 4);
-                    SkyPosition sp = new SkyPosition();
-                    sp.Rectascence = Convert.ToDouble(split[2], provider) * 15;
-                    sp.Declination = Convert.ToDouble(split[3], provider);
-                    ConstellationNames.Add(new ConstellationName(split[1], sp));
+                    SkyPosition skyPosition = new SkyPosition();
+                    skyPosition.Rectascence = Convert.ToDouble(split[2], provider) * 15;
+                    skyPosition.Declination = Convert.ToDouble(split[3], provider);
+                    ConstellationNames.Add(new ConstellationName(split[1], skyPosition));
                 }
             }
             Constellation.TrimToSize();

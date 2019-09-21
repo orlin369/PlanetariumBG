@@ -29,13 +29,32 @@ namespace SpaceObjects.Data
     /// </summary>
     public class ConstellationName
     {
-        public string name;
-        public SkyPosition skyPos = new SkyPosition();
 
-        public ConstellationName(string name, SkyPosition sp)
+        #region Properties
+
+        public string Name
         {
-            this.name = name;
-            this.skyPos = sp;
+            get;
+            set;
         }
+
+        public SkyPosition SkyPosition
+        {
+            get;
+            set;
+        }
+
+        #endregion
+
+        #region Constructor
+
+        public ConstellationName(string name, SkyPosition skyPosition)
+        {
+            this.Name = name;
+            this.SkyPosition = skyPosition;
+        }
+
+        #endregion
+
     }
 }

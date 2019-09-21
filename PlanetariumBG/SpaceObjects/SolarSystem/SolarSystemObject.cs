@@ -63,37 +63,37 @@ namespace SpaceObjects.SolarSystem
         virtual public void HeliocentricPos()
         {
             ResetPlanet();
-            double E0 = M + (180 / Math.PI * ec * Math.Sin(M * Math.PI / 180) * (1 + ec * Math.Cos(M * Math.PI / 180)));
+            double E0 = this.MeanAnomaly + (180 / Math.PI * ec * Math.Sin(this.MeanAnomaly * Math.PI / 180) * (1 + ec * Math.Cos(this.MeanAnomaly * Math.PI / 180)));
             double E1 = 0;
             for (short k = 0; k < 100; ++k)
             {
-                E1 = E0 - (E0 - (180 / Math.PI) * ec * Math.Sin(E0 * Math.PI / 180) - M) / (1 + ec * Math.Sin(E0 * Math.PI / 180));
+                E1 = E0 - (E0 - (180 / Math.PI) * ec * Math.Sin(E0 * Math.PI / 180) - this.MeanAnomaly) / (1 + ec * Math.Sin(E0 * Math.PI / 180));
                 if (Math.Abs(E0 - E1) < 0.00005) break;
                 E0 = E1;
             }
             double E = E0;
 
-            double x1 = a * (Math.Cos(E * Math.PI / 180) - ec);
-            double y1 = a * Math.Sqrt(1 - ec * ec) * Math.Sin(E * Math.PI / 180);
+            double x1 = this.MeanDistance * (Math.Cos(E * Math.PI / 180) - ec);
+            double y1 = this.MeanDistance * Math.Sqrt(1 - ec * ec) * Math.Sin(E * Math.PI / 180);
             rr = Math.Sqrt(x1 * x1 + y1 * y1);
             v = (360 + Math.Atan2(y1, x1) * 180 / Math.PI) % 360;
 
-            this.Position.X = xeclip = rr * (Math.Cos(N * Math.PI / 180) * Math.Cos((v + w) * Math.PI / 180) - Math.Sin(N * Math.PI / 180) * Math.Sin((v + w) * Math.PI / 180) * Math.Cos(i * Math.PI / 180));
-            this.Position.Y = yeclip = rr * (Math.Sin(N * Math.PI / 180) * Math.Cos((v + w) * Math.PI / 180) + Math.Cos(N * Math.PI / 180) * Math.Sin((v + w) * Math.PI / 180) * Math.Cos(i * Math.PI / 180));
-            this.Position.Z = zeclip = rr * Math.Sin((v + w) * Math.PI / 180) * Math.Sin(i * Math.PI / 180);
+            this.Position.X = xeclip = rr * (Math.Cos(N * Math.PI / 180) * Math.Cos((v + this.Perihelion) * Math.PI / 180) - Math.Sin(N * Math.PI / 180) * Math.Sin((v + this.Perihelion) * Math.PI / 180) * Math.Cos(this.Inclination * Math.PI / 180));
+            this.Position.Y = yeclip = rr * (Math.Sin(N * Math.PI / 180) * Math.Cos((v + this.Perihelion) * Math.PI / 180) + Math.Cos(N * Math.PI / 180) * Math.Sin((v + this.Perihelion) * Math.PI / 180) * Math.Cos(this.Inclination * Math.PI / 180));
+            this.Position.Z = zeclip = rr * Math.Sin((v + this.Perihelion) * Math.PI / 180) * Math.Sin(this.Inclination * Math.PI / 180);
 
             helDist = Math.Sqrt(xeclip * xeclip + yeclip * yeclip + zeclip * zeclip);
 
             lon = (360 + (Math.Atan2(yeclip, xeclip) * 180 / Math.PI)) % 360;
             lat = Math.Asin(zeclip / rr) * 180 / Math.PI;
-            a = Math.Sqrt(xeclip * xeclip + yeclip * yeclip + zeclip * zeclip);
+            this.MeanDistance = Math.Sqrt(xeclip * xeclip + yeclip * yeclip + zeclip * zeclip);
         }
 
         public void TopocentricPos()
         {
             double LON = this.Location.Longitude,
                    LAT = this.Location.Latitude + 0.00000000001;
-            double mpar = Math.Asin(1 / dist) * 180.0D / Math.PI;
+            double mpar = Math.Asin(1 / this.Distance) * 180.0D / Math.PI;
             double GMST0 = (pert.Ls / 15 + 12 + (this.Location.MainDateTime.Hour - LON / 15) + (double)this.Location.MainDateTime.Minute / 60 + (double)this.Location.MainDateTime.Second / 3600) % 24;
             double SIDTIME = (GMST0 + LON / 15);
             double LST = SIDTIME * 15;

@@ -41,15 +41,15 @@ namespace SpaceObjects.SolarSystem
         public override void OrbitalElements()
         {
             N = 125.1228 - 0.0529538083 * this.Location.DayNumber();
-            i = 5.1454;
-            w = (360 + (318.0634 + 0.1643573223 * this.Location.DayNumber())) % 360;
-            a = 60.2666;
+            this.Inclination = 5.1454;
+            this.Perihelion = (360 + (318.0634 + 0.1643573223 * this.Location.DayNumber())) % 360;
+            this.MeanDistance = 60.2666;
             ec = 0.0549;
-            M = 115.3654 + 13.0649929509 * this.Location.DayNumber();
-            M += ((int)Math.Abs(M / 360) + 1) * 360;
+            this.MeanAnomaly = 115.3654 + 13.0649929509 * this.Location.DayNumber();
+            this.MeanAnomaly += ((int)Math.Abs(this.MeanAnomaly / 360) + 1) * 360;
 
-            pert.Mm = M;
-            pert.Lm = N + w + M;
+            pert.Mm = this.MeanAnomaly;
+            pert.Lm = N + this.Perihelion + this.MeanAnomaly;
             pert.D = pert.Lm - pert.Ls;
             pert.F = pert.Lm - N;
         }
@@ -58,7 +58,7 @@ namespace SpaceObjects.SolarSystem
         {
             lon += pm.PertInLon();
             lat += pm.PertInLat();
-            dist = (a + pm.PertInDist());
+            this.Distance = (this.MeanDistance + pm.PertInDist());
         }
 
         public override void GeocentricPos()
@@ -75,13 +75,13 @@ namespace SpaceObjects.SolarSystem
 
         public override void Ephemerides()
         {
-            diam = 1873.7 * 60 / dist;
-            dist = dist * 6378.140 / 1.49597870E8;
-            elong = Math.Acos(
+            Diameter = 1873.7 * 60 / this.Distance;
+            this.Distance = this.Distance * 6378.140 / 1.49597870E8;
+            Elongation = Math.Acos(
                 Math.Sin(SkyPosition.Declination * Math.PI / 180.0D) * Math.Sin(this.Location.sDecl * Math.PI / 180.0D) +
                 Math.Cos(SkyPosition.Declination * Math.PI / 180.0D) * Math.Cos(this.Location.sDecl * Math.PI / 180.0D) *
                 Math.Cos((SkyPosition.Rectascence - this.Location.sRA) * Math.PI / 180.0D)) * 180.0D / Math.PI;
-            phase = 180.0D - elong;
+            this.Phase = 180.0D - Elongation;
             this.Magnitude = -10;
         }
 

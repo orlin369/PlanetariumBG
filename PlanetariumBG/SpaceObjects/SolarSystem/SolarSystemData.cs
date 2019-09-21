@@ -152,10 +152,10 @@ namespace SpaceObjects.SolarSystem
 
             double RZ = 6378.140;
             double RS = 696000;
-            double dS = this.SolarSystemObjects.GetObjectByName("Sun").dist * 1.49597870E8;
-            double dM = this.SolarSystemObjects.GetObjectByName("Moon").dist * 1.49597870E8;
+            double dS = this.SolarSystemObjects.GetObjectByName("Sun").Distance * 1.49597870E8;
+            double dM = this.SolarSystemObjects.GetObjectByName("Moon").Distance * 1.49597870E8;
             ((EarthShadow)this.SolarSystemObjects.GetObjectByName("Earth shadow")).DP = RES = (RZ + RS) * (dS + dM) / dS - RS;
-            this.SolarSystemObjects.GetObjectByName("Earth shadow").diam = 7200 * Math.Atan(RES / dM) * 180 / Math.PI;
+            this.SolarSystemObjects.GetObjectByName("Earth shadow").Diameter = 7200 * Math.Atan(RES / dM) * 180 / Math.PI;
             ((EarthShadow)this.SolarSystemObjects.GetObjectByName("Earth shadow")).DU = RS - ((RS - RZ) * (dS + dM)) / dS;
         }
 
@@ -167,7 +167,7 @@ namespace SpaceObjects.SolarSystem
                 for (short i = 0; i < 30; ++i)
                 {
                     PlanetPositions();
-                    location.MainDateTime = location.MainDateTime.AddDays(this.SolarSystemObjects.GetObjectByName(orbitName).T / 27.4);
+                    location.MainDateTime = location.MainDateTime.AddDays(this.SolarSystemObjects.GetObjectByName(orbitName).TrueAnomaly / 27.4);
                     PlanetPosition pp = new PlanetPosition();
                     pp.X = this.SolarSystemObjects.GetObjectByName(orbitName).Position.X;
                     pp.Y = this.SolarSystemObjects.GetObjectByName(orbitName).Position.Y;

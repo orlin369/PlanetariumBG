@@ -40,15 +40,15 @@ namespace SpaceObjects.SolarSystem
         public override void OrbitalElements()
         {
             N = 74.0005 + 1.3978E-5 * this.Location.DayNumber();
-            i = 0.7733 + 1.9E-8 * this.Location.DayNumber();
-            w = 96.6612 + 3.0565E-5 * this.Location.DayNumber();
-            a = 19.18171 - 1.55E-8 * this.Location.DayNumber();
+            this.Inclination = 0.7733 + 1.9E-8 * this.Location.DayNumber();
+            this.Perihelion = 96.6612 + 3.0565E-5 * this.Location.DayNumber();
+            this.MeanDistance = 19.18171 - 1.55E-8 * this.Location.DayNumber();
             ec = 0.047318 + 7.45E-9 * this.Location.DayNumber();
-            M = 142.5905 + 0.011725806 * this.Location.DayNumber();
+            this.MeanAnomaly = 142.5905 + 0.011725806 * this.Location.DayNumber();
 
-            d = 24; T = 84 * 365; d0 = 56.8;
+            this.MeanMotion = 24; this.TrueAnomaly = 84 * 365; d0 = 56.8;
 
-            pert.Mu = M;
+            pert.Mu = this.MeanAnomaly;
         }
 
         public override void Perturbations()
@@ -59,20 +59,20 @@ namespace SpaceObjects.SolarSystem
 
         public override void Ephemerides()
         {
-            diam = d0 / dist;
-            double test = (sunDist * sunDist + dist * dist - helDist * helDist) /
-                          (2 * sunDist * dist + 0.000000001);
+            Diameter = d0 / this.Distance;
+            double test = (this.SunDistance * this.SunDistance + this.Distance * this.Distance - helDist * helDist) /
+                          (2 * this.SunDistance * this.Distance + 0.000000001);
             if (test < -1) test = -1;
             if (test > 1) test = 1;
-            elong = Math.Acos(test) * 180 / Math.PI;
+            Elongation = Math.Acos(test) * 180 / Math.PI;
 
-            test = (helDist * helDist + dist * dist - sunDist * sunDist) /
-                   (2 * helDist * dist + 0.000000001);
+            test = (helDist * helDist + this.Distance * this.Distance - this.SunDistance * this.SunDistance) /
+                   (2 * helDist * this.Distance + 0.000000001);
             if (test < -1) test = -1;
             if (test > 1) test = 1;
             FV = Math.Acos(test) * 180 / Math.PI;
-            phase = (1 + Math.Cos(FV * Math.PI / 180)) / 2;
-            this.Magnitude = -7.15 + 5 * Math.Log10(helDist * dist) + 0.001 * FV;
+            this.Phase = (1 + Math.Cos(FV * Math.PI / 180)) / 2;
+            this.Magnitude = -7.15 + 5 * Math.Log10(helDist * this.Distance) + 0.001 * FV;
         }
 
         private PertUranus pu = new PertUranus();

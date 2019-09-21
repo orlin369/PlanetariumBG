@@ -30,6 +30,7 @@ namespace SpaceObjects.Data
     /// <summary>
     /// 
     /// </summary>
+    [Serializable]
     public class LocationST
     {
 
@@ -39,13 +40,28 @@ namespace SpaceObjects.Data
         private DateTime dts = new DateTime(1, 3, 28, 2, 0, 0);
         private DateTime dte = new DateTime(1, 10, 30, 2, 0, 0);
         private RegistryKey regKey;
-        public string v_unit = "minutes";
-        public DateTime dtMin = new DateTime(1900, 1, 1, 0, 0, 0);
-        public DateTime dtMax = new DateTime(2099, 12, 31, 23, 59, 59);
 
         #endregion
 
         #region Properties
+
+        public string v_unit
+        {
+            get;
+            set;
+        }
+
+        public DateTime dtMin
+        {
+            get;
+            set;
+        }
+
+        public DateTime dtMax
+        {
+            get;
+            set;
+        }
 
         public int Longitude
         {
@@ -137,6 +153,12 @@ namespace SpaceObjects.Data
 
         private LocationST()
         {
+
+            this.v_unit = "minutes";
+            this.dtMin = new DateTime(1900, 1, 1, 0, 0, 0);
+            this.dtMax = new DateTime(2099, 12, 31, 23, 59, 59);
+
+
             this.Step = 1;
             this.TimeNow();
 
@@ -171,17 +193,17 @@ namespace SpaceObjects.Data
 
         public double DayNumber()
         {
-            double d = MainDateTime.Day - 32076 + 1461 * (MainDateTime.Year +
+            double dayNumber = MainDateTime.Day - 32076 + 1461 * (MainDateTime.Year +
                 4800 + (MainDateTime.Month - 14) / 12) / 4 +
                 367 * (MainDateTime.Month - 2 - (MainDateTime.Month - 14) / 12 * 12) / 12 -
                 3 * ((MainDateTime.Year + 4900 + (MainDateTime.Month - 14) / 12) / 100) / 4;
 
-            d += (MainDateTime.Hour - (double)this.Longitude / 15 + 12.0) / 24.0;
-            d += (MainDateTime.Minute) / 1440.0;
-            d += (MainDateTime.Second) / 86400.0;
-            d -= 2451543.5;
+            dayNumber += (MainDateTime.Hour - (double)this.Longitude / 15 + 12.0) / 24.0;
+            dayNumber += (MainDateTime.Minute) / 1440.0;
+            dayNumber += (MainDateTime.Second) / 86400.0;
+            dayNumber -= 2451543.5;
 
-            return d;
+            return dayNumber;
         }
 
         public void FixTime()

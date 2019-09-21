@@ -62,7 +62,11 @@ namespace SpaceObjects.Data
             set;
         }
 
-        public string Type { get; set; }
+        public string Type
+        {
+            get;
+            set;
+        }
 
         public SkyPosition SkyPosition
         {
@@ -70,72 +74,68 @@ namespace SpaceObjects.Data
             set;
         }
 
-        public double d
+        public double Inclination
         {
             get;
             set;
         }
-        public double T
+
+        /// <summary>
+        /// The perihelion is the point in the orbit of a planet, asteroid or comet that is nearest to the sun.
+        /// It is the opposite of aphelion, which is the point farthest from the sun.
+        /// </summary>
+        public double Perihelion
         {
             get;
             set;
         }
-        public double d0
+
+        /// <summary>
+        /// Mean Distance (a) - the semi-major axis of the orbit measured in Astronomical Units (1 AU = 149.59787 million km);
+        /// </summary>
+        public double MeanDistance
         {
             get;
             set;
         }
-        public double N
+
+        /// <summary>
+        /// Mean Anomaly (M) - angle increasing uniformly with time by 360 degrees per orbital period from 0 at perihelion;
+        /// </summary>
+        public double MeanAnomaly
         {
             get;
             set;
         }
-        public double i
+
+        /// <summary>
+        /// Distance from Earth.
+        /// </summary>
+        public double Distance
         {
             get;
             set;
         }
-        public double w
+
+        /// <summary>
+        /// Physical diameter.
+        /// </summary>
+        public double Diameter
         {
             get;
             set;
         }
-        public double a
+
+        /// <summary>
+        /// In astronomy, a planet's elongation is the angular separation between the Sun and the planet, with Earth as the reference point.
+        /// </summary>
+        public double Elongation
         {
             get;
             set;
         }
-        public double ec
-        {
-            get;
-            set;
-        }
-        public double M
-        {
-            get;
-            set;
-        }
-        public double dist
-        {
-            get;
-            set;
-        }
-        public double diam
-        {
-            get;
-            set;
-        }
-        public double elong
-        {
-            get;
-            set;
-        }
-        public double FV
-        {
-            get;
-            set;
-        }
-        public double phase
+
+        public double Phase
         {
             get;
             set;
@@ -147,12 +147,58 @@ namespace SpaceObjects.Data
             set;
         }
 
+        /// <summary>
+        /// True Anomaly (TA) - the actual angle between the spacecraft position and the perihelion as seen from the Sun.
+        /// This angle increases non-uniformly with time, changing most rapidly at perihelion.
+        /// </summary>
+        public double TrueAnomaly
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// In orbital mechanics, mean motion (represented by n) is the angular speed required for a body to complete one orbit,
+        /// assuming constant speed in a circular orbit which completes in the same time as the variable speed,
+        /// elliptical orbit of the actual body.[
+        /// </summary>
+        public double MeanMotion
+        {
+            get;
+            set;
+        }
+
         protected double helDist
         {
             get;
             set;
         }
-        protected double sunDist
+
+        protected double SunDistance
+        {
+            get;
+            set;
+        }
+        
+        public double d0
+        {
+            get;
+            set;
+        }
+
+        public double N
+        {
+            get;
+            set;
+        }
+
+        public double ec
+        {
+            get;
+            set;
+        }
+
+        public double FV
         {
             get;
             set;
@@ -183,13 +229,13 @@ namespace SpaceObjects.Data
             xeclip += this.Location.xs;
             yeclip += this.Location.ys;
             zeclip += this.Location.zs;
-            dist = Math.Sqrt(xeclip * xeclip + yeclip * yeclip + zeclip * zeclip);
+            this.Distance = Math.Sqrt(xeclip * xeclip + yeclip * yeclip + zeclip * zeclip);
 
             double xequat = xeclip;
             double yequat = yeclip * Math.Cos(this.Location.Oblecl * Math.PI / 180) - zeclip * Math.Sin(this.Location.Oblecl * Math.PI / 180);
             double zequat = yeclip * Math.Sin(this.Location.Oblecl * Math.PI / 180) + zeclip * Math.Cos(this.Location.Oblecl * Math.PI / 180);
 
-            sunDist = Math.Sqrt(this.Location.xs * this.Location.xs + this.Location.ys * this.Location.ys + this.Location.zs * this.Location.zs);
+            this.SunDistance = Math.Sqrt(this.Location.xs * this.Location.xs + this.Location.ys * this.Location.ys + this.Location.zs * this.Location.zs);
 
             SkyPosition.Rectascence = (360 + (Math.Atan2(yequat, xequat) * 180 / Math.PI)) % 360;
             SkyPosition.Declination = Math.Atan2(zequat, Math.Sqrt(xequat * xequat + yequat * yequat)) * 180 / Math.PI;

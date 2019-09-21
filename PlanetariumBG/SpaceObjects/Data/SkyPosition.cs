@@ -29,6 +29,7 @@ namespace SpaceObjects.Data
     /// <summary>
     /// 
     /// </summary>
+    [Serializable]
     public class SkyPosition
     {
 

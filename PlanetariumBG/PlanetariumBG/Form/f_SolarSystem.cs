@@ -983,7 +983,7 @@ namespace Planetarium
 
         private void DrawSS(Graphics g, string name, Color color)
         {
-            if (mag == 0) mag = (short)((originTop.Y - 10) / this.solarSystemData.SolarSystemObjects.GetObjectByName(name).d);
+            if (mag == 0) mag = (short)((originTop.Y - 10) / this.solarSystemData.SolarSystemObjects.GetObjectByName(name).MeanMotion);
             if (c_Orbits.Checked)
             {
                 Point[] p = new Point[29];

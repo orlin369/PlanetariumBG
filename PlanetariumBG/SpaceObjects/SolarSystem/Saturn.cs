@@ -42,15 +42,15 @@ namespace SpaceObjects.SolarSystem
         public override void OrbitalElements()
         {
             N = 113.6634 + 2.3898E-5 * this.Location.DayNumber();
-            i = 2.4886 - 1.081E-7 * this.Location.DayNumber();
-            w = 339.3939 + 2.97661E-5 * this.Location.DayNumber();
-            a = 9.55475;
+            this.Inclination = 2.4886 - 1.081E-7 * this.Location.DayNumber();
+            this.Perihelion = 339.3939 + 2.97661E-5 * this.Location.DayNumber();
+            this.MeanDistance = 9.55475;
             ec = 0.055546 - 9.499E-9 * this.Location.DayNumber();
-            M = 316.967 + 0.0334442282 * this.Location.DayNumber();
+            this.MeanAnomaly = 316.967 + 0.0334442282 * this.Location.DayNumber();
 
-            d = 12; T = 29.5 * 365; d0 = 165.6;
+            this.MeanMotion = 12; this.TrueAnomaly = 29.5 * 365; d0 = 165.6;
 
-            pert.Msat = M;
+            pert.Msat = this.MeanAnomaly;
         }
 
         public override void Perturbations()
@@ -64,19 +64,19 @@ namespace SpaceObjects.SolarSystem
 
         public override void Ephemerides()
         {
-            diam = d0 / dist;
-            double test = (sunDist * sunDist + dist * dist - helDist * helDist) /
-                          (2 * sunDist * dist + 0.000000001);
+            Diameter = d0 / this.Distance;
+            double test = (this.SunDistance * this.SunDistance + this.Distance * this.Distance - helDist * helDist) /
+                          (2 * this.SunDistance * this.Distance + 0.000000001);
             if (test < -1) test = -1;
             if (test > 1) test = 1;
-            elong = Math.Acos(test) * 180 / Math.PI;
+            Elongation = Math.Acos(test) * 180 / Math.PI;
 
-            test = (helDist * helDist + dist * dist - sunDist * sunDist) /
-                   (2 * helDist * dist + 0.000000001);
+            test = (helDist * helDist + this.Distance * this.Distance - this.SunDistance * this.SunDistance) /
+                   (2 * helDist * this.Distance + 0.000000001);
             if (test < -1) test = -1;
             if (test > 1) test = 1;
             FV = Math.Acos(test) * 180 / Math.PI;
-            phase = (1 + Math.Cos(FV * Math.PI / 180)) / 2;
+            this.Phase = (1 + Math.Cos(FV * Math.PI / 180)) / 2;
 
             double ir = 28.06;
             double Nr = 169.51 + 3.82E-5 * this.Location.DayNumber();
@@ -85,7 +85,7 @@ namespace SpaceObjects.SolarSystem
                 Math.Cos(lat * Math.PI / 180) * Math.Sin(ir * Math.PI / 180) * Math.Sin((lon - Nr) * Math.PI / 180)
                                         ) * 180 / Math.PI;
             double ring_mag = -2.6 * Math.Sin(Math.Abs(ringTilt) * Math.PI / 180) + 1.2 * Math.Pow(Math.Sin(ringTilt * Math.PI / 180), 2);
-            this.Magnitude = -9.0 + 5 * Math.Log10(helDist * dist) + 0.044 * FV + ring_mag;
+            this.Magnitude = -9.0 + 5 * Math.Log10(helDist * this.Distance) + 0.044 * FV + ring_mag;
         }
 
         private PertSaturn ps = new PertSaturn();
