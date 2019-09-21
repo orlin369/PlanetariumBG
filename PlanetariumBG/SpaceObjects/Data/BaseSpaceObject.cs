@@ -32,7 +32,10 @@ namespace SpaceObjects.Data
 
         #region Variables
 
-        protected double rr, v, xeclip, yeclip, zeclip;
+        protected double rr, v;
+        protected double XEclipse;
+        protected double YEclipse;
+        protected double ZEclipse;
         protected double Longitude;
         protected double Latitude;
 
@@ -228,14 +231,14 @@ namespace SpaceObjects.Data
 
         virtual public void GeocentricPos()
         {
-            xeclip += this.Location.xs;
-            yeclip += this.Location.ys;
-            zeclip += this.Location.zs;
-            this.Distance = Math.Sqrt(xeclip * xeclip + yeclip * yeclip + zeclip * zeclip);
+            this.XEclipse += this.Location.xs;
+            this.YEclipse += this.Location.ys;
+            this.ZEclipse += this.Location.zs;
+            this.Distance = Math.Sqrt(this.XEclipse * this.XEclipse + this.YEclipse * this.YEclipse + this.ZEclipse * this.ZEclipse);
 
-            double xequat = xeclip;
-            double yequat = yeclip * Math.Cos(this.Location.Oblecl * Math.PI / 180) - zeclip * Math.Sin(this.Location.Oblecl * Math.PI / 180);
-            double zequat = yeclip * Math.Sin(this.Location.Oblecl * Math.PI / 180) + zeclip * Math.Cos(this.Location.Oblecl * Math.PI / 180);
+            double xequat = this.XEclipse;
+            double yequat = this.YEclipse * Math.Cos(this.Location.Oblecl * Math.PI / 180) - this.ZEclipse * Math.Sin(this.Location.Oblecl * Math.PI / 180);
+            double zequat = this.YEclipse * Math.Sin(this.Location.Oblecl * Math.PI / 180) + this.ZEclipse * Math.Cos(this.Location.Oblecl * Math.PI / 180);
 
             this.SunDistance = Math.Sqrt(this.Location.xs * this.Location.xs + this.Location.ys * this.Location.ys + this.Location.zs * this.Location.zs);
 

@@ -52,7 +52,7 @@ namespace SpaceObjects.SolarSystem
 
         public override void Perturbations()
         {
-            this.Longitude = (360 + (Math.Atan2(yeclip, xeclip) * 180 / Math.PI)) % 360;
+            this.Longitude = (360 + (Math.Atan2(this.YEclipse, this.XEclipse) * 180 / Math.PI)) % 360;
             this.Longitude += pj.PertInLon();
         }
 

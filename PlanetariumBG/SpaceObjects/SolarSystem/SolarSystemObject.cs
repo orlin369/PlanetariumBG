@@ -79,15 +79,15 @@ namespace SpaceObjects.SolarSystem
             rr = Math.Sqrt(x1 * x1 + y1 * y1);
             v = (360 + Math.Atan2(y1, x1) * 180 / Math.PI) % 360;
 
-            this.Position.X = xeclip = rr * (Math.Cos(N * Math.PI / 180) * Math.Cos((v + this.Perihelion) * Math.PI / 180) - Math.Sin(N * Math.PI / 180) * Math.Sin((v + this.Perihelion) * Math.PI / 180) * Math.Cos(this.Inclination * Math.PI / 180));
-            this.Position.Y = yeclip = rr * (Math.Sin(N * Math.PI / 180) * Math.Cos((v + this.Perihelion) * Math.PI / 180) + Math.Cos(N * Math.PI / 180) * Math.Sin((v + this.Perihelion) * Math.PI / 180) * Math.Cos(this.Inclination * Math.PI / 180));
-            this.Position.Z = zeclip = rr * Math.Sin((v + this.Perihelion) * Math.PI / 180) * Math.Sin(this.Inclination * Math.PI / 180);
+            this.Position.X = this.XEclipse = rr * (Math.Cos(N * Math.PI / 180) * Math.Cos((v + this.Perihelion) * Math.PI / 180) - Math.Sin(N * Math.PI / 180) * Math.Sin((v + this.Perihelion) * Math.PI / 180) * Math.Cos(this.Inclination * Math.PI / 180));
+            this.Position.Y = this.YEclipse = rr * (Math.Sin(N * Math.PI / 180) * Math.Cos((v + this.Perihelion) * Math.PI / 180) + Math.Cos(N * Math.PI / 180) * Math.Sin((v + this.Perihelion) * Math.PI / 180) * Math.Cos(this.Inclination * Math.PI / 180));
+            this.Position.Z = this.ZEclipse = rr * Math.Sin((v + this.Perihelion) * Math.PI / 180) * Math.Sin(this.Inclination * Math.PI / 180);
 
-            helDist = Math.Sqrt(xeclip * xeclip + yeclip * yeclip + zeclip * zeclip);
+            helDist = Math.Sqrt(this.XEclipse * this.XEclipse + this.YEclipse * this.YEclipse + this.ZEclipse * this.ZEclipse);
 
-            this.Longitude = (360 + (Math.Atan2(yeclip, xeclip) * 180.0D / Math.PI)) % 360;
-            this.Latitude = Math.Asin(zeclip / rr) * 180.0D / Math.PI;
-            this.MeanDistance = Math.Sqrt(xeclip * xeclip + yeclip * yeclip + zeclip * zeclip);
+            this.Longitude = (360 + (Math.Atan2(this.YEclipse, this.XEclipse) * 180.0D / Math.PI)) % 360;
+            this.Latitude = Math.Asin(this.ZEclipse / rr) * 180.0D / Math.PI;
+            this.MeanDistance = Math.Sqrt(this.XEclipse * this.XEclipse + this.YEclipse * this.YEclipse + this.ZEclipse * this.ZEclipse);
         }
 
         public void TopocentricPos()
