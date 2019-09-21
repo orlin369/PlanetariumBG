@@ -49,24 +49,24 @@ namespace SpaceObjects.SolarSystem
             this.MeanAnomaly = 115.3654 + 13.0649929509 * this.Location.DayNumber();
             this.MeanAnomaly += ((int)Math.Abs(this.MeanAnomaly / 360) + 1) * 360;
 
-            pert.Mm = this.MeanAnomaly;
-            pert.Lm = N + this.Perihelion + this.MeanAnomaly;
-            pert.D = pert.Lm - pert.Ls;
-            pert.F = pert.Lm - N;
+            this.Perturbation.Mm = this.MeanAnomaly;
+            this.Perturbation.Lm = N + this.Perihelion + this.MeanAnomaly;
+            this.Perturbation.D = this.Perturbation.Lm - this.Perturbation.Ls;
+            this.Perturbation.F = this.Perturbation.Lm - N;
         }
 
         public override void Perturbations()
         {
-            lon += pm.PertInLon();
-            lat += pm.PertInLat();
+            this.Longitude += pm.PertInLon();
+            this.Latitude += pm.PertInLat();
             this.Distance = (this.MeanDistance + pm.PertInDist());
         }
 
         public override void GeocentricPos()
         {
-            double xeclip2 = Math.Cos(MathHelp.DegreeToRadian(lon)) * Math.Cos(MathHelp.DegreeToRadian(lat));
-            double yeclip2 = Math.Sin(MathHelp.DegreeToRadian(lon)) * Math.Cos(MathHelp.DegreeToRadian(lat));
-            double zeclip2 = Math.Sin(MathHelp.DegreeToRadian(lat));
+            double xeclip2 = Math.Cos(MathHelp.DegreeToRadian(this.Longitude)) * Math.Cos(MathHelp.DegreeToRadian(this.Latitude));
+            double yeclip2 = Math.Sin(MathHelp.DegreeToRadian(this.Longitude)) * Math.Cos(MathHelp.DegreeToRadian(this.Latitude));
+            double zeclip2 = Math.Sin(MathHelp.DegreeToRadian(this.Latitude));
             double xequat = xeclip2;
             double yequat = yeclip2 * Math.Cos(MathHelp.DegreeToRadian(this.Location.Oblecl)) - zeclip2 * Math.Sin(MathHelp.DegreeToRadian(this.Location.Oblecl));
             double zequat = yeclip2 * Math.Sin(MathHelp.DegreeToRadian(this.Location.Oblecl)) + zeclip2 * Math.Cos(MathHelp.DegreeToRadian(this.Location.Oblecl));
@@ -86,7 +86,7 @@ namespace SpaceObjects.SolarSystem
             this.Magnitude = -10;
         }
 
-        //private PertElements pert = PertElements.GetInstance();
+        //private PertElements this.Perturbation = PertElements.GetInstance();
         private PertMoon pm = new PertMoon();
     }
 }

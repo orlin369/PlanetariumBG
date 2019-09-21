@@ -48,7 +48,7 @@ namespace SpaceObjects.SolarSystem
 
             this.Location.Oblecl = 23.4393 - 3.563E-7 * this.Location.DayNumber();
 
-            pert.Msun = this.MeanAnomaly;
+            this.Perturbation.Msun = this.MeanAnomaly;
         }
 
         public override void GeocentricPos()
@@ -71,7 +71,7 @@ namespace SpaceObjects.SolarSystem
             SkyPosition.Rectascence = (360 + (Math.Atan2(yeq, xeq) * 180 / Math.PI)) % 360;
             SkyPosition.Declination = Math.Asin(zeq / this.Distance) * 180 / Math.PI;
 
-            pert.Ls = L;
+            this.Perturbation.Ls = L;
             this.Location.xs = this.Position.X;
             this.Location.ys = this.Position.Y;
             this.Location.zs = this.Position.Z;

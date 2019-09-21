@@ -29,7 +29,7 @@ namespace SpaceObjects.Perturbations
     /// </summary>
     public abstract class APerturbations : IPerturbations
     {
-        public PertElements pert = PertElements.GetInstance();
+        public PertElements Perturbation = PertElements.GetInstance();
 
         public APerturbations() { }
 

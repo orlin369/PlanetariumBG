@@ -35,15 +35,15 @@ namespace SpaceObjects.Perturbations
 
         public override double PertInLon()
         {
-            double lon1 = -0.332 * (Math.Sin((2 * pert.Mj - 5 * pert.Msat - 67.6) * Math.PI / 180));
-            double lon2 = -0.056 * Math.Sin((2 * pert.Mj - 2 * pert.Msat + 21) * Math.PI / 180);
-            double lon3 = 0.042 * Math.Sin((3 * pert.Mj - 5 * pert.Msat + 21) * Math.PI / 180);
-            double lon4 = -0.036 * Math.Sin((pert.Mj - 2 * pert.Msat) * Math.PI / 180);
-            double lon5 = 0.022 * Math.Cos((pert.Mj - pert.Msat) * Math.PI / 180);
-            double lon6 = 0.023 * Math.Sin((2 * pert.Mj - 3 * pert.Msat + 52) * Math.PI / 180);
-            double lon7 = -0.016 * Math.Sin((pert.Mj - 5 * pert.Msat - 69) * Math.PI / 180);
-            double lon = lon1 + lon2 + lon3 + lon4 + lon5 + lon6 + lon7;
-            return lon;
+            double lon1 = -0.332 * (Math.Sin((2 * this.Perturbation.Mj - 5 * this.Perturbation.Msat - 67.6) * Math.PI / 180));
+            double lon2 = -0.056 * Math.Sin((2 * this.Perturbation.Mj - 2 * this.Perturbation.Msat + 21) * Math.PI / 180);
+            double lon3 = 0.042 * Math.Sin((3 * this.Perturbation.Mj - 5 * this.Perturbation.Msat + 21) * Math.PI / 180);
+            double lon4 = -0.036 * Math.Sin((this.Perturbation.Mj - 2 * this.Perturbation.Msat) * Math.PI / 180);
+            double lon5 = 0.022 * Math.Cos((this.Perturbation.Mj - this.Perturbation.Msat) * Math.PI / 180);
+            double lon6 = 0.023 * Math.Sin((2 * this.Perturbation.Mj - 3 * this.Perturbation.Msat + 52) * Math.PI / 180);
+            double lon7 = -0.016 * Math.Sin((this.Perturbation.Mj - 5 * this.Perturbation.Msat - 69) * Math.PI / 180);
+            double longitude = lon1 + lon2 + lon3 + lon4 + lon5 + lon6 + lon7;
+            return longitude;
         }
 
         public override double PertInLat()

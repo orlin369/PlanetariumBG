@@ -32,7 +32,9 @@ namespace SpaceObjects.Data
 
         #region Variables
 
-        protected double rr, v, xeclip, yeclip, zeclip, lon, lat;
+        protected double rr, v, xeclip, yeclip, zeclip;
+        protected double Longitude;
+        protected double Latitude;
 
         #endregion
 

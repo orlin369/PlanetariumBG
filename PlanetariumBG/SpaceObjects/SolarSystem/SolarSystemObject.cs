@@ -85,8 +85,8 @@ namespace SpaceObjects.SolarSystem
 
             helDist = Math.Sqrt(xeclip * xeclip + yeclip * yeclip + zeclip * zeclip);
 
-            lon = (360 + (Math.Atan2(yeclip, xeclip) * 180.0D / Math.PI)) % 360;
-            lat = Math.Asin(zeclip / rr) * 180.0D / Math.PI;
+            this.Longitude = (360 + (Math.Atan2(yeclip, xeclip) * 180.0D / Math.PI)) % 360;
+            this.Latitude = Math.Asin(zeclip / rr) * 180.0D / Math.PI;
             this.MeanDistance = Math.Sqrt(xeclip * xeclip + yeclip * yeclip + zeclip * zeclip);
         }
 
@@ -95,7 +95,7 @@ namespace SpaceObjects.SolarSystem
             double LON = this.Location.Longitude,
                    LAT = this.Location.Latitude + 0.00000000001;
             double mpar = Math.Asin(1 / this.Distance) * 180.0D / Math.PI;
-            double GMST0 = (pert.Ls / 15 + 12 + (this.Location.MainDateTime.Hour - LON / 15) + (double)this.Location.MainDateTime.Minute / 60 + (double)this.Location.MainDateTime.Second / 3600) % 24;
+            double GMST0 = (this.Perturbation.Ls / 15 + 12 + (this.Location.MainDateTime.Hour - LON / 15) + (double)this.Location.MainDateTime.Minute / 60 + (double)this.Location.MainDateTime.Second / 3600) % 24;
             double SIDTIME = (GMST0 + LON / 15);
             double LST = SIDTIME * 15;
             this.Location.SIDTIME = SIDTIME;
@@ -103,13 +103,13 @@ namespace SpaceObjects.SolarSystem
             double HA = (360 + (LST - SkyPosition.Rectascence)) % 360;
             double gclat = LAT - 0.1924 * Math.Sin(MathHelp.DegreeToRadian(2 * LAT));
             double rho = 0.99833 + 0.00167 * Math.Cos((2 * LAT) * Math.PI / 180.0D);
-            double g = Math.Atan(Math.Tan(gclat * Math.PI / 180.0D) / Math.Cos(HA * Math.PI / 180.0D)) * 180.0D / Math.PI;
-            double topRA = SkyPosition.Rectascence - mpar * rho * Math.Cos(gclat * Math.PI / 180.0D) * Math.Sin(HA * Math.PI / 180.0D) / Math.Cos((SkyPosition.Declination + 0.000000001) * Math.PI / 180.0D);
-            double topDecl = SkyPosition.Declination - mpar * rho * Math.Sin(gclat * Math.PI / 180.0D) * Math.Sin((g - SkyPosition.Declination) * Math.PI / 180.0D) / Math.Sin((g + 0.00000001) * Math.PI / 180.0D);
+            double g = Math.Atan(Math.Tan(MathHelp.DegreeToRadian(gclat)) / Math.Cos(HA * Math.PI / 180.0D)) * 180.0D / Math.PI;
+            double topRA = SkyPosition.Rectascence - mpar * rho * Math.Cos(MathHelp.DegreeToRadian(gclat)) * Math.Sin(HA * Math.PI / 180.0D) / Math.Cos((SkyPosition.Declination + 0.000000001) * Math.PI / 180.0D);
+            double topDecl = SkyPosition.Declination - mpar * rho * Math.Sin(MathHelp.DegreeToRadian(gclat)) * Math.Sin((g - SkyPosition.Declination) * Math.PI / 180.0D) / Math.Sin((g + 0.00000001) * Math.PI / 180.0D);
             SkyPosition.Rectascence = topRA;
             SkyPosition.Declination = topDecl;
         }
 
-        protected PertElements pert = PertElements.GetInstance();
+        protected PertElements Perturbation = PertElements.GetInstance();
     }
 }

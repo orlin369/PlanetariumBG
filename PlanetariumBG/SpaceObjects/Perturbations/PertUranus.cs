@@ -35,11 +35,11 @@ namespace SpaceObjects.Perturbations
 
         public override double PertInLon()
         {
-            double lon1 = 0.04 * Math.Sin((pert.Msat - 2 * pert.Mu + 6) * Math.PI / 180);
-            double lon2 = 0.035 * Math.Sin((pert.Msat - 3 * pert.Mu + 33) * Math.PI / 180);
-            double lon3 = -0.015 * Math.Sin((pert.Mj - pert.Mu + 20) * Math.PI / 180);
-            double lon = lon1 + lon2 + lon3;
-            return lon;
+            double lon1 = 0.04 * Math.Sin((this.Perturbation.Msat - 2 * this.Perturbation.Mu + 6) * Math.PI / 180);
+            double lon2 = 0.035 * Math.Sin((this.Perturbation.Msat - 3 * this.Perturbation.Mu + 33) * Math.PI / 180);
+            double lon3 = -0.015 * Math.Sin((this.Perturbation.Mj - this.Perturbation.Mu + 20) * Math.PI / 180);
+            double longitude = lon1 + lon2 + lon3;
+            return longitude;
         }
 
         public override double PertInLat()

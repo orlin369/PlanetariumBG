@@ -47,13 +47,13 @@ namespace SpaceObjects.SolarSystem
             this.MeanAnomaly = 19.895 + 0.0830853001 * this.Location.DayNumber();
             this.MeanAnomaly += ((int)Math.Abs(this.MeanAnomaly / 360) + 1) * 360;
             this.MeanMotion = 6; this.TrueAnomaly = 11.9 * 365; d0 = 196.94;
-            pert.Mj = this.MeanAnomaly;
+            this.Perturbation.Mj = this.MeanAnomaly;
         }
 
         public override void Perturbations()
         {
-            lon = (360 + (Math.Atan2(yeclip, xeclip) * 180 / Math.PI)) % 360;
-            lon += pj.PertInLon();
+            this.Longitude = (360 + (Math.Atan2(yeclip, xeclip) * 180 / Math.PI)) % 360;
+            this.Longitude += pj.PertInLon();
         }
 
         public override void Ephemerides()

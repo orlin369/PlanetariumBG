@@ -50,16 +50,16 @@ namespace SpaceObjects.SolarSystem
 
             this.MeanMotion = 12; this.TrueAnomaly = 29.5 * 365; d0 = 165.6;
 
-            pert.Msat = this.MeanAnomaly;
+            this.Perturbation.Msat = this.MeanAnomaly;
         }
 
         public override void Perturbations()
         {
-            lon = (360 + (Math.Atan2(yeclip, xeclip) * 180 / Math.PI)) % 360;
-            lat = Math.Asin(zeclip / rr) * 180 / Math.PI;
+            this.Longitude = (360 + (Math.Atan2(yeclip, xeclip) * 180 / Math.PI)) % 360;
+            this.Latitude = Math.Asin(zeclip / rr) * 180 / Math.PI;
 
-            lon += ps.PertInLon();
-            lat += ps.PertInLat();
+            this.Longitude += ps.PertInLon();
+            Latitude += ps.PertInLat();
         }
 
         public override void Ephemerides()
@@ -81,8 +81,8 @@ namespace SpaceObjects.SolarSystem
             double ir = 28.06;
             double Nr = 169.51 + 3.82E-5 * this.Location.DayNumber();
             double ringTilt = Math.Asin(
-                Math.Sin(lat * Math.PI / 180) * Math.Cos(ir * Math.PI / 180) -
-                Math.Cos(lat * Math.PI / 180) * Math.Sin(ir * Math.PI / 180) * Math.Sin((lon - Nr) * Math.PI / 180)
+                Math.Sin(this.Latitude * Math.PI / 180) * Math.Cos(ir * Math.PI / 180) -
+                Math.Cos(this.Latitude * Math.PI / 180) * Math.Sin(ir * Math.PI / 180) * Math.Sin((this.Longitude - Nr) * Math.PI / 180)
                                         ) * 180 / Math.PI;
             double ring_mag = -2.6 * Math.Sin(Math.Abs(ringTilt) * Math.PI / 180) + 1.2 * Math.Pow(Math.Sin(ringTilt * Math.PI / 180), 2);
             this.Magnitude = -9.0 + 5 * Math.Log10(helDist * this.Distance) + 0.044 * FV + ring_mag;
