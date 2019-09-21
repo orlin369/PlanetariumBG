@@ -40,7 +40,7 @@ namespace SpaceObjects.Data
             set;
         }
 
-        public double Decl
+        public double Declination
         {
             get;
             set;
@@ -68,18 +68,18 @@ namespace SpaceObjects.Data
             double AA = 0, Atemp = 0;
 
             a = Math.Asin(
-                Math.Sin(Decl * Math.PI / 180) * Math.Sin(LAT * Math.PI / 180) +
-                Math.Cos(Decl * Math.PI / 180) * Math.Cos(LAT * Math.PI / 180) * Math.Cos(ZPX * Math.PI / 180)
+                Math.Sin(Declination * Math.PI / 180) * Math.Sin(LAT * Math.PI / 180) +
+                Math.Cos(Declination * Math.PI / 180) * Math.Cos(LAT * Math.PI / 180) * Math.Cos(ZPX * Math.PI / 180)
                          ) * 180 / Math.PI;
 
-            Atemp = (-Math.Sin(Decl * Math.PI / 180) * Math.Cos(LAT * Math.PI / 180) +
-                     Math.Sin(LAT * Math.PI / 180) * Math.Cos(Decl * Math.PI / 180) * Math.Cos(ZPX * Math.PI / 180)) /
+            Atemp = (-Math.Sin(Declination * Math.PI / 180) * Math.Cos(LAT * Math.PI / 180) +
+                     Math.Sin(LAT * Math.PI / 180) * Math.Cos(Declination * Math.PI / 180) * Math.Cos(ZPX * Math.PI / 180)) /
                      Math.Sin((90 - a + 0.0000001) * Math.PI / 180);
             if (Atemp > 1) Atemp = 1;
             if (Atemp < -1) Atemp = -1;
             A = Math.Acos(Atemp) * 180 / Math.PI;
 
-            Atemp = Math.Sin(ZPX * Math.PI / 180) * Math.Cos(Decl * Math.PI / 180) / Math.Sin((90 - a) * Math.PI / 180);
+            Atemp = Math.Sin(ZPX * Math.PI / 180) * Math.Cos(Declination * Math.PI / 180) / Math.Sin((90 - a) * Math.PI / 180);
             if (Atemp > 1) Atemp = 1;
             if (Atemp < -1) Atemp = -1;
             AA = Math.Asin(Atemp) * 180 / Math.PI;
@@ -100,17 +100,17 @@ namespace SpaceObjects.Data
                     Math.Sin((a - 90) * Math.PI / 180) * Math.Cos(LAT * Math.PI / 180) * Math.Cos(A * Math.PI / 180);
             if (Rtemp > 1) Rtemp = 1;
             if (Rtemp < -1) Rtemp = -1;
-            Decl = Math.Asin(Rtemp) * 180 / Math.PI;
+            Declination = Math.Asin(Rtemp) * 180 / Math.PI;
 
             Rtemp = Math.Sin((a - 90) * Math.PI / 180) * Math.Sin(A * Math.PI / 180) /
-                    Math.Cos(Decl * Math.PI / 180);
+                    Math.Cos(Declination * Math.PI / 180);
             if (Rtemp > 1) Rtemp = 1;
             if (Rtemp < -1) Rtemp = -1;
             RR = (SIDTIME - Math.Asin(Rtemp) * 180 / Math.PI + 360) % 360;
 
             Rtemp = (Math.Cos(A * Math.PI / 180) * Math.Sin((a - 90) * Math.PI / 180) +
-                     Math.Sin(Decl * Math.PI / 180) * Math.Cos(LAT * Math.PI / 180)) /
-                    (Math.Sin(LAT * Math.PI / 180) * Math.Cos((Decl) * Math.PI / 180));
+                     Math.Sin(Declination * Math.PI / 180) * Math.Cos(LAT * Math.PI / 180)) /
+                    (Math.Sin(LAT * Math.PI / 180) * Math.Cos((Declination) * Math.PI / 180));
             if (Rtemp > 1) Rtemp = 1;
             if (Rtemp < -1) Rtemp = -1;
             Rectascence = SIDTIME - Math.Acos(Rtemp) * 180 / Math.PI;
@@ -123,8 +123,6 @@ namespace SpaceObjects.Data
             if (Math.Round(RRR, 0) == 180) { Rectascence = (180 + 2 * SIDTIME - RR + 360) % 360; ; return; }
             if (Math.Round((Rectascence + RR) - (2 * SIDTIME), 0) != 0) { Rectascence = (RR - RRR + 360) % 360; return; }
         }
-
-
 
         #endregion
     }

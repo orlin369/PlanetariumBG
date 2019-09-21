@@ -6,13 +6,13 @@ namespace SpaceObjects.Data
     {
         public Star() { }
 
-        public Star(string designation, string name, double ra, double decl, double magnitude, string spectrum)
+        public Star(string designation, string name, double rectascence, double declination, double magnitude, string spectrum)
         {
             this.Designation = designation;
             this.Name = name;
             this.SkyPosition = new SkyPosition();
-            this.SkyPosition.Rectascence = ra;
-            this.SkyPosition.Decl = decl;
+            this.SkyPosition.Rectascence = rectascence;
+            this.SkyPosition.Declination = declination;
             this.Magnitude = magnitude;
             this.Spectrum = spectrum;
         }

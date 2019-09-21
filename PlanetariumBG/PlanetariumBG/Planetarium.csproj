@@ -110,6 +110,7 @@
     <Compile Include="Form\SkyView.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Planets.cs" />
     <Content Include="Form\App.ico" />
     <Content Include="Resources\ButtonIcons\label.bmp" />
     <Content Include="Resources\Icons\minus.ico" />

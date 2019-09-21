@@ -70,7 +70,7 @@ namespace SpaceObjects.SolarSystem
             double yequat = yeclip2 * Math.Cos(this.Location.Oblecl * Math.PI / 180.0D) - zeclip2 * Math.Sin(this.Location.Oblecl * Math.PI / 180.0D);
             double zequat = yeclip2 * Math.Sin(this.Location.Oblecl * Math.PI / 180.0D) + zeclip2 * Math.Cos(this.Location.Oblecl * Math.PI / 180.0D);
             SkyPosition.Rectascence = (360 + (Math.Atan2(yequat, xequat) * 180.0D / Math.PI)) % 360;
-            SkyPosition.Decl = Math.Atan2(zequat, Math.Sqrt(xequat * xequat + yequat * yequat)) * 180.0D / Math.PI;
+            SkyPosition.Declination = Math.Atan2(zequat, Math.Sqrt(xequat * xequat + yequat * yequat)) * 180.0D / Math.PI;
         }
 
         public override void Ephemerides()
@@ -78,8 +78,8 @@ namespace SpaceObjects.SolarSystem
             diam = 1873.7 * 60 / dist;
             dist = dist * 6378.140 / 1.49597870E8;
             elong = Math.Acos(
-                Math.Sin(SkyPosition.Decl * Math.PI / 180.0D) * Math.Sin(this.Location.sDecl * Math.PI / 180.0D) +
-                Math.Cos(SkyPosition.Decl * Math.PI / 180.0D) * Math.Cos(this.Location.sDecl * Math.PI / 180.0D) *
+                Math.Sin(SkyPosition.Declination * Math.PI / 180.0D) * Math.Sin(this.Location.sDecl * Math.PI / 180.0D) +
+                Math.Cos(SkyPosition.Declination * Math.PI / 180.0D) * Math.Cos(this.Location.sDecl * Math.PI / 180.0D) *
                 Math.Cos((SkyPosition.Rectascence - this.Location.sRA) * Math.PI / 180.0D)) * 180.0D / Math.PI;
             phase = 180.0D - elong;
             this.Magnitude = -10;

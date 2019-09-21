@@ -1586,7 +1586,7 @@ namespace Planetarium
         private void f_MainForm_Load(object sender, System.EventArgs e)
         {
             location.TimeNow();
-            UpdateLabel();
+            this.UpdateLabel();
 
             skyView.origin.X = pB_Space.Width / 2;
             skyView.origin.Y = pB_Space.Height / 2;
@@ -1601,12 +1601,10 @@ namespace Planetarium
                     skyView.grid[i, j].a = a;
                     skyView.grid[i, j].A = A;
 
-                    skyView.EQgrid[i, j].Decl = a;
+                    skyView.EQgrid[i, j].Declination = a;
                     skyView.EQgrid[i, j].Rectascence = A;
                 }
             }
-
-
 
             for (int i = 0; i < 8; ++i)
             {
@@ -3167,11 +3165,11 @@ namespace Planetarium
         }
 
         private LocationST location = LocationST.GetInstance();
-        private SolarSystemData planetData = SolarSystemData.GetInstance();
+        private readonly SolarSystemData solarSystemData = SolarSystemData.GetInstance();
         private SkyView skyView = new SkyView();
         private string selected;
         private bool changePos = false;
-        private Cursor openH, closedH;
+        private readonly Cursor openH, closedH;
         private string[] timeUnit = { "seconds", "minutes", "hours", "days", "months", "years" };
         private int strIndex = 1;
         private short n;

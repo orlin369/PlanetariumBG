@@ -29,6 +29,15 @@ namespace SpaceObjects.Data
     [Serializable]
     public abstract class BaseSpaceObject : ISpaceObject
     {
+
+        #region Variables
+
+        protected double rr, v, xeclip, yeclip, zeclip, lon, lat;
+
+        #endregion
+
+        #region Properties
+
         public string Spectrum
         {
             get;
@@ -53,19 +62,13 @@ namespace SpaceObjects.Data
             set;
         }
 
+        public string Type { get; set; }
+
         public SkyPosition SkyPosition
         {
             get;
             set;
         }
-
-        public BaseSpaceObject()
-        {
-            this.SkyPosition = new SkyPosition();
-            this.Location = LocationST.GetInstance();
-        }
-
-        #region Properties
 
         public double d
         {
@@ -138,21 +141,11 @@ namespace SpaceObjects.Data
             set;
         }
 
-        #endregion
-
         public LocationST Location
         {
             get;
             set;
         }
-
-        public abstract void Ephemerides();
-
-        public abstract void OrbitalElements();
-
-        public abstract void Perturbations();
-
-
 
         protected double helDist
         {
@@ -165,8 +158,25 @@ namespace SpaceObjects.Data
             set;
         }
 
+        #endregion
 
-        protected double rr, v, xeclip, yeclip, zeclip, lon, lat;
+        #region Constructor
+
+        public BaseSpaceObject()
+        {
+            this.SkyPosition = new SkyPosition();
+            this.Location = LocationST.GetInstance();
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public abstract void Ephemerides();
+
+        public abstract void OrbitalElements();
+
+        public abstract void Perturbations();
 
         virtual public void GeocentricPos()
         {
@@ -182,7 +192,10 @@ namespace SpaceObjects.Data
             sunDist = Math.Sqrt(this.Location.xs * this.Location.xs + this.Location.ys * this.Location.ys + this.Location.zs * this.Location.zs);
 
             SkyPosition.Rectascence = (360 + (Math.Atan2(yequat, xequat) * 180 / Math.PI)) % 360;
-            SkyPosition.Decl = Math.Atan2(zequat, Math.Sqrt(xequat * xequat + yequat * yequat)) * 180 / Math.PI;
+            SkyPosition.Declination = Math.Atan2(zequat, Math.Sqrt(xequat * xequat + yequat * yequat)) * 180 / Math.PI;
         }
+
+        #endregion
+
     }
 }

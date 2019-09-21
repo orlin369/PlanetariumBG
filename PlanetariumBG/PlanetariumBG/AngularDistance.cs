@@ -62,183 +62,183 @@ namespace Planetarium
         /// </summary>
         /// <param name="planets"></param>
         /// <returns></returns>
-        public double AngularDistance(string planets)
+        public double AngularDistance(int planets)
         {
-            // TODO: Migreate all strings to ENUM.
             solarSystemData.PlanetPositions();
             switch (planets)
             {
-                case "MerVen":
+                case (int)Planets.Mercury + (int)Planets.Venus:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Mercury").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Venus").SkyPosition);
-                case "MerMar":
+                case (int)Planets.Mercury + (int)Planets.Mars:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Mercury").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Mars").SkyPosition);
-                case "MerJup":
+                case (int)Planets.Mercury + (int)Planets.Jupiter:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Mercury").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Jupiter").SkyPosition);
-                case "MerSat":
+                case (int)Planets.Mercury + (int)Planets.Saturn:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Mercury").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Saturn").SkyPosition);
-                case "MerUra":
+                case (int)Planets.Mercury + (int)Planets.Uranus:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Mercury").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Uranus").SkyPosition);
-                case "MerNep":
+                case (int)Planets.Mercury + (int)Planets.Neptune:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Mercury").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Neptune").SkyPosition);
-                case "MerPlu":
+                case (int)Planets.Mercury + (int)Planets.Pluto:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Mercury").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Pluto").SkyPosition);
-                case "MerMoo":
+                case (int)Planets.Mercury + (int)Planets.Moon:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Mercury").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Moon").SkyPosition);
 
-                case "VenMar":
+                case (int)Planets.Venus + (int)Planets.Mars:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Venus").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Mars").SkyPosition);
-                case "VenJup":
+                case (int)Planets.Venus + (int)Planets.Jupiter:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Venus").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Jupiter").SkyPosition);
-                case "VenSat":
+                case (int)Planets.Venus + (int)Planets.Saturn:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Venus").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Saturn").SkyPosition);
-                case "VenUra":
+                case (int)Planets.Venus + (int)Planets.Uranus:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Venus").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Uranus").SkyPosition);
-                case "VenNep":
+                case (int)Planets.Venus + (int)Planets.Neptune:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Venus").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Neptune").SkyPosition);
-                case "VenPlu":
+                case (int)Planets.Venus + (int)Planets.Pluto:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Venus").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Pluto").SkyPosition);
-                case "VenMoo":
+                case (int)Planets.Venus + (int)Planets.Moon:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Venus").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Moon").SkyPosition);
 
-                case "MarJup":
+                case (int)Planets.Mars + (int)Planets.Jupiter:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Mars").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Jupiter").SkyPosition);
-                case "MarSat":
+                case (int)Planets.Mars + (int)Planets.Saturn:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Mars").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Saturn").SkyPosition);
-                case "MarUra":
+                case (int)Planets.Mars + (int)Planets.Uranus:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Mars").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Uranus").SkyPosition);
-                case "MarNep":
+                case (int)Planets.Mars + (int)Planets.Neptune:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Mars").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Neptune").SkyPosition);
-                case "MarPlu":
+                case (int)Planets.Mars + (int)Planets.Pluto:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Mars").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Pluto").SkyPosition);
-                case "MarMoo":
+                case (int)Planets.Mars + (int)Planets.Moon:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Mars").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Moon").SkyPosition);
 
-                case "JupSat":
+                case (int)Planets.Jupiter + (int)Planets.Saturn:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Jupiter").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Saturn").SkyPosition);
-                case "JupUra":
+                case (int)Planets.Jupiter + (int)Planets.Uranus:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Jupiter").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Uranus").SkyPosition);
-                case "JupNep":
+                case (int)Planets.Jupiter + (int)Planets.Neptune:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Jupiter").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Neptune").SkyPosition);
-                case "JupPlu":
+                case (int)Planets.Jupiter + (int)Planets.Pluto:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Jupiter").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Pluto").SkyPosition);
-                case "JupMoo":
+                case (int)Planets.Jupiter + (int)Planets.Moon:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Jupiter").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Moon").SkyPosition);
 
-                case "SatUra":
+                case (int)Planets.Saturn + (int)Planets.Uranus:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Saturn").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Uranus").SkyPosition);
-                case "SatNep":
+                case (int)Planets.Saturn + (int)Planets.Neptune:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Saturn").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Neptune").SkyPosition);
-                case "SatPlu":
+                case (int)Planets.Saturn + (int)Planets.Pluto:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Saturn").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Pluto").SkyPosition);
-                case "SatMoo":
+                case (int)Planets.Saturn + (int)Planets.Moon:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Saturn").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Moon").SkyPosition);
 
-                case "UraNep":
+                case (int)Planets.Uranus + (int)Planets.Neptune:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Uranus").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Neptune").SkyPosition);
-                case "UraPlu":
+                case (int)Planets.Uranus + (int)Planets.Pluto:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Uranus").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Pluto").SkyPosition);
-                case "UraMoo":
+                case (int)Planets.Uranus + (int)Planets.Moon:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Uranus").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Moon").SkyPosition);
 
-                case "NepPlu":
+                case (int)Planets.Neptune + (int)Planets.Pluto:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Neptune").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Pluto").SkyPosition);
-                case "NepMoo":
+                case (int)Planets.Neptune + (int)Planets.Moon:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Neptune").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Moon").SkyPosition);
 
-                case "PluMoo":
+                case (int)Planets.Pluto + (int)Planets.Moon:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Pluto").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Moon").SkyPosition);
 
-                case "SunMoo":
+                case (int)Planets.Sun + (int)Planets.Moon:
                     return Distance(
                         solarSystemData.SolarSystemObjects.GetObjectByName("Sun").SkyPosition,
                         solarSystemData.SolarSystemObjects.GetObjectByName("Moon").SkyPosition);
             }
+
             return 0;
         }
 
 
         public double Distance(SkyPosition a, SkyPosition b)
         {
-            return Distance(a.Rectascence, a.Decl, b.Rectascence, b.Decl);
+            return Distance(a.Rectascence, a.Declination, b.Rectascence, b.Declination);
         }
 
-        public double Distance(double RA1, double decl1, double RA2, double decl2)
+        public double Distance(double rectascence1, double declination1, double rectascence2, double declination2)
         {
             return Math.Acos(
-                Math.Sin(decl1 * Math.PI / 180) * Math.Sin(decl2 * Math.PI / 180) +
-                Math.Cos(decl1 * Math.PI / 180) * Math.Cos(decl2 * Math.PI / 180) * Math.Cos((RA1 - RA2) * Math.PI / 180)) * 180 / Math.PI;
+                Math.Sin(declination1 * Math.PI / 180) * Math.Sin(declination2 * Math.PI / 180) +
+                Math.Cos(declination1 * Math.PI / 180) * Math.Cos(declination2 * Math.PI / 180) * Math.Cos((rectascence1 - rectascence2) * Math.PI / 180)) * 180 / Math.PI;
         }
 
         #endregion

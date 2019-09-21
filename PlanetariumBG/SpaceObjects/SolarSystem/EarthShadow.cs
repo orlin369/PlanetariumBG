@@ -45,7 +45,7 @@ namespace SpaceObjects.SolarSystem
         public override void GeocentricPos()
         {
             SkyPosition.Rectascence = (this.Location.sRA + 180) % 360;
-            SkyPosition.Decl = -this.Location.sDecl;
+            SkyPosition.Declination = -this.Location.sDecl;
         }
 
         public override void Ephemerides()

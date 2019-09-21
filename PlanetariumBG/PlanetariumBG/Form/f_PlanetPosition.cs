@@ -114,16 +114,16 @@ namespace Planetarium
             StringFormat sf = new StringFormat();
             sf.Alignment = System.Drawing.StringAlignment.Center;
             g.DrawString("RA", new Font("Georgia", 9), new SolidBrush(Color.FromArgb(100, 100, 100)), 110, 5, sf);
-            g.DrawString("Decl", new Font("Georgia", 9), new SolidBrush(Color.FromArgb(100, 100, 100)), 200, 5, sf);
+            g.DrawString("Declination", new Font("Georgia", 9), new SolidBrush(Color.FromArgb(100, 100, 100)), 200, 5, sf);
             foreach (String planetName in planetNames)
             {
                 g.DrawString(planetName + " :", new Font("Georgia", 9), new SolidBrush(Color.FromArgb(100, 100, 100)), 5, 5 + 20 * x);
 
-                double rahTemp = planetData.SolarSystemObjects.GetObjectByName(planetName).SkyPosition.Rectascence / 15;
+                double rahTemp = this.solarSystemData.SolarSystemObjects.GetObjectByName(planetName).SkyPosition.Rectascence / 15;
                 double ramTemp = (rahTemp - (int)rahTemp) * 60;
                 double rasTemp = (ramTemp - (int)ramTemp) * 60;
 
-                double dhTemp = planetData.SolarSystemObjects.GetObjectByName(planetName).SkyPosition.Decl;
+                double dhTemp = this.solarSystemData.SolarSystemObjects.GetObjectByName(planetName).SkyPosition.Declination;
                 double dmTemp = Math.Abs((dhTemp - (int)dhTemp) * 60);
                 double dsTemp = (dmTemp - (int)dmTemp) * 60;
 
@@ -137,7 +137,7 @@ namespace Planetarium
             }
         }
 
-        private SolarSystemData planetData = SolarSystemData.GetInstance();
+        private SolarSystemData solarSystemData = SolarSystemData.GetInstance();
         public System.Windows.Forms.PictureBox pb;
         private static string[] planetNames = {"Sun","Moon","Mercury","Venus","Mars",
                                                "Jupiter","Saturn","Uranus","Neptune","Pluto"};

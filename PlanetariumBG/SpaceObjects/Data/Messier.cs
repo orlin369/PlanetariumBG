@@ -29,12 +29,12 @@ namespace SpaceObjects.Data
     /// </summary>
     public class Messier : BaseSpaceObject
     {
-        public string Type { get; set; }
 
-        public Messier()
-        { }
+        #region Constructor
 
-        public Messier(string designation, double Rectascence, double Decl, string type, string name)
+        public Messier() { }
+
+        public Messier(string designation, double Rectascence, double Declination, string type, string name)
         {
             if (designation != "")
             {
@@ -46,9 +46,13 @@ namespace SpaceObjects.Data
             }
             this.Name = name;
             this.SkyPosition.Rectascence = Rectascence;
-            this.SkyPosition.Decl = Decl;
+            this.SkyPosition.Declination = Declination;
             this.Type = type;
         }
+
+        #endregion
+
+        #region Public Methods
 
         public override void Ephemerides()
         {
@@ -64,5 +68,8 @@ namespace SpaceObjects.Data
         {
             throw new System.NotImplementedException();
         }
+
+        #endregion
+
     }
 }

@@ -53,7 +53,7 @@ namespace SpaceObjects.SolarSystem
             this.Position = new PlanetPosition();
 
             this.SkyPosition.Rectascence = 0;
-            this.SkyPosition.Decl = 0;
+            this.SkyPosition.Declination = 0;
 
             this.Position.X = 0;
             this.Position.Y = 0;
@@ -103,10 +103,10 @@ namespace SpaceObjects.SolarSystem
             double gclat = LAT - 0.1924 * Math.Sin((2 * LAT) * Math.PI / 180.0D);
             double rho = 0.99833 + 0.00167 * Math.Cos((2 * LAT) * Math.PI / 180.0D);
             double g = Math.Atan(Math.Tan(gclat * Math.PI / 180.0D) / Math.Cos(HA * Math.PI / 180.0D)) * 180.0D / Math.PI;
-            double topRA = SkyPosition.Rectascence - mpar * rho * Math.Cos(gclat * Math.PI / 180.0D) * Math.Sin(HA * Math.PI / 180.0D) / Math.Cos((SkyPosition.Decl + 0.000000001) * Math.PI / 180.0D);
-            double topDecl = SkyPosition.Decl - mpar * rho * Math.Sin(gclat * Math.PI / 180.0D) * Math.Sin((g - SkyPosition.Decl) * Math.PI / 180.0D) / Math.Sin((g + 0.00000001) * Math.PI / 180.0D);
+            double topRA = SkyPosition.Rectascence - mpar * rho * Math.Cos(gclat * Math.PI / 180.0D) * Math.Sin(HA * Math.PI / 180.0D) / Math.Cos((SkyPosition.Declination + 0.000000001) * Math.PI / 180.0D);
+            double topDecl = SkyPosition.Declination - mpar * rho * Math.Sin(gclat * Math.PI / 180.0D) * Math.Sin((g - SkyPosition.Declination) * Math.PI / 180.0D) / Math.Sin((g + 0.00000001) * Math.PI / 180.0D);
             SkyPosition.Rectascence = topRA;
-            SkyPosition.Decl = topDecl;
+            SkyPosition.Declination = topDecl;
         }
 
         protected PertElements pert = PertElements.GetInstance();

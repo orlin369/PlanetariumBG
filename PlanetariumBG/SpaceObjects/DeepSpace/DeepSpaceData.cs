@@ -98,7 +98,7 @@ namespace SpaceObjects.DeepSpace
                     string[] split = str.Split(delimiter, 4);
                     SkyPosition sp = new SkyPosition();
                     sp.Rectascence = Convert.ToDouble(split[2], provider) * 15;
-                    sp.Decl = Convert.ToDouble(split[3], provider);
+                    sp.Declination = Convert.ToDouble(split[3], provider);
                     constellationNames.Add(new ConstellationName(split[1], sp));
                 }
             }

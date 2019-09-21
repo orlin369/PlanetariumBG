@@ -81,7 +81,7 @@ namespace Planetarium
         private System.Windows.Forms.Panel p_mainPanel;
 
         private LocationST location = LocationST.GetInstance();
-        private SolarSystemData planetData = SolarSystemData.GetInstance();
+        private SolarSystemData solarSystemData = SolarSystemData.GetInstance();
         private System.Windows.Forms.Button b_Apply;
         private System.Windows.Forms.TextBox t_Decoy;
         private System.Windows.Forms.Label label1;
@@ -741,9 +741,9 @@ namespace Planetarium
             originTop.X = pB_Space.Size.Width / 2;
             originTop.Y = pB_Space.Size.Height / 2;
             b_StartStop.Text = "Start";
-            planetData.PlanetPositions();
-            planetData.PlanetOrb();
-            planetData.RotateOrbit(angle_X, angle_Z);
+            this.solarSystemData.PlanetPositions();
+            this.solarSystemData.PlanetOrb();
+            this.solarSystemData.RotateOrbit(angle_X, angle_Z);
 
             if (isFor == "cf")
             {
@@ -889,7 +889,7 @@ namespace Planetarium
         private void b_dtIn_Click(object sender, System.EventArgs e)
         {
             ChangeTime(1);
-            planetData.PlanetPositions();
+            this.solarSystemData.PlanetPositions();
             t_Decoy.Select();
             if (isFor == "cf") TestConjunction();
             pB_Space.Invalidate();
@@ -898,7 +898,7 @@ namespace Planetarium
         private void b_dtDe_Click(object sender, System.EventArgs e)
         {
             ChangeTime(-1);
-            planetData.PlanetPositions();
+            this.solarSystemData.PlanetPositions();
             t_Decoy.Select();
             if (isFor == "cf") TestConjunction();
             pB_Space.Invalidate();
@@ -975,7 +975,7 @@ namespace Planetarium
             location.TimeNow();
             UpdateLabel();
             NormalizeLabel();
-            planetData.PlanetPositions();
+            this.solarSystemData.PlanetPositions();
             t_Decoy.Select();
             if (isFor == "cf") TestConjunction();
             pB_Space.Invalidate();
@@ -983,34 +983,34 @@ namespace Planetarium
 
         private void DrawSS(Graphics g, string name, Color c)
         {
-            if (mag == 0) mag = (short)((originTop.Y - 10) / planetData.SolarSystemObjects.GetObjectByName(name).d);
+            if (mag == 0) mag = (short)((originTop.Y - 10) / this.solarSystemData.SolarSystemObjects.GetObjectByName(name).d);
             if (c_Orbits.Checked)
             {
                 Point[] p = new Point[29];
                 for (short i = 0; i < 28; ++i)
                 {
-                    p[i].X = (int)(originTop.X + planetData.copyOrb[name, i].X * mag);
-                    p[i].Y = (int)(originTop.Y - planetData.copyOrb[name, i].Y * mag);
+                    p[i].X = (int)(originTop.X + this.solarSystemData.copyOrb[name, i].X * mag);
+                    p[i].Y = (int)(originTop.Y - this.solarSystemData.copyOrb[name, i].Y * mag);
                 }
                 p[28] = p[0];
                 g.DrawCurve(new Pen(Color.Red), p);
             }
 
-            planetData.SolarSystemObjects.GetObjectByName(name).Position.Rotate(angle_X, angle_Z);
+            this.solarSystemData.SolarSystemObjects.GetObjectByName(name).Position.Rotate(angle_X, angle_Z);
             g.FillRectangle(new SolidBrush(c),
-                (int)(originTop.X + planetData.SolarSystemObjects.GetObjectByName(name).Position.X * mag) - 2,
-                (int)(originTop.Y - planetData.SolarSystemObjects.GetObjectByName(name).Position.Y * mag) - 2, 4, 4);
+                (int)(originTop.X + this.solarSystemData.SolarSystemObjects.GetObjectByName(name).Position.X * mag) - 2,
+                (int)(originTop.Y - this.solarSystemData.SolarSystemObjects.GetObjectByName(name).Position.Y * mag) - 2, 4, 4);
             if (isFor == "cf")
             {
                 if (name == "Earth")
                 {
-                    angVec[0].X = (int)(originTop.X + planetData.SolarSystemObjects.GetObjectByName(name).Position.X * mag);
-                    angVec[0].Y = (int)(originTop.Y - planetData.SolarSystemObjects.GetObjectByName(name).Position.Y * mag);
+                    angVec[0].X = (int)(originTop.X + this.solarSystemData.SolarSystemObjects.GetObjectByName(name).Position.X * mag);
+                    angVec[0].Y = (int)(originTop.Y - this.solarSystemData.SolarSystemObjects.GetObjectByName(name).Position.Y * mag);
                 }
                 else
                 {
-                    angVec[avIndex].X = (int)(originTop.X + planetData.SolarSystemObjects.GetObjectByName(name).Position.X * mag);
-                    angVec[avIndex].Y = (int)(originTop.Y - planetData.SolarSystemObjects.GetObjectByName(name).Position.Y * mag);
+                    angVec[avIndex].X = (int)(originTop.X + this.solarSystemData.SolarSystemObjects.GetObjectByName(name).Position.X * mag);
+                    angVec[avIndex].Y = (int)(originTop.Y - this.solarSystemData.SolarSystemObjects.GetObjectByName(name).Position.Y * mag);
                     ++avIndex;
                 }
             }
@@ -1064,11 +1064,11 @@ namespace Planetarium
 
         private void TestConjunction()
         {
-            AD = anglDist.AngularDistance(conStr);
-            if (AD <= oldAD + 0.001) tend = true;
+            this.angularDistance = anglDist.AngularDistance(conStr);
+            if (this.angularDistance <= oldAD + 0.001) tend = true;
             else tend = false;
-            graf[index] = AD;
-            printAD = AD;
+            graf[index] = this.angularDistance;
+            printAD = this.angularDistance;
             if (index < top - 1) ++index;
             else index = 0;
             if (start == true && cont == true && oldAD <= tolerance && tend == false)
@@ -1078,12 +1078,12 @@ namespace Planetarium
                 printAD = oldAD;
                 selected = "l_Day";
                 ChangeTime(-1 * step);
-                planetData.PlanetPositions();
+                this.solarSystemData.PlanetPositions();
                 pB_Space.Invalidate();
                 selected = "";
             }
-            if (AD > tolerance) cont = true;
-            oldAD = AD;
+            if (this.angularDistance > tolerance) cont = true;
+            oldAD = this.angularDistance;
         }
 
         private void timer1_Tick(object sender, System.EventArgs e)
@@ -1101,7 +1101,7 @@ namespace Planetarium
                 location.MainDateTime = location.dtMax;
                 UpdateLabel();
             }
-            planetData.PlanetPositions();
+            this.solarSystemData.PlanetPositions();
             if (isFor == "cf") TestConjunction();
             UpdateLabel();
             pB_Space.Invalidate();
@@ -1109,9 +1109,9 @@ namespace Planetarium
 
         private void StartTimer()
         {
-            AD = oldAD = 0; cont = false; found = false;
+            this.angularDistance = oldAD = 0; cont = false; found = false;
             NormalizeLabel();
-            planetData.PlanetPositions();
+            this.solarSystemData.PlanetPositions();
             if (isFor == "cf") CreateConString();
             mag = 0;
             pB_Space.Invalidate(false);
@@ -1180,7 +1180,7 @@ namespace Planetarium
         private void b_Step_Click(object sender, System.EventArgs e)
         {
             location.MainDateTime = location.MainDateTime.AddDays(step);
-            planetData.PlanetPositions();
+            this.solarSystemData.PlanetPositions();
             UpdateLabel();
             t_Decoy.Select();
             pB_Space.Invalidate();
@@ -1189,7 +1189,7 @@ namespace Planetarium
         private void c_Orbits_CheckedChanged(object sender, System.EventArgs e)
         {
             mag = 0;
-            planetData.PlanetPositions();
+            this.solarSystemData.PlanetPositions();
             t_Decoy.Select();
             pB_Space.Invalidate();
         }
@@ -1199,7 +1199,7 @@ namespace Planetarium
             if (c_Moon.Checked) ++countPl;
             else --countPl;
             mag = 0; if (countPl < 2) DisableBut(); else EnableBut();
-            planetData.PlanetPositions();
+            this.solarSystemData.PlanetPositions();
             t_Decoy.Select();
             pB_Space.Invalidate();
         }
@@ -1209,7 +1209,7 @@ namespace Planetarium
             if (c_Mercury.Checked) ++countPl;
             else --countPl;
             mag = 0; if (countPl < 2) DisableBut(); else EnableBut();
-            planetData.PlanetPositions();
+            this.solarSystemData.PlanetPositions();
             t_Decoy.Select();
             pB_Space.Invalidate();
         }
@@ -1219,7 +1219,7 @@ namespace Planetarium
             if (c_Venus.Checked) ++countPl;
             else --countPl;
             mag = 0; if (countPl < 2) DisableBut(); else EnableBut();
-            planetData.PlanetPositions();
+            this.solarSystemData.PlanetPositions();
             t_Decoy.Select();
             pB_Space.Invalidate();
         }
@@ -1229,7 +1229,7 @@ namespace Planetarium
             if (c_Earth.Checked) c_Moon.Enabled = true;
             else c_Moon.Enabled = false;
             mag = 0;
-            planetData.PlanetPositions();
+            this.solarSystemData.PlanetPositions();
             t_Decoy.Select();
             pB_Space.Invalidate();
         }
@@ -1239,7 +1239,7 @@ namespace Planetarium
             if (c_Mars.Checked) ++countPl;
             else --countPl;
             mag = 0; if (countPl < 2) DisableBut(); else EnableBut();
-            planetData.PlanetPositions();
+            this.solarSystemData.PlanetPositions();
             t_Decoy.Select();
             pB_Space.Invalidate();
         }
@@ -1249,7 +1249,7 @@ namespace Planetarium
             if (c_Jupiter.Checked) ++countPl;
             else --countPl;
             mag = 0; if (countPl < 2) DisableBut(); else EnableBut();
-            planetData.PlanetPositions();
+            this.solarSystemData.PlanetPositions();
             t_Decoy.Select();
             pB_Space.Invalidate();
         }
@@ -1259,7 +1259,7 @@ namespace Planetarium
             if (c_Saturn.Checked) ++countPl;
             else --countPl;
             mag = 0; if (countPl < 2) DisableBut(); else EnableBut();
-            planetData.PlanetPositions();
+            this.solarSystemData.PlanetPositions();
             t_Decoy.Select();
             pB_Space.Invalidate();
         }
@@ -1269,7 +1269,7 @@ namespace Planetarium
             if (c_Uranus.Checked) ++countPl;
             else --countPl;
             mag = 0; if (countPl < 2) DisableBut(); else EnableBut();
-            planetData.PlanetPositions();
+            this.solarSystemData.PlanetPositions();
             t_Decoy.Select();
             pB_Space.Invalidate();
         }
@@ -1279,7 +1279,7 @@ namespace Planetarium
             if (c_Neptune.Checked) ++countPl;
             else --countPl;
             mag = 0; if (countPl < 2) DisableBut(); else EnableBut();
-            planetData.PlanetPositions();
+            this.solarSystemData.PlanetPositions();
             t_Decoy.Select();
             pB_Space.Invalidate();
         }
@@ -1289,7 +1289,7 @@ namespace Planetarium
             if (c_Pluto.Checked) ++countPl;
             else --countPl;
             mag = 0; if (countPl < 2) DisableBut(); else EnableBut();
-            planetData.PlanetPositions();
+            this.solarSystemData.PlanetPositions();
             t_Decoy.Select();
             pB_Space.Invalidate();
         }
@@ -1344,16 +1344,16 @@ namespace Planetarium
 
         private void CreateConString()
         {
-            conStr = "";
-            if (c_Mercury.Checked) conStr += "Mer";
-            if (c_Venus.Checked) conStr += "Ven";
-            if (c_Mars.Checked) conStr += "Mar";
-            if (c_Jupiter.Checked) conStr += "Jup";
-            if (c_Saturn.Checked) conStr += "Sat";
-            if (c_Uranus.Checked) conStr += "Ura";
-            if (c_Neptune.Checked) conStr += "Nep";
-            if (c_Pluto.Checked) conStr += "Plu";
-            if (c_Moon.Checked) conStr += "Moo";
+            conStr = (int)Planets.None;
+            if (c_Mercury.Checked) conStr += (int)Planets.Mercury;
+            if (c_Venus.Checked) conStr += (int)Planets.Venus;
+            if (c_Mars.Checked) conStr += (int)Planets.Mars;
+            if (c_Jupiter.Checked) conStr += (int)Planets.Jupiter;
+            if (c_Saturn.Checked) conStr += (int)Planets.Saturn;
+            if (c_Uranus.Checked) conStr += (int)Planets.Uranus;
+            if (c_Neptune.Checked) conStr += (int)Planets.Neptune;
+            if (c_Pluto.Checked) conStr += (int)Planets.Pluto;
+            if (c_Moon.Checked) conStr += (int)Planets.Moon;
         }
 
         private void f_SolarSystem_Deactivate(object sender, System.EventArgs e)
@@ -1378,14 +1378,14 @@ namespace Planetarium
             {
                 xmN = e.X;
                 ymN = e.Y;
-                planetData.PlanetPositions();
+                this.solarSystemData.PlanetPositions();
                 if (angle_X >= 0 && angle_X <= 180)
                     angle_X -= (ymN - ymO);
                 if (angle_X > 180) angle_X = 180;
                 if (angle_X < 0) angle_X = 00;
                 angle_Z += (360 + xmN - xmO);
                 angle_Z = (angle_Z + 360) % 360;
-                planetData.RotateOrbit(angle_X, angle_Z);
+                this.solarSystemData.RotateOrbit(angle_X, angle_Z);
                 pB_Space.Invalidate();
                 xmO = xmN;
                 ymO = ymN;
@@ -1434,8 +1434,8 @@ namespace Planetarium
         private string isFor;
         private double tolerance = 5;
         private short countPl = 0;
-        private string conStr = "";
-        private double AD, oldAD, printAD;
+        private int conStr = (int)Planets.None;
+        private double angularDistance, oldAD, printAD;
         private bool tend = false, cont = true;
         private int xg, yg, wg, hg, next;
         private double[] graf;

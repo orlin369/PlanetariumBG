@@ -29,18 +29,37 @@ namespace SpaceObjects.Data
     /// </summary>
     public class ConstellationLine
     {
-        public SkyPosition sp1, sp2;
 
-        public ConstellationLine(double RA1, double decl1, double RA2, double decl2)
+        #region Properties
+
+        public SkyPosition SkyPosition1
         {
-            sp1 = new SkyPosition();
-            sp2 = new SkyPosition();
-
-            sp1.Rectascence = RA1;
-            sp1.Decl = decl1;
-
-            sp2.Rectascence = RA2;
-            sp2.Decl = decl2;
+            get;
+            set;
         }
+        public SkyPosition SkyPosition2
+        {
+            get;
+            set;
+        }
+
+        #endregion
+
+        #region Constructor
+
+        public ConstellationLine(double rectascence1, double declination1, double rectascence2, double declination2)
+        {
+            this.SkyPosition1 = new SkyPosition();
+            this.SkyPosition2 = new SkyPosition();
+
+            this.SkyPosition1.Rectascence = rectascence1;
+            this.SkyPosition1.Declination = declination1;
+
+            this.SkyPosition2.Rectascence = rectascence2;
+            this.SkyPosition2.Declination = declination2;
+        }
+
+        #endregion
+
     }
 }

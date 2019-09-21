@@ -57,9 +57,9 @@ namespace SpaceObjects.SolarSystem
             double y1 = Math.Sin(E * Math.PI / 180) * Math.Sqrt(1 - ec * ec);
             double r = Math.Sqrt(x1 * x1 + y1 * y1);
             double v = Math.Atan2(y1, x1) * 180 / Math.PI;
-            double lon = v + w;
-            this.Position.X = r * Math.Cos(lon * Math.PI / 180);
-            this.Position.Y = r * Math.Sin(lon * Math.PI / 180);
+            double longtitude = v + w;
+            this.Position.X = r * Math.Cos(longtitude * Math.PI / 180);
+            this.Position.Y = r * Math.Sin(longtitude * Math.PI / 180);
             this.Position.Z = 0.0;
             double xeq = this.Position.X;
             double yeq = this.Position.Y * Math.Cos(this.Location.Oblecl * Math.PI / 180) - this.Position.Z * Math.Sin(this.Location.Oblecl * Math.PI / 180);
@@ -67,15 +67,15 @@ namespace SpaceObjects.SolarSystem
             dist = Math.Sqrt(xeq * xeq + yeq * yeq + zeq * zeq);
 
             SkyPosition.Rectascence = (360 + (Math.Atan2(yeq, xeq) * 180 / Math.PI)) % 360;
-            SkyPosition.Decl = Math.Asin(zeq / dist) * 180 / Math.PI;
+            SkyPosition.Declination = Math.Asin(zeq / dist) * 180 / Math.PI;
 
             pert.Ls = L;
             this.Location.xs = this.Position.X;
             this.Location.ys = this.Position.Y;
             this.Location.zs = this.Position.Z;
-            this.Location.slon = lon;
+            this.Location.slon = longtitude;
             this.Location.sRA = SkyPosition.Rectascence;
-            this.Location.sDecl = SkyPosition.Decl;
+            this.Location.sDecl = SkyPosition.Declination;
         }
 
         public override void Ephemerides()
