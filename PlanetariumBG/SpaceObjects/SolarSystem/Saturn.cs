@@ -75,8 +75,8 @@ namespace SpaceObjects.SolarSystem
                    (2 * helDist * this.Distance + 0.000000001);
             if (test < -1) test = -1;
             if (test > 1) test = 1;
-            FV = Math.Acos(test) * 180 / Math.PI;
-            this.Phase = (1 + Math.Cos(FV * Math.PI / 180)) / 2;
+            this.FV = Math.Acos(test) * 180 / Math.PI;
+            this.Phase = (1 + Math.Cos(this.FV * Math.PI / 180)) / 2;
 
             double ir = 28.06;
             double Nr = 169.51 + 3.82E-5 * this.Location.DayNumber();
@@ -85,7 +85,7 @@ namespace SpaceObjects.SolarSystem
                 Math.Cos(this.Latitude * Math.PI / 180) * Math.Sin(ir * Math.PI / 180) * Math.Sin((this.Longitude - Nr) * Math.PI / 180)
                                         ) * 180 / Math.PI;
             double ring_mag = -2.6 * Math.Sin(Math.Abs(ringTilt) * Math.PI / 180) + 1.2 * Math.Pow(Math.Sin(ringTilt * Math.PI / 180), 2);
-            this.Magnitude = -9.0 + 5 * Math.Log10(helDist * this.Distance) + 0.044 * FV + ring_mag;
+            this.Magnitude = -9.0 + 5 * Math.Log10(helDist * this.Distance) + 0.044 * this.FV + ring_mag;
         }
 
         private PertSaturn ps = new PertSaturn();

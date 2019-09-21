@@ -60,9 +60,9 @@ namespace SpaceObjects.SolarSystem
                    (2 * helDist * this.Distance + 0.000000001);
             if (test < -1) test = -1;
             if (test > 1) test = 1;
-            FV = Math.Acos(test) * 180 / Math.PI;
-            this.Phase = (1 + Math.Cos(FV * Math.PI / 180)) / 2;
-            this.Magnitude = -6.9 + 5 * Math.Log10(helDist * this.Distance) + 0.001 * FV;
+            this.FV = Math.Acos(test) * 180 / Math.PI;
+            this.Phase = (1 + Math.Cos(this.FV * Math.PI / 180)) / 2;
+            this.Magnitude = -6.9 + 5 * Math.Log10(helDist * this.Distance) + 0.001 * this.FV;
         }
 
         public override void Perturbations()

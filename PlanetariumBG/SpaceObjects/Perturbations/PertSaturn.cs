@@ -48,8 +48,8 @@ namespace SpaceObjects.Perturbations
         {
             double lat1 = -0.02 * Math.Cos((2 * this.Perturbation.Mj - 4 * this.Perturbation.Msat - 2) * Math.PI / 180);
             double lat2 = 0.018 * Math.Sin((2 * this.Perturbation.Mj - 6 * this.Perturbation.Msat - 49) * Math.PI / 180);
-            double Latitude = lat1 + lat2;
-            return Latitude;
+            double latitude = lat1 + lat2;
+            return latitude;
         }
 
         public override double PertInDist()

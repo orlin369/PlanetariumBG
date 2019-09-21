@@ -1758,7 +1758,7 @@ namespace Planetarium
         {
             timer2.Stop(); timer3.Stop();
             timerRun = false;
-            T = "";
+            timerName = "";
             NormalizeButton();
             skyView.f_pp.Close();
             f_SolarSystem f_ssv = new f_SolarSystem();
@@ -1769,7 +1769,7 @@ namespace Planetarium
         {
             timer2.Stop(); timer3.Stop();
             timerRun = false;
-            T = "";
+            timerName = "";
             skyView.f_pp.Close();
             NormalizeButton();
             f_SolarSystem f_cf = new f_SolarSystem("cf");
@@ -2203,7 +2203,7 @@ namespace Planetarium
         {
             timer2.Stop(); timer3.Stop();
             timerRun = false;
-            T = "";
+            timerName = "";
             NormalizeButton();
             skyView.f_pp.Close();
             changePos = true;
@@ -2258,8 +2258,8 @@ namespace Planetarium
             pB_Space.Cursor = openH;
             mDown = false; zenith = false;
             pB_Space.Invalidate();
-            if (T == "timer2") timer2.Start();
-            if (T == "timer3") timer3.Start();
+            if (timerName == "timer2") timer2.Start();
+            if (timerName == "timer3") timer3.Start();
         }
 
         private void ChangeVA()
@@ -2318,8 +2318,8 @@ namespace Planetarium
             if (e.Button == MouseButtons.Left)
             {
                 timer1.Stop();
-                if (T == "timer2") timer2.Start();
-                if (T == "timer3") timer3.Start();
+                if (timerName == "timer2") timer2.Start();
+                if (timerName == "timer3") timer3.Start();
             }
         }
 
@@ -2354,8 +2354,8 @@ namespace Planetarium
             if (e.Button == MouseButtons.Left)
             {
                 timer1.Stop();
-                if (T == "timer2") timer2.Start();
-                if (T == "timer3") timer3.Start();
+                if (timerName == "timer2") timer2.Start();
+                if (timerName == "timer3") timer3.Start();
             }
         }
 
@@ -2513,7 +2513,7 @@ namespace Planetarium
                 timer2.Tick += new EventHandler(timer2_Tick);
                 timer2.Enabled = true;
                 timer2.Start();
-                T = "timer2";
+                timerName = "timer2";
             }
         }
 
@@ -2525,7 +2525,7 @@ namespace Planetarium
             timerRun = false;
             changePos = true;
             NormalizeButton();
-            T = "";
+            timerName = "";
         }
 
         private void b_StepB_Click(object sender, System.EventArgs e)
@@ -2535,7 +2535,7 @@ namespace Planetarium
             p_Select.Visible = false;
             timerRun = false;
             NormalizeButton();
-            T = "";
+            timerName = "";
             TimerWork(-1);
         }
 
@@ -2546,7 +2546,7 @@ namespace Planetarium
             p_Select.Visible = false;
             timerRun = false;
             NormalizeButton();
-            T = "";
+            timerName = "";
             TimerWork(1);
         }
 
@@ -2566,7 +2566,7 @@ namespace Planetarium
                 timer2.Tick += new EventHandler(timer2_Tick);
                 timer2.Enabled = true;
                 timer2.Start();
-                T = "timer2";
+                timerName = "timer2";
             }
         }
 
@@ -2585,7 +2585,7 @@ namespace Planetarium
                 timer3.Tick += new EventHandler(timer3_Tick);
                 timer3.Enabled = true;
                 timer3.Start();
-                T = "timer3";
+                timerName = "timer3";
             }
         }
 
@@ -2614,7 +2614,7 @@ namespace Planetarium
             timer2.Stop();
             timer3.Stop();
             timerRun = false;
-            T = "";
+            timerName = "";
             skyView.f_pp.Close();
             NormalizeButton();
             f_PlanetData f_pd = new f_PlanetData();
@@ -2626,7 +2626,7 @@ namespace Planetarium
             timer2.Stop();
             timer3.Stop();
             timerRun = false;
-            T = "";
+            timerName = "";
             NormalizeButton();
             skyView.f_pp = new f_PlanetPosition();
             skyView.f_pp.Show();
@@ -2730,13 +2730,13 @@ namespace Planetarium
                 zenith = false;
                 dt = 1;
                 pB_Space.Invalidate();
-                if (T == "timer2") timer2.Start();
-                if (T == "timer3") timer3.Start();
+                if (timerName == "timer2") timer2.Start();
+                if (timerName == "timer3") timer3.Start();
             }
             if (e.KeyCode == Keys.PageUp || e.KeyCode == Keys.PageDown)
             {
-                if (T == "timer2") timer2.Start();
-                if (T == "timer3") timer3.Start();
+                if (timerName == "timer2") timer2.Start();
+                if (timerName == "timer3") timer3.Start();
             }
         }
 
@@ -2800,7 +2800,7 @@ namespace Planetarium
             p_Tools.Visible = false;
             timer2.Stop(); timer3.Stop();
             timerRun = false;
-            T = "";
+            timerName = "";
             NormalizeButton();
             skyView.f_pp.Close();
             changePos = true;
@@ -2827,7 +2827,7 @@ namespace Planetarium
             timer2.Stop();
             timer3.Stop();
             timerRun = false;
-            T = "";
+            timerName = "";
             skyView.f_pp.Close();
             NormalizeButton();
             f_PlanetData f_pd = new f_PlanetData();
@@ -2847,7 +2847,7 @@ namespace Planetarium
             timer2.Stop();
             timer3.Stop();
             timerRun = false;
-            T = "";
+            timerName = "";
             NormalizeButton();
             skyView.f_pp = new f_PlanetPosition();
             skyView.f_pp.Show();
@@ -2892,7 +2892,7 @@ namespace Planetarium
             p_Tools.Visible = false;
             timer2.Stop(); timer3.Stop();
             timerRun = false;
-            T = "";
+            timerName = "";
             NormalizeButton();
             skyView.f_pp.Close();
             f_SolarSystem f_ssv = new f_SolarSystem();
@@ -2917,7 +2917,7 @@ namespace Planetarium
             p_Tools.Visible = false;
             timer2.Stop(); timer3.Stop();
             timerRun = false;
-            T = "";
+            timerName = "";
             skyView.f_pp.Close();
             NormalizeButton();
             f_SolarSystem f_cf = new f_SolarSystem("cf");
@@ -2942,7 +2942,7 @@ namespace Planetarium
             p_Tools.Visible = false;
             timer2.Stop(); timer3.Stop();
             timerRun = false;
-            T = "";
+            timerName = "";
             skyView.f_pp.Close();
             NormalizeButton();
             skyView.f_pp.Close();
@@ -3172,7 +3172,7 @@ namespace Planetarium
         private int strIndex = 1;
         private short n;
         private bool timerRun = false;
-        private string T = "";
+        private string timerName = "";
         private Point pOld = new Point();
         private Point pNew = new Point();
         private bool mDown = false;

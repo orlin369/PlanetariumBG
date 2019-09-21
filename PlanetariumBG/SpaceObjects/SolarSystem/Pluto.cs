@@ -63,8 +63,8 @@ namespace SpaceObjects.SolarSystem
                    (2 * helDist * this.Distance + 0.000000001);
             if (test < -1) test = -1;
             if (test > 1) test = 1;
-            FV = Math.Acos(test) * 180 / Math.PI;
-            this.Phase = (1 + Math.Cos(MathHelp.DegreeToRadian(FV))) / 2;
+            this.FV = Math.Acos(test) * 180 / Math.PI;
+            this.Phase = (1 + Math.Cos(MathHelp.DegreeToRadian(this.FV))) / 2;
             this.Magnitude = 14;
         }
 
