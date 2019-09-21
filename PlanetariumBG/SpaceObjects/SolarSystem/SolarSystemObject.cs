@@ -24,6 +24,7 @@
 
 using SpaceObjects.Data;
 using SpaceObjects.Perturbations;
+using SpaceObjects.Utilities;
 using System;
 
 namespace SpaceObjects.SolarSystem
@@ -84,8 +85,8 @@ namespace SpaceObjects.SolarSystem
 
             helDist = Math.Sqrt(xeclip * xeclip + yeclip * yeclip + zeclip * zeclip);
 
-            lon = (360 + (Math.Atan2(yeclip, xeclip) * 180 / Math.PI)) % 360;
-            lat = Math.Asin(zeclip / rr) * 180 / Math.PI;
+            lon = (360 + (Math.Atan2(yeclip, xeclip) * 180.0D / Math.PI)) % 360;
+            lat = Math.Asin(zeclip / rr) * 180.0D / Math.PI;
             this.MeanDistance = Math.Sqrt(xeclip * xeclip + yeclip * yeclip + zeclip * zeclip);
         }
 
@@ -100,7 +101,7 @@ namespace SpaceObjects.SolarSystem
             this.Location.SIDTIME = SIDTIME;
 
             double HA = (360 + (LST - SkyPosition.Rectascence)) % 360;
-            double gclat = LAT - 0.1924 * Math.Sin((2 * LAT) * Math.PI / 180.0D);
+            double gclat = LAT - 0.1924 * Math.Sin(MathHelp.DegreeToRadian(2 * LAT));
             double rho = 0.99833 + 0.00167 * Math.Cos((2 * LAT) * Math.PI / 180.0D);
             double g = Math.Atan(Math.Tan(gclat * Math.PI / 180.0D) / Math.Cos(HA * Math.PI / 180.0D)) * 180.0D / Math.PI;
             double topRA = SkyPosition.Rectascence - mpar * rho * Math.Cos(gclat * Math.PI / 180.0D) * Math.Sin(HA * Math.PI / 180.0D) / Math.Cos((SkyPosition.Declination + 0.000000001) * Math.PI / 180.0D);

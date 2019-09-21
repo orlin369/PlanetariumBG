@@ -23,6 +23,7 @@
 */
 
 using SpaceObjects.Perturbations;
+using SpaceObjects.Utilities;
 using System;
 
 namespace SpaceObjects.SolarSystem
@@ -71,7 +72,7 @@ namespace SpaceObjects.SolarSystem
             if (test < -1) test = -1;
             if (test > 1) test = 1;
             FV = Math.Acos(test) * 180 / Math.PI;
-            this.Phase = (1 + Math.Cos(FV * Math.PI / 180)) / 2;
+            this.Phase = (1 + Math.Cos(MathHelp.DegreeToRadian(FV))) / 2;
             this.Magnitude = -7.15 + 5 * Math.Log10(helDist * this.Distance) + 0.001 * FV;
         }
 

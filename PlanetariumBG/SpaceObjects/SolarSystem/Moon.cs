@@ -24,6 +24,7 @@
 
 using SpaceObjects.Data;
 using SpaceObjects.Perturbations;
+using SpaceObjects.Utilities;
 using System;
 
 namespace SpaceObjects.SolarSystem
@@ -63,12 +64,12 @@ namespace SpaceObjects.SolarSystem
 
         public override void GeocentricPos()
         {
-            double xeclip2 = Math.Cos(lon * Math.PI / 180.0D) * Math.Cos(lat * Math.PI / 180.0D);
-            double yeclip2 = Math.Sin(lon * Math.PI / 180.0D) * Math.Cos(lat * Math.PI / 180.0D);
-            double zeclip2 = Math.Sin(lat * Math.PI / 180.0D);
+            double xeclip2 = Math.Cos(MathHelp.DegreeToRadian(lon)) * Math.Cos(MathHelp.DegreeToRadian(lat));
+            double yeclip2 = Math.Sin(MathHelp.DegreeToRadian(lon)) * Math.Cos(MathHelp.DegreeToRadian(lat));
+            double zeclip2 = Math.Sin(MathHelp.DegreeToRadian(lat));
             double xequat = xeclip2;
-            double yequat = yeclip2 * Math.Cos(this.Location.Oblecl * Math.PI / 180.0D) - zeclip2 * Math.Sin(this.Location.Oblecl * Math.PI / 180.0D);
-            double zequat = yeclip2 * Math.Sin(this.Location.Oblecl * Math.PI / 180.0D) + zeclip2 * Math.Cos(this.Location.Oblecl * Math.PI / 180.0D);
+            double yequat = yeclip2 * Math.Cos(MathHelp.DegreeToRadian(this.Location.Oblecl)) - zeclip2 * Math.Sin(MathHelp.DegreeToRadian(this.Location.Oblecl));
+            double zequat = yeclip2 * Math.Sin(MathHelp.DegreeToRadian(this.Location.Oblecl)) + zeclip2 * Math.Cos(MathHelp.DegreeToRadian(this.Location.Oblecl));
             SkyPosition.Rectascence = (360 + (Math.Atan2(yequat, xequat) * 180.0D / Math.PI)) % 360;
             SkyPosition.Declination = Math.Atan2(zequat, Math.Sqrt(xequat * xequat + yequat * yequat)) * 180.0D / Math.PI;
         }
@@ -78,9 +79,9 @@ namespace SpaceObjects.SolarSystem
             Diameter = 1873.7 * 60 / this.Distance;
             this.Distance = this.Distance * 6378.140 / 1.49597870E8;
             Elongation = Math.Acos(
-                Math.Sin(SkyPosition.Declination * Math.PI / 180.0D) * Math.Sin(this.Location.sDecl * Math.PI / 180.0D) +
-                Math.Cos(SkyPosition.Declination * Math.PI / 180.0D) * Math.Cos(this.Location.sDecl * Math.PI / 180.0D) *
-                Math.Cos((SkyPosition.Rectascence - this.Location.sRA) * Math.PI / 180.0D)) * 180.0D / Math.PI;
+                Math.Sin(MathHelp.DegreeToRadian(SkyPosition.Declination)) * Math.Sin(MathHelp.DegreeToRadian(this.Location.sDecl)) +
+                Math.Cos(MathHelp.DegreeToRadian(SkyPosition.Declination)) * Math.Cos(MathHelp.DegreeToRadian(this.Location.sDecl)) *
+                Math.Cos(MathHelp.DegreeToRadian(SkyPosition.Rectascence - this.Location.sRA))) * 180.0D / Math.PI;
             this.Phase = 180.0D - Elongation;
             this.Magnitude = -10;
         }

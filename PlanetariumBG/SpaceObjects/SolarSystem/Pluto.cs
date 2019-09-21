@@ -22,6 +22,7 @@
     SOFTWARE.
 */
 
+using SpaceObjects.Utilities;
 using System;
 
 namespace SpaceObjects.SolarSystem
@@ -45,7 +46,8 @@ namespace SpaceObjects.SolarSystem
             ec = 0.24880766 + 0.00000000177002 * this.Location.DayNumber();
             this.MeanDistance = 39.48168677 - 0.0000000210574 * this.Location.DayNumber();
             this.MeanAnomaly = 14.882 + 0.00396 * this.Location.DayNumber();
-            this.MeanMotion = 50; this.TrueAnomaly = 248 * 365; d0 = 3.14;
+            this.MeanMotion = 50;
+            this.TrueAnomaly = 248 * 365; d0 = 3.14;
         }
 
         public override void Ephemerides()
@@ -62,7 +64,7 @@ namespace SpaceObjects.SolarSystem
             if (test < -1) test = -1;
             if (test > 1) test = 1;
             FV = Math.Acos(test) * 180 / Math.PI;
-            this.Phase = (1 + Math.Cos(FV * Math.PI / 180)) / 2;
+            this.Phase = (1 + Math.Cos(MathHelp.DegreeToRadian(FV))) / 2;
             this.Magnitude = 14;
         }
 

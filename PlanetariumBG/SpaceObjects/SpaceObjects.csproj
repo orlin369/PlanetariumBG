@@ -76,6 +76,7 @@
     <Compile Include="SolarSystem\Sun.cs" />
     <Compile Include="SolarSystem\Uranus.cs" />
     <Compile Include="SolarSystem\Venus.cs" />
+    <Compile Include="Utilities\MathHelp.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Messier.txt" />
@@ -86,5 +87,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\Constellations.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
