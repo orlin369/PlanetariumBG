@@ -28,9 +28,12 @@ namespace SpaceObjects.Utilities
 {
     public class MathHelp
     {
+        public const double RadsPerDegree = Math.PI / 180.0;
+        public const double DegreesPerRad = 180.0 / Math.PI;
+
         public static double DegreeToRadian(double angle)
         {
-            return angle * Math.PI / 180.0;
+            return angle * RadsPerDegree;
         }
     }
 }

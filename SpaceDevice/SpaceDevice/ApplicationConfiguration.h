@@ -33,10 +33,29 @@
 	#include "WProgram.h"
 #endif
 
+/* slave id = 1, rs485 control-pin = 8, baud = 9600
+ */
+#define COM_SLAVE_ID 1
+#define COM_CTRL_PIN 8
+#define COM_BAUDREATE 9600
+
+
 #define UPDATE_RATE 100
 
 //#define MAGSENSOR_HMC5883
 #define MAGSENSOR_LSM303
+
+#define AZM_ENABLED true
+#define AZM_PIN_1 2
+#define AZM_PIN_2 3
+#define AZM_PIN_3 4
+#define AZM_PIN_4 5
+
+#define DCM_ENABLED true
+#define DCM_PIN_1 6
+#define DCM_PIN_2 7
+#define DCM_PIN_3 8
+#define DCM_PIN_4 9
 
 #endif
 

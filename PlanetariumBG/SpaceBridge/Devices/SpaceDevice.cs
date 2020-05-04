@@ -22,6 +22,8 @@
     SOFTWARE.
 */
 
+using System;
+
 namespace SpaceBridge.Devices
 {
     public class SpaceDevice
@@ -44,6 +46,20 @@ namespace SpaceBridge.Devices
             set;
             get;
         }
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// On connect event.
+        /// </summary>
+        public virtual event EventHandler<EventArgs> OnConnect;
+
+        /// <summary>
+        /// On disconnect
+        /// </summary>
+        public virtual event EventHandler<EventArgs> OnDisconnect;
 
         #endregion
 

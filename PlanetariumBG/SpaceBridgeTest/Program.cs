@@ -34,7 +34,7 @@ namespace SpaceBridgeTest
         private static Model1 device;
         static void Main(string[] args)
         {
-            device = Model1.NewDevice("COM3");
+            device = Model1.GetDevice("COM6", 9600, 1);
 
             device.OnCompasChange += Device_OnCompasChange;
             device.OnConnect += Device_OnConnect;
@@ -49,6 +49,7 @@ namespace SpaceBridgeTest
 
             device.Enable();
 
+            device.SetPosition(0.0, 0.0);
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
             Console.WriteLine("Time to exit.");

@@ -22,12 +22,13 @@
     SOFTWARE.
 */
 
-using SpaceBridge.Adapters;
-using SpaceBridge.Data;
 using SpaceBridge.Events;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.IO.Ports;
+using EasyModbus;
+using SpaceBridge.Data;
 
 namespace SpaceBridge.Devices.Model1
 {
@@ -54,20 +55,12 @@ namespace SpaceBridge.Devices.Model1
 
         #region Variables
 
-        /// <summary>
-        /// Comunication adapter.
-        /// </summary>
-        private Adapter adapter;
+        private static Model1 device;
 
         /// <summary>
-        /// Serialization handle.
+        /// Modbus client.
         /// </summary>
-        private GCHandle handle;
-
-        /// <summary>
-        /// Compas vector.
-        /// </summary>
-        private Vector3 compasVector;
+        ModbusClient mbClient;
 
         #endregion
 
@@ -76,12 +69,12 @@ namespace SpaceBridge.Devices.Model1
         /// <summary>
         /// On connect event.
         /// </summary>
-        public event EventHandler<EventArgs> OnConnect;
+        public override event EventHandler<EventArgs> OnConnect;
 
         /// <summary>
         /// On disconnect
         /// </summary>
-        public event EventHandler<EventArgs> OnDisconnect;
+        public override event EventHandler<EventArgs> OnDisconnect;
 
         /// <summary>
         /// On device ready.
@@ -111,9 +104,13 @@ namespace SpaceBridge.Devices.Model1
         /// Constructor
         /// </summary>
         /// <param name="portName">Communication port.</param>
-        public Model1(Adapter adapter)
+        public Model1(string portName, int baudrate, byte slaveId)
         {
-            this.adapter = adapter;
+            mbClient = new ModbusClient(portName);
+            mbClient.UnitIdentifier = slaveId;
+            mbClient.Baudrate = baudrate;
+            mbClient.Parity = Parity.None;
+            mbClient.StopBits = StopBits.One;
             this.IsReady = false;
         }
 
@@ -122,6 +119,7 @@ namespace SpaceBridge.Devices.Model1
         /// </summary>
         ~Model1()
         {
+            this.Disconnect();
         }
 
         #endregion
@@ -134,24 +132,30 @@ namespace SpaceBridge.Devices.Model1
         public override void Connect()
         {
             this.Disconnect();
-            this.adapter.OnConnect += Adapter_OnConnect;
-            this.adapter.OnMessage += Adapter_OnMessage;
-            this.adapter.OnDisconnect += Adapter_OnDisconnect;
-            this.adapter.Connect();
+            if(!this.mbClient.Connected)
+            {
+                this.mbClient.NumberOfRetries = 3;
+                this.mbClient.Connect();
+                this.mbClient.ReceiveDataChanged += MbClient_ReceiveDataChanged;
+                this.OnConnect?.Invoke(this, new EventArgs());
+            }
         }
 
-
+        private void MbClient_ReceiveDataChanged(object sender)
+        {
+            Console.WriteLine("MbClient_ReceiveDataChanged");
+        }
 
         /// <summary>
         /// Disconnect
         /// </summary>
         public override void Disconnect()
         {
-            if (this.adapter == null || !this.adapter.IsConnected) return;
+            if (this.mbClient == null || !this.mbClient.Connected) return;
 
-
-
-            this.adapter.Disconnect();
+            this.OnDisconnect?.Invoke(this, new EventArgs());
+            this.mbClient.Disconnect();
+            this.mbClient.ReceiveDataChanged -= MbClient_ReceiveDataChanged;
         }
 
         /// <summary>
@@ -160,7 +164,9 @@ namespace SpaceBridge.Devices.Model1
         /// <param name="joint">Index of the motor.</param>
         public override void Enable()
         {
-            SendRawRequest(OpCodes.Enable);
+            if (this.mbClient == null) return;
+
+            this.mbClient.WriteSingleRegister(MemoryMap.MOTOR_STATE, 1);
         }
 
         /// <summary>
@@ -169,287 +175,95 @@ namespace SpaceBridge.Devices.Model1
         /// <param name="joint">Index of the motor.</param>
         public override void Disable()
         {
-            SendRawRequest(OpCodes.Disable);
+            if (this.mbClient == null) return;
+
+            this.mbClient.WriteSingleRegister(MemoryMap.MOTOR_STATE, 0);
         }
 
         /// <summary>
         /// Read the motor state.
         /// </summary>
-        public override void GetPosition()
+        public void GetPosition()
         {
+            if (this.mbClient == null) return;
 
+            int fields = 2;
+            int[] result = mbClient.ReadHoldingRegisters(MemoryMap.MOTOR_POSITION, fields);
+            if (result != null)
+            {
+                if (result.Length == fields * 2)
+                {
+
+                }
+
+            }
+
+
+            // TODO: Return position.
         }
 
         /// <summary>
         /// Move relative single motor.
         /// </summary>
-        public override void SetPosition()
+        /// <param name="azimuth"></param>
+        /// <param name="declination"></param>
+        public void SetPosition(double azimuth, double declination)
         {
+            if (this.mbClient == null) return;
 
+            // Scale
+            int az = (int)(azimuth * 1);
+            int dc = (int)(declination * 1);
+
+            // Convert to ints
+            int az1 = az >> 16;
+            int az0 = az & 0x0000FFFF;
+            int dc1 = dc >> 16;
+            int dc0 = dc & 0x0000FFFF;
+
+            // Create array.
+            int[] values = new int[] { az0, az1, dc0, dc1 };
+
+            // Send it over the network.
+            this.mbClient.WriteMultipleRegisters(MemoryMap.MOTOR_POSITION, values);
         }
 
         public override void Reset()
         {
-            if (this.adapter != null)
+            if (this.mbClient == null) return;
+
+            this.Disable();
+
+            int[] result = mbClient.ReadHoldingRegisters(MemoryMap.DEVICE_STATE, 1);
+            if(result != null)
             {
-                this.adapter.Reset();
-            }
-        }
-
-        #endregion
-
-        public static Model1 NewDevice(string portName)
-        {
-            System.IO.Ports.SerialPort port = new System.IO.Ports.SerialPort(portName, 115200, System.IO.Ports.Parity.None, 8, System.IO.Ports.StopBits.One);
-            SpaceBridge.Adapters.SerialAdapter adapter = new SpaceBridge.Adapters.SerialAdapter(port);
-            return new Model1(adapter);
-        }
-
-        #region Private
-
-        private void Adapter_OnConnect(object sender, EventArgs e)
-        {
-            this.OnConnect?.Invoke(sender, e);
-        }
-
-        private void Adapter_OnDisconnect(object sender, EventArgs e)
-        {
-            this.OnDisconnect?.Invoke(sender, e);
-        }
-
-        private void Adapter_OnMessage(object sender, EventArgsByte e)
-        {
-            this.ParseFrame(e.Value);
-        }
-
-
-        /** @brief Parse and execute the incoming commands.
-         *  @param frame, uint8_t *, The frame array.
-         *  @param length, uint8_t, The frame array length.
-         *  @return Void.
-         */
-        void ParseFrame(byte[] frame)
-        {
-            if (frame[(int)FrameIndexes.FrmType] == (byte)FrameType.Request)
-            {
-                if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.Ping)
-                {
-
-                    // SendRawResponse(OpCodes.Ping, StatusCodes.Ok, PayloadRequest_g, frame[FrameIndexes.Length] - 1);
-                }
-                else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.Stop)
-                {
-
-                    // SendRawResponse(OpCodes.Stop, StatusCodes.Ok, NULL, 0);
-                }
-                else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.Disable)
-                {
-
-                    // SendRawResponse(OpCodes.Disable, StatusCodes.Ok, NULL, 0);
-                }
-                else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.Enable)
-                {
-
-                    // SendRawResponse(OpCodes.Enable, StatusCodes.Ok, NULL, 0);
-                }
-                else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.Clear)
-                {
-
-                    // SendRawResponse(OpCodes.Clear, StatusCodes.Ok, NULL, 0);
-                }
-                else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.MoveRelative)
-                {
-
-                    // Respond with success.
-                    //SendRawResponse(OpCodes.MoveRelative, StatusCodes.Ok, NULL, 0);
-                }
-                else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.MoveAblolute)
-                {
-
-                    // Respond with success.
-                    // SendRawResponse(OpCodes.MoveAblolute, StatusCodes.Ok, NULL, 0);
-                }
-                else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.DO)
-                {
-
-                    // Respond with success.
-                    // SendRawResponse(OpCodes.DO, StatusCodes.Ok, NULL, 0);
-                }
-                else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.DI)
-                {
-
-                    //SendRawResponse(OpCodes.DI, StatusCodes.Ok, PayloadResponse_g, 1);
-                }
-                else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.IsMoving)
-                {
-
-                    //SendRawResponse(OpCodes.IsMoving, StatusCodes.Ok, PayloadResponse_g, 1);
-                }
-                else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.CurrentPosition)
-                {
-
-                    //SendRawResponse(OpCodes.CurrentPosition, StatusCodes.Ok, CurrentPositions_g.Buffer, sizeof(JointPosition_t));
-                }
-                else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.MoveSpeed)
-                {
-
-                    // Respond with success.
-                    //SendRawResponse(OpCodes.MoveSpeed, StatusCodes.Ok, NULL, 0);
-                }
-                else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.SetDeviceID)
-                {
-
-                    //SendRawResponse(OpCodes.SetRobotID, StatusCodes.Ok, PayloadRequest_g, frame[FrameIndexes.Length] - 1);
-                }
-                else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.GetDeviceID)
-                {
-                    byte[] PayloadRequest_g = new byte[8];
-
-                    SendRawResponse(OpCodes.GetDeviceID, StatusCodes.Ok, PayloadRequest_g);
-                }
-                else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.Compas)
-                {
-                    byte[] buff = GetPayload(frame);
-
-                    if (buff == null)
-                    {
-                        SendRawResponse(OpCodes.Compas, StatusCodes.Error, null);
-                        return;
-                    }
-
-                    handle = GCHandle.Alloc(buff, GCHandleType.Pinned);
-
-                    compasVector = (Vector3)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(Vector3));
-
-                    handle.Free();
-
-                    this.OnCompasChange?.Invoke(this, new EventArgsVector3(compasVector));
-
-                    SendRawResponse(OpCodes.Compas, StatusCodes.Ok, null);
-                }
-                else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.Ready)
+                if(result[0] == 0)
                 {
                     this.IsReady = true;
-                    this.OnReady?.Invoke(this, new EventArgs());
-                }
-            }
-            else if (frame[(int)FrameIndexes.FrmType] == (byte)FrameType.Response)
-            {
-                if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.Ping)
-                {
-                }
-                else if (frame[(int)FrameIndexes.OperationCode] == (byte)OpCodes.Stop)
-                {
-                }
-            }
-        }
-
-        private void SendRawResponse(OpCodes opcode, StatusCodes statusCode, byte[] data)
-        {
-            List<byte> command = new List<byte>();
-            command.Add(SENTINEL);
-            command.Add((byte)FrameType.Response);
-            if (data == null)
-            {
-                command.Add(1);
-            }
-            else
-            {
-                command.Add((byte)(data.Length + FRAME_RESPONSE_PAYLOAD_OFFSET));
-            }
-            command.Add((byte)opcode);
-            command.Add((byte)statusCode);
-            if (data != null)
-            {
-                foreach (byte b in data)
-                {
-                    command.Add(b);
-                }
-            }
-            byte[] crc = CalculateCRC(command.ToArray());
-            foreach (byte b in crc)
-            {
-                command.Add(b);
-            }
-
-            this.adapter.SendRequest(command.ToArray());
-        }
-
-        private void SendRawRequest(OpCodes opcode, byte[] data = null)
-        {
-            List<byte> command = new List<byte>();
-            command.Add(SENTINEL);
-            command.Add((byte)FrameType.Request);
-            if (data == null)
-            {
-                command.Add(1);
-            }
-            else
-            {
-                command.Add((byte)(data.Length + FRAME_RESPONSE_PAYLOAD_OFFSET));
-            }
-            command.Add((byte)opcode);
-            if (data != null)
-            {
-                foreach (byte b in data)
-                {
-                    command.Add(b);
-                }
-            }
-            byte[] crc = CalculateCRC(command.ToArray());
-            foreach (byte b in crc)
-            {
-                command.Add(b);
-            }
-
-            this.adapter.SendRequest(command.ToArray());
-        }
-
-        /** @brief Calculate the CRC.
-         *  @param frame uint8_t *, The frame.
-         *  @param length uint8_t, Length of the payload.
-         *  @param out uint8_t *, CRC frame.
-         *  @return Void
-         */
-        private byte[] CalculateCRC(byte[] frame)
-        {
-            byte[] result = new byte[2];
-
-            for (int index = 0; index < frame.Length; index++)
-            {
-                // Odd
-                if ((index % 2 == 0))
-                {
-                    // Sum all odd indexes.
-                    result[0] ^= frame[index];
-                }
-                // Even
-                else
-                {
-                    // Sum all even indexes.
-                    result[1] ^= frame[index];
                 }
             }
 
-            return result;
-        }
-
-        private byte[] GetPayload(byte[] frame)
-        {
-            List<byte> content = new List<byte>();
-            int beginIndex = 0;
-            int endIndex = frame[(int)FrameIndexes.Length] - 1;
-
-            for (int index = beginIndex; index < endIndex; index++)
-            {
-                content.Add(frame[index + FRAME_STATIC_FIELD_OFFSET]);
-            }
-
-            return content.ToArray();
+            //mbClient.WriteSingleCoil(10, true);
+            //int[] res0 = mbClient.ReadInputRegisters(0, 20);
+            //mbClient.WriteSingleRegister(2, 5);
+            //mbClient.WriteMultipleRegisters(2, new int[] { 5 });
         }
 
         #endregion
 
+        #region Singelton
+
+        public static Model1 GetDevice(string portName, int baudrate, byte slaveId)
+        {
+            if(device == null)
+            {
+                device = new Model1(portName, baudrate, slaveId);
+            }
+
+            return device;
+        }
+
+        #endregion
     }
 }
 

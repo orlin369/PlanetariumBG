@@ -1652,7 +1652,10 @@ namespace Planetarium
         {
             try
             {
-                device = Model1.NewDevice("COM3");
+                
+                device = Model1.GetDevice(
+                    Planetarium.Properties.Settings.Default.SBPort,
+                    Planetarium.Properties.Settings.Default.SBBaud, 1);
 
                 device.OnCompasChange += Device_OnCompasChange;
                 device.OnConnect += Device_OnConnect;
